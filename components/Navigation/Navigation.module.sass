@@ -1,0 +1,22 @@
+.navigation
+  display: flex
+  justify-content: center
+  gap: 50px
+  position: relative
+  margin-bottom: 30px
+  &Item
+    display: flex
+    align-items: center
+    column-gap: 5px
+    cursor: pointer
+    padding: 16px
+    &:hover .categoryLinks
+      display: flex
+.categoryLinks
+  display: none
+  position: absolute
+  background-color: #f1f1f1
+  z-index: 1
+  top: 40px
+  flex-direction: column
+.categoryLink
