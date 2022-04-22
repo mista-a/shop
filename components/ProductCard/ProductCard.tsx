@@ -1,15 +1,51 @@
-import React, { FC } from 'react'
+import { Typography } from '@mui/material'
+import Link from 'next/link'
+import React, { FC, useState } from 'react'
+import cardImg from '../../assets/images/card-img.png'
+import styles from './Product.module.sass'
+import { ReactComponent as LikeIcon } from '../../assets/images/like-icon.svg'
 
-interface ProductCardProps {
-  products: Array<any>[]
+interface IProduct {
+  img: string
+  name: string
+  colors: string[]
+  price: number
 }
 
-const ProductCard: FC<ProductCardProps> = ({ products }) => {
+interface ProductCardProps {
+  product: IProduct
+}
+
+const ProductCard: FC<ProductCardProps> = ({ product }) => {
+  const [inFavorite, setInFavorite] = useState(false)
+
   return (
-    <div>
-      {products.map((product) => {
-        // return <img src={product.img} alt='' />
-      })}
+    <div className={styles.card}>
+      <div className={styles.imgWrapper}>
+        <img className={styles.cardImg} src={product.img} alt={product.name} />
+        <button
+          className={styles.likeButton}
+          onClick={() => setInFavorite(!inFavorite)}
+        >
+          <LikeIcon />
+        </button>
+      </div>
+      <Typography>{product.name}</Typography>
+      <div className={styles.colors}>
+        {product.colors.map((color) => {
+          return (
+            <Link href={'/color'}>
+              <div
+                className={styles.color}
+                style={{
+                  backgroundColor: color,
+                }}
+              ></div>
+            </Link>
+          )
+        })}
+      </div>
+      <Typography>$ {product.price}</Typography>
     </div>
   )
 }

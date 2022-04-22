@@ -4,8 +4,8 @@ import MainLayout from '../layouts/MainLayout'
 import carouselImg from '../assets/images/carousel-img.png'
 import styles from './HomePage.module.sass'
 import Carousel from '../components/Carousel/Carousel'
-import cardImg from '../../assets/images/card-img.png'
 import CarouselItem from '../components/CarouselItem/CarouselItem'
+import ProductList from '../components/ProductList/ProductList'
 
 const Index = () => {
   const carouselData = [
@@ -26,81 +26,6 @@ const Index = () => {
     },
   ]
 
-  const products = [
-    {
-      img: cardImg.src,
-      name: 'Columbia Marquam Peak Fusion parka jacket in black',
-      colors: ['red', 'green', 'pink'],
-      price: 17,
-    },
-    {
-      img: cardImg.src,
-      name: 'Columbia Marquam Peak Fusion parka jacket in black',
-      colors: ['red', 'green', 'pink'],
-      price: 17,
-    },
-    {
-      img: cardImg.src,
-      name: 'Columbia Marquam Peak Fusion parka jacket in black',
-      colors: ['red', 'green', 'pink'],
-      price: 17,
-    },
-    {
-      img: cardImg.src,
-      name: 'Columbia Marquam Peak Fusion parka jacket in black',
-      colors: ['red', 'green', 'pink'],
-      price: 17,
-    },
-    {
-      img: cardImg.src,
-      name: 'Columbia Marquam Peak Fusion parka jacket in black',
-      colors: ['red', 'green', 'pink'],
-      price: 17,
-    },
-    {
-      img: cardImg.src,
-      name: 'Columbia Marquam Peak Fusion parka jacket in black',
-      colors: ['red', 'green', 'pink'],
-      price: 17,
-    },
-    {
-      img: cardImg.src,
-      name: 'Columbia Marquam Peak Fusion parka jacket in black',
-      colors: ['red', 'green', 'pink'],
-      price: 17,
-    },
-    {
-      img: cardImg.src,
-      name: 'Columbia Marquam Peak Fusion parka jacket in black',
-      colors: ['red', 'green', 'pink'],
-      price: 17,
-    },
-    {
-      img: cardImg.src,
-      name: 'Columbia Marquam Peak Fusion parka jacket in black',
-      colors: ['red', 'green', 'pink'],
-      price: 17,
-    },
-    {
-      img: cardImg.src,
-      name: 'Columbia Marquam Peak Fusion parka jacket in black',
-      colors: ['red', 'green', 'pink'],
-      price: 17,
-    },
-    {
-      img: cardImg.src,
-      name: 'Columbia Marquam Peak Fusion parka jacket in black',
-      colors: ['red', 'green', 'pink'],
-      price: 17,
-    },
-    {
-      img: cardImg.src,
-      name: 'Columbia Marquam Peak Fusion parka jacket in black',
-      colors: ['red', 'green', 'pink'],
-      price: 17,
-    },
-  ]
-
   return (
     <MainLayout>
       <Carousel>
@@ -108,11 +33,13 @@ const Index = () => {
           return (
             <CarouselItem>
               <div className={styles.carouselContainer}>
-                <img
-                  draggable='false'
-                  className={styles.carouselImg}
-                  src={carouselItem.carouselImg.src}
-                />
+                <div className={styles.imgWrapper}>
+                  <img
+                    draggable='false'
+                    className={styles.carouselImg}
+                    src={carouselItem.carouselImg.src}
+                  />
+                </div>
                 <div className={styles.carouselText}>
                   <Typography className={styles.carouselText} variant='h4'>
                     {carouselItem.header}
@@ -126,6 +53,10 @@ const Index = () => {
           )
         })}
       </Carousel>
+      <Typography className={styles.categoryName} variant='h4'>
+        Most popular
+      </Typography>
+      <ProductList />
     </MainLayout>
   )
 }
