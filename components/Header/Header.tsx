@@ -14,6 +14,7 @@ import { ReactComponent as MenuIcon } from '../../assets/images/menu-icon.svg'
 import { ReactComponent as LikeIcon } from '../../assets/images/like-icon.svg'
 import { ReactComponent as CartIcon } from '../../assets/images/cart-icon.svg'
 import { ReactComponent as SearchIcon } from '../../assets/images/search-icon.svg'
+import Input from '../UI/Input'
 
 const Header = () => {
   return (
@@ -28,7 +29,7 @@ const Header = () => {
           <Button className={styles.menuButton}>
             <MenuIcon />
           </Button>
-          <InputBase className={styles.search} placeholder='Search' />
+          <Input className={styles.search} placeholder='Search' />
           <div className={styles.accountController}>
             <Typography>Log in</Typography>
             <Typography>|</Typography>
