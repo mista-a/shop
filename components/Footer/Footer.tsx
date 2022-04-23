@@ -43,8 +43,22 @@ const Footer: FC = () => {
             </div>
           </Grid>
 
-          <Grid item xs={2}>
+          <Grid className={styles.resources} item xs={2}>
             <WhiteTypography variant='h5'>Resources</WhiteTypography>
+            <div className={styles.resourcesLinks}>
+              <Link href={'/Terms and Conditions'}>
+                <WhiteTypography>Terms and Conditions</WhiteTypography>
+              </Link>
+              <Link href={'/Privacy Policy'}>
+                <WhiteTypography>Privacy Policy</WhiteTypography>
+              </Link>
+              <Link href={'/Shipping & Returns'}>
+                <WhiteTypography>Shipping & Returns</WhiteTypography>
+              </Link>
+              <Link href={'/Contact Us'}>
+                <WhiteTypography>Contact Us</WhiteTypography>
+              </Link>
+            </div>
           </Grid>
         </Grid>
       </Container>
