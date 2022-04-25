@@ -47,13 +47,6 @@ const Carousel: FC = ({ children }) => {
       endX: e.screenX,
       isScrolling: false,
     })
-    console.log('a')
-  }
-
-  console.log(drag.isScrolling)
-
-  if (drag.isScrolling) {
-    console.log(drag.isScrolling)
   }
 
   return (

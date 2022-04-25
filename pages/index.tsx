@@ -7,7 +7,7 @@ import Carousel from '../components/Carousel/Carousel'
 import CarouselItem from '../components/CarouselItem/CarouselItem'
 import ProductList from '../components/ProductList/ProductList'
 
-const Index = () => {
+const HomePage = () => {
   const carouselData = [
     {
       carouselImg: carouselImg,
@@ -29,9 +29,9 @@ const Index = () => {
   return (
     <MainLayout>
       <Carousel>
-        {carouselData.map((carouselItem) => {
+        {carouselData.map((carouselItem, index) => {
           return (
-            <CarouselItem>
+            <CarouselItem key={index}>
               <div className={styles.carouselContainer}>
                 <div className={styles.imgWrapper}>
                   <img
@@ -61,4 +61,4 @@ const Index = () => {
   )
 }
 
-export default Index
+export default HomePage
