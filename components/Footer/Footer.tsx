@@ -6,6 +6,7 @@ import { ReactComponent as GithubLogo } from '../../assets/images/github-logo.sv
 import Link from '../UI/Link/Link'
 import Input from '../UI/Input'
 import TextButton from '../UI/TextButton'
+import MainContainer from '../MainContainer/MainContainer'
 
 const Footer: FC = () => {
   const WhiteTypography = styled(Typography)(({ theme }) => ({
@@ -13,7 +14,7 @@ const Footer: FC = () => {
   }))
   return (
     <div className={styles.footer}>
-      <Container maxWidth='desktop'>
+      <MainContainer>
         <Grid container justifyContent='space-between'>
           <Grid item xs={2}>
             <WhiteTypography variant='h5'>Dev</WhiteTypography>
@@ -65,7 +66,7 @@ const Footer: FC = () => {
             </div>
           </Grid>
         </Grid>
-      </Container>
+      </MainContainer>
     </div>
   )
 }

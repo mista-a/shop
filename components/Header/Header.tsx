@@ -5,8 +5,9 @@ import {
   Typography,
   Badge,
   useMediaQuery,
+  Modal,
 } from '@mui/material'
-import React from 'react'
+import React, { useState } from 'react'
 import styles from './Header.module.sass'
 import { ReactComponent as MenuIcon } from '../../assets/images/menu-icon.svg'
 import { ReactComponent as LikeIcon } from '../../assets/images/like-icon.svg'
@@ -18,7 +19,7 @@ import { Box } from '@mui/system'
 import styled from '@emotion/styled'
 import Link from '../UI/Link/Link'
 import MainContainer from '../MainContainer/MainContainer'
-import { useTheme } from '@emotion/react'
+import { Theme, useTheme } from '@emotion/react'
 
 const Header = () => {
   const HeaderButton = styled(Button)(({ theme }) => ({
@@ -33,15 +34,27 @@ const Header = () => {
     boxShadow: 'none',
     borderRadius: '15px',
   }))
+  const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    backgroundColor: 'white',
+  }
 
-  const theme = useTheme()
+  const [open, setOpen] = useState(false)
+  const handleOpen = () => setOpen(true)
+  const handleClose = () => setOpen(false)
+
+  const theme: Theme = useTheme()
   const menuBreakepoint = useMediaQuery(theme.breakpoints.down('tablet'))
+  const accountController = useMediaQuery(theme.breakpoints.down('tablet'))
 
   return (
     <AppBar position='sticky' className={styles.header}>
       <Toolbar>
         <MainContainer className={styles.container}>
-          {/* <Container className={styles.container} maxWidth='desktop'> */}
           <Link href={'/'}>
             <Typography className={styles.logo} variant='h4'>
               SHOP
@@ -61,26 +74,25 @@ const Header = () => {
               </Button>
             }
           />
-          <Box
-            className={styles.accountController}
-            sx={{
-              display: { desktop: 'flex', tablet: 'none', mobile: 'none' },
-            }}
-          >
-            <Button variant='text'>
-              <Typography>Log in</Typography>
-            </Button>
-            <Typography>|</Typography>
-            <Button>Create account</Button>
-          </Box>
-          <HeaderButton
-            className={styles.likeButton}
-            sx={{
-              display: { desktop: 'none', tablet: 'flex', mobile: 'flex' },
-            }}
-          >
-            <UserIcon />
-          </HeaderButton>
+          {!accountController && (
+            <Box className={styles.accountController}>
+              <Button variant='text' onClick={handleOpen}>
+                Log in
+              </Button>
+              <Typography>|</Typography>
+              <Button variant='text'>Create account</Button>
+            </Box>
+          )}
+          <Modal open={open} onClose={handleClose}>
+            <Box sx={style}>
+              <Typography>Когут лох</Typography>
+            </Box>
+          </Modal>
+          {accountController && (
+            <HeaderButton className={styles.likeButton}>
+              <UserIcon />
+            </HeaderButton>
+          )}
           <HeaderButton className={styles.likeButton}>
             <LikeIcon />
           </HeaderButton>
@@ -95,7 +107,6 @@ const Header = () => {
               </HeaderButton>
             </Badge>
           </Link>
-          {/* </Container> */}
         </MainContainer>
       </Toolbar>
     </AppBar>

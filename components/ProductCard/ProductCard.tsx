@@ -20,28 +20,20 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
   const [inFavorite, setInFavorite] = useState(false)
 
   return (
-    <Card>
-      <CardMedia
-        component='img'
-        height='580'
-        image={product.img}
-        alt='green iguana'
-      />
-    </Card>
-    /* <img className={styles.cardImg} src={product.img} alt={product.name} /> */
+    //  <img className={styles.cardImg} src={product.img} alt={product.name} />
 
-    /* <div className={styles.card}> */
-    // <div className={styles.imgWrapper}>
-
-    //   <button
-    //     className={styles.likeButton}
-    //     onClick={() => setInFavorite(!inFavorite)}
-    //   >
-    //     <LikeIcon />
-    //   </button>
-    // </div>
-    /* <Typography>{product.name}</Typography> */
-    /* <div className={styles.colors}>
+    <div className={styles.card}>
+      <div className={styles.imgWrapper}>
+        <img className={styles.cardImg} src={product.img} alt={product.name} />
+        <button
+          className={styles.likeButton}
+          onClick={() => setInFavorite(!inFavorite)}
+        >
+          <LikeIcon />
+        </button>
+      </div>
+      <Typography>{product.name}</Typography>{' '}
+      <div className={styles.colors}>
         {product.colors.map((color, index) => {
           return (
             <Link href={'/color'} key={index}>
@@ -55,8 +47,8 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
           )
         })}
       </div>
-      <Typography>$ {product.price}</Typography> */
-    // </div>
+      <Typography>$ {product.price}</Typography>
+    </div>
   )
 }
 

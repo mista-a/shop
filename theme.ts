@@ -96,5 +96,12 @@ export const theme = createTheme({
         },
       },
     },
+    MuiModal: {
+      styleOverrides: {
+        root: {
+          border: 'none'
+        }
+      }
+    }
   },
 })
