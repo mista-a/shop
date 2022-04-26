@@ -1,4 +1,3 @@
-import { Container } from '@mui/material'
 import React, { FC } from 'react'
 import Footer from '../components/Footer/Footer'
 import Header from '../components/Header/Header'
@@ -13,7 +12,7 @@ const MainLayout: FC = ({ children }) => {
         <Navigation />
         {children}
       </MainContainer>
-      <Footer />
+      {/* <Footer /> */}
     </>
   )
 }
