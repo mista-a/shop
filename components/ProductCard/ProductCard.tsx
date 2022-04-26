@@ -20,8 +20,6 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
   const [inFavorite, setInFavorite] = useState(false)
 
   return (
-    //  <img className={styles.cardImg} src={product.img} alt={product.name} />
-
     <div className={styles.card}>
       <div className={styles.imgWrapper}>
         <img className={styles.cardImg} src={product.img} alt={product.name} />

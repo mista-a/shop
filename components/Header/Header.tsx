@@ -6,6 +6,7 @@ import {
   Badge,
   useMediaQuery,
   Modal,
+  BadgeProps,
 } from '@mui/material'
 import React, { useState } from 'react'
 import styles from './Header.module.sass'
@@ -15,7 +16,7 @@ import { ReactComponent as CartIcon } from '../../assets/images/cart-icon.svg'
 import { ReactComponent as SearchIcon } from '../../assets/images/search-icon.svg'
 import { ReactComponent as UserIcon } from '../../assets/images/user-icon.svg'
 import Input from '../UI/Input'
-import { Box } from '@mui/system'
+import { Box, flexbox } from '@mui/system'
 import styled from '@emotion/styled'
 import Link from '../UI/Link/Link'
 import MainContainer from '../MainContainer/MainContainer'
@@ -33,6 +34,59 @@ const Header = () => {
     },
     boxShadow: 'none',
     borderRadius: '15px',
+    [theme.breakpoints.down('mobile')]: {
+      minHeight: '40px',
+      minWidth: '40px',
+      backgroundColor: 'inherit',
+    },
+  }))
+  const CartBadge = styled(Badge)<BadgeProps>(({ theme }) => ({
+    '& .MuiBadge-badge': {
+      right: 3,
+      top: 5,
+      minWidth: '25px',
+      minHeight: '25px',
+      borderRadius: '25px',
+      [theme.breakpoints.down(435)]: {
+        right: 5,
+        top: 5,
+      },
+      [theme.breakpoints.down('mobile')]: {
+        right: 15,
+        top: 13,
+        display: 'none',
+      },
+    },
+  }))
+  const LeftSide = styled('div')(({ theme }) => ({
+    display: 'flex',
+    columnGap: '30px',
+    alignItems: 'center',
+    [theme.breakpoints.down(680)]: {
+      display: 'flex',
+      columnGap: '10px',
+    },
+  }))
+  const RightSide = styled('div')(({ theme }) => ({
+    display: 'flex',
+    columnGap: '30px',
+    alignItems: 'center',
+    width: '100%',
+    justifyContent: 'flex-end',
+    [theme.breakpoints.down(680)]: {
+      columnGap: '10px',
+    },
+  }))
+  const CartButton = styled(HeaderButton)(({ theme }) => ({
+    padding: '0 15px',
+    [theme.breakpoints.down('mobile')]: {
+      padding: '0 0',
+    },
+  }))
+  const Logo = styled(Typography)(({ theme }) => ({
+    [theme.breakpoints.down('mobile')]: {
+      fontSize: '30px',
+    },
   }))
   const style = {
     position: 'absolute',
@@ -43,70 +97,124 @@ const Header = () => {
     backgroundColor: 'white',
   }
 
+  const theme: Theme = useTheme()
+  const menuBreakepoint = useMediaQuery(theme.breakpoints.down('tablet'))
+  const accountControllerBreakepoint = useMediaQuery(
+    theme.breakpoints.down('tablet'),
+  )
+  const logoBreakepoint = useMediaQuery(theme.breakpoints.down(585))
+  const cartPriceBreakepoint = useMediaQuery(theme.breakpoints.down(490))
+  const searchBreakepoint = useMediaQuery(theme.breakpoints.down(720))
+
   const [open, setOpen] = useState(false)
+  const [showFullSearch, setshowFullSearch] = useState(false)
+
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
 
-  const theme: Theme = useTheme()
-  const menuBreakepoint = useMediaQuery(theme.breakpoints.down('tablet'))
-  const accountController = useMediaQuery(theme.breakpoints.down('tablet'))
+  const switchShowFullSearch = () => {
+    setshowFullSearch(!showFullSearch)
+  }
 
   return (
     <AppBar position='sticky' className={styles.header}>
       <Toolbar>
         <MainContainer className={styles.container}>
-          <Link href={'/'}>
-            <Typography className={styles.logo} variant='h4'>
-              SHOP
-            </Typography>
-          </Link>
-          {menuBreakepoint && (
-            <HeaderButton>
-              <MenuIcon />
-            </HeaderButton>
+          {showFullSearch ? (
+            showFullSearch &&
+            searchBreakepoint && (
+              <Input
+                className={styles.search}
+                placeholder='Search'
+                startAdornment={
+                  <Button
+                    disableRipple
+                    className={styles.searchButton}
+                    onClick={switchShowFullSearch}
+                  >
+                    x
+                  </Button>
+                }
+                endAdornment={
+                  <Button disableRipple className={styles.searchButton}>
+                    <SearchIcon />
+                  </Button>
+                }
+              />
+            )
+          ) : (
+            <>
+              <LeftSide>
+                {menuBreakepoint && (
+                  <HeaderButton>
+                    <MenuIcon />
+                  </HeaderButton>
+                )}
+                {logoBreakepoint ? (
+                  <Link href={'/'}>
+                    <Logo variant='h4'>S</Logo>
+                  </Link>
+                ) : (
+                  <Link href={'/'}>
+                    <Logo variant='h4'>SHOP</Logo>
+                  </Link>
+                )}
+              </LeftSide>
+              <RightSide>
+                {!searchBreakepoint && (
+                  <Input
+                    className={styles.search}
+                    placeholder='Search'
+                    endAdornment={
+                      <Button disableRipple className={styles.searchButton}>
+                        <SearchIcon />
+                      </Button>
+                    }
+                  />
+                )}
+                {!showFullSearch && searchBreakepoint && (
+                  <HeaderButton onClick={switchShowFullSearch}>
+                    <SearchIcon />
+                  </HeaderButton>
+                )}
+                {!accountControllerBreakepoint && (
+                  <Box className={styles.accountController}>
+                    <Button variant='text' onClick={handleOpen}>
+                      <Typography>Log in</Typography>
+                    </Button>
+                    <Typography>|</Typography>
+                    <Button variant='text'>
+                      <Typography>Create account</Typography>
+                    </Button>
+                  </Box>
+                )}
+                <Modal open={open} onClose={handleClose}>
+                  <Box sx={style}>
+                    <Typography>Когут лох</Typography>
+                  </Box>
+                </Modal>
+                {accountControllerBreakepoint && (
+                  <HeaderButton className={styles.likeButton}>
+                    <UserIcon />
+                  </HeaderButton>
+                )}
+                <HeaderButton className={styles.likeButton}>
+                  <LikeIcon />
+                </HeaderButton>
+                <Link href={'/cart'}>
+                  <CartBadge badgeContent={10} color='info'>
+                    <CartButton
+                      variant='contained'
+                      className={styles.cartButton}
+                    >
+                      <CartIcon />
+                      {!cartPriceBreakepoint && <Typography>15.33$</Typography>}
+                    </CartButton>
+                  </CartBadge>
+                </Link>
+              </RightSide>
+            </>
           )}
-          <Input
-            className={styles.search}
-            placeholder='Search'
-            endAdornment={
-              <Button disableRipple className={styles.searchButton}>
-                <SearchIcon />
-              </Button>
-            }
-          />
-          {!accountController && (
-            <Box className={styles.accountController}>
-              <Button variant='text' onClick={handleOpen}>
-                Log in
-              </Button>
-              <Typography>|</Typography>
-              <Button variant='text'>Create account</Button>
-            </Box>
-          )}
-          <Modal open={open} onClose={handleClose}>
-            <Box sx={style}>
-              <Typography>Когут лох</Typography>
-            </Box>
-          </Modal>
-          {accountController && (
-            <HeaderButton className={styles.likeButton}>
-              <UserIcon />
-            </HeaderButton>
-          )}
-          <HeaderButton className={styles.likeButton}>
-            <LikeIcon />
-          </HeaderButton>
-          <Link href={'/cart'}>
-            <Badge badgeContent={10} color='info'>
-              <HeaderButton
-                variant='contained'
-                startIcon={<CartIcon />}
-                className={styles.cartButton}
-              >
-                <Typography className={styles.cartText}>15.33$</Typography>
-              </HeaderButton>
-            </Badge>
-          </Link>
         </MainContainer>
       </Toolbar>
     </AppBar>

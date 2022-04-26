@@ -46,6 +46,7 @@ export const theme = createTheme({
       styleOverrides: {
         root: {
           height: '94px',
+          padding: '0',
         },
       },
     },
@@ -85,23 +86,12 @@ export const theme = createTheme({
         },
       },
     },
-    MuiBadge: {
-      styleOverrides: {
-        badge: {
-          right: 3,
-          top: 5,
-          minWidth: '25px',
-          minHeight: '25px',
-          borderRadius: '25px',
-        },
-      },
-    },
     MuiModal: {
       styleOverrides: {
         root: {
-          border: 'none'
-        }
-      }
-    }
+          border: 'none',
+        },
+      },
+    },
   },
 })

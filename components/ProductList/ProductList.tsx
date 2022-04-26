@@ -1,10 +1,22 @@
 import React, { FC } from 'react'
 import ProductCard from '../ProductCard/ProductCard'
 import cardImg from '../../assets/images/card-img.png'
-import { Grid } from '@mui/material'
 import styles from './ProductList.module.sass'
+import styled from '@emotion/styled'
 
 const ProductList: FC = () => {
+  const ProductListGrid = styled('div')(({ theme }) => ({
+    display: 'grid',
+    gridTemplateColumns: 'repeat(4, 1fr)',
+    gap: '30px',
+    [theme.breakpoints.down('tablet')]: {
+      gridTemplateColumns: 'repeat(3, 1fr)',
+    },
+    [theme.breakpoints.down('mobile')]: {
+      gridTemplateColumns: 'repeat(2, 1fr)',
+    },
+  }))
+
   const products = [
     {
       id: 1,
@@ -93,20 +105,11 @@ const ProductList: FC = () => {
   ]
 
   return (
-    <Grid
-      className={styles.productList}
-      container
-      spacing={3}
-      justifyContent='center'
-    >
+    <ProductListGrid>
       {products.map((product) => {
-        return (
-          <Grid item key={product.id} xs={3}>
-            <ProductCard product={product} />
-          </Grid>
-        )
+        return <ProductCard product={product} key={product.id} />
       })}
-    </Grid>
+    </ProductListGrid>
   )
 }
 
