@@ -7,6 +7,7 @@ import {
   useMediaQuery,
   Modal,
   BadgeProps,
+  Drawer,
 } from '@mui/material'
 import React, { useState } from 'react'
 import styles from './Header.module.sass'
@@ -88,6 +89,9 @@ const Header = () => {
       fontSize: '30px',
     },
   }))
+  const Menu = styled(Drawer)(({ theme }) => ({
+    '& .MuiDrawer-paper': { maxWidth: '30%', width: '100%', display: 'flex' },
+  }))
   const style = {
     position: 'absolute',
     top: '50%',
@@ -100,7 +104,7 @@ const Header = () => {
   const theme: Theme = useTheme()
   const menuBreakepoint = useMediaQuery(theme.breakpoints.down('tablet'))
   const accountControllerBreakepoint = useMediaQuery(
-    theme.breakpoints.down('tablet'),
+    theme.breakpoints.down('tablet')
   )
   const logoBreakepoint = useMediaQuery(theme.breakpoints.down(585))
   const cartPriceBreakepoint = useMediaQuery(theme.breakpoints.down(490))
@@ -108,6 +112,7 @@ const Header = () => {
 
   const [open, setOpen] = useState(false)
   const [showFullSearch, setshowFullSearch] = useState(false)
+  const [openMenu, setOpenMenu] = useState(false)
 
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
@@ -115,6 +120,8 @@ const Header = () => {
   const switchShowFullSearch = () => {
     setshowFullSearch(!showFullSearch)
   }
+
+  const toggleMenu = () => setOpenMenu(!openMenu)
 
   return (
     <AppBar position='sticky' className={styles.header}>
@@ -143,9 +150,14 @@ const Header = () => {
             <>
               <LeftSide>
                 {menuBreakepoint && (
-                  <HeaderButton>
-                    <MenuIcon />
-                  </HeaderButton>
+                  <>
+                    <Menu anchor='left' open={openMenu} onClose={toggleMenu}>
+                      triehjierkjhthtjklhteg
+                    </Menu>
+                    <HeaderButton onClick={toggleMenu} sx={{ maxWidth: '30%' }}>
+                      <MenuIcon />
+                    </HeaderButton>
+                  </>
                 )}
                 {logoBreakepoint ? (
                   <Link href={'/'}>
