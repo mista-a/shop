@@ -12,6 +12,31 @@ const Footer: FC = () => {
   const WhiteTypography = styled(Typography)(({ theme }) => ({
     color: 'white',
   }))
+  const Resources = styled(Grid)(({ theme }) => ({
+    display: 'flex',
+    textAlign: 'right',
+    alignItems: 'flex-end',
+    flexDirection: 'column',
+    [theme.breakpoints.down('tablet')]: {
+      alignItems: 'flex-start',
+    },
+  }))
+
+  const ResourcesLinks = styled('div')(({ theme }) => ({
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '5px',
+    alignItems: 'flex-end',
+    textDecoration: 'underline',
+    textDecorationColor: 'white',
+    fontWeight: '300',
+    fontSize: '20px',
+    lineHeight: '23px',
+    [theme.breakpoints.down('tablet')]: {
+      alignItems: 'flex-start',
+    },
+  }))
+
   return (
     <div className={styles.footer}>
       <MainContainer>
@@ -40,9 +65,9 @@ const Footer: FC = () => {
               </div>
             </div>
           </Grid>
-          <Grid className={styles.resources} item xs={2}>
+          <Resources item xs={2}>
             <WhiteTypography variant='h5'>Resources</WhiteTypography>
-            <div className={styles.resourcesLinks}>
+            <ResourcesLinks>
               <Link
                 href={'/terms-and-conditions'}
                 classLink={styles.resourceLink}
@@ -63,8 +88,8 @@ const Footer: FC = () => {
               <Link href={'/contact-us'} classLink={styles.resourceLink}>
                 <WhiteTypography>Contact Us</WhiteTypography>
               </Link>
-            </div>
-          </Grid>
+            </ResourcesLinks>
+          </Resources>
         </Grid>
       </MainContainer>
     </div>

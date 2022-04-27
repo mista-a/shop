@@ -12,7 +12,7 @@ const MainLayout: FC = ({ children }) => {
         <Navigation />
         {children}
       </MainContainer>
-      {/* <Footer /> */}
+      <Footer />
     </>
   )
 }
