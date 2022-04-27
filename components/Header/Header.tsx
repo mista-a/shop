@@ -120,28 +120,25 @@ const Header = () => {
     <AppBar position='sticky' className={styles.header}>
       <Toolbar>
         <MainContainer className={styles.container}>
-          {showFullSearch ? (
-            showFullSearch &&
-            searchBreakepoint && (
-              <Input
-                className={styles.search}
-                placeholder='Search'
-                startAdornment={
-                  <Button
-                    disableRipple
-                    className={styles.searchButton}
-                    onClick={switchShowFullSearch}
-                  >
-                    x
-                  </Button>
-                }
-                endAdornment={
-                  <Button disableRipple className={styles.searchButton}>
-                    <SearchIcon />
-                  </Button>
-                }
-              />
-            )
+          {showFullSearch && searchBreakepoint ? (
+            <Input
+              className={styles.search}
+              placeholder='Search'
+              startAdornment={
+                <Button
+                  disableRipple
+                  className={styles.searchButton}
+                  onClick={switchShowFullSearch}
+                >
+                  x
+                </Button>
+              }
+              endAdornment={
+                <Button disableRipple className={styles.searchButton}>
+                  <SearchIcon />
+                </Button>
+              }
+            />
           ) : (
             <>
               <LeftSide>
