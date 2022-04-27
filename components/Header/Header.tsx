@@ -59,6 +59,18 @@ const Header = () => {
       },
     },
   }))
+  const CartButton = styled(HeaderButton)(({ theme }) => ({
+    padding: '0 15px',
+    columnGap: '5px',
+    [theme.breakpoints.down('mobile')]: {
+      padding: '0 0',
+    },
+  }))
+  const Logo = styled(Typography)(({ theme }) => ({
+    [theme.breakpoints.down('mobile')]: {
+      fontSize: '30px',
+    },
+  }))
   const LeftSide = styled('div')(({ theme }) => ({
     display: 'flex',
     columnGap: '30px',
@@ -78,20 +90,7 @@ const Header = () => {
       columnGap: '10px',
     },
   }))
-  const CartButton = styled(HeaderButton)(({ theme }) => ({
-    padding: '0 15px',
-    [theme.breakpoints.down('mobile')]: {
-      padding: '0 0',
-    },
-  }))
-  const Logo = styled(Typography)(({ theme }) => ({
-    [theme.breakpoints.down('mobile')]: {
-      fontSize: '30px',
-    },
-  }))
-  const Menu = styled(Drawer)(({ theme }) => ({
-    '& .MuiDrawer-paper': { maxWidth: '30%', width: '100%', display: 'flex' },
-  }))
+  const Menu = styled(Drawer)(({ theme }) => ({}))
   const style = {
     position: 'absolute',
     top: '50%',
@@ -148,13 +147,19 @@ const Header = () => {
             />
           ) : (
             <>
+              <Drawer
+                anchor='left'
+                open={openMenu}
+                onClose={() => setOpenMenu(false)}
+              >
+                <Box width='250px' role='presentation'>
+                  setOpenMenu(false)
+                </Box>
+              </Drawer>
               <LeftSide>
                 {menuBreakepoint && (
                   <>
-                    <Menu anchor='left' open={openMenu} onClose={toggleMenu}>
-                      triehjierkjhthtjklhteg
-                    </Menu>
-                    <HeaderButton onClick={toggleMenu} sx={{ maxWidth: '30%' }}>
+                    <HeaderButton onClick={() => setOpenMenu(true)}>
                       <MenuIcon />
                     </HeaderButton>
                   </>
@@ -203,7 +208,7 @@ const Header = () => {
                   </Box>
                 </Modal>
                 {accountControllerBreakepoint && (
-                  <HeaderButton className={styles.likeButton}>
+                  <HeaderButton>
                     <UserIcon />
                   </HeaderButton>
                 )}
