@@ -56,13 +56,12 @@ export const theme = createTheme({
       },
       styleOverrides: {
         root: {
-          backgroundColor: 'inherit',
           padding: '0',
           color: 'black',
           textTransform: 'none',
           disableRipple: 'true',
           '&:hover': {
-            backgroundColor: 'inherit',
+            backgroundColor: 'transparent',
             boxShadow: 'none',
           },
         },
