@@ -4,14 +4,7 @@ import React, { FC, useState } from 'react'
 import cardImg from '../../assets/images/card-img.png'
 import styles from './Product.module.sass'
 import { ReactComponent as LikeIcon } from '../../assets/images/like-icon.svg'
-
-interface IProduct {
-  id: number
-  img: string
-  name: string
-  colors: string[]
-  price: number
-}
+import { IProduct } from '../../types/product'
 
 interface ProductCardProps {
   product: IProduct
