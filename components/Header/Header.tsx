@@ -103,7 +103,7 @@ const Header = () => {
   const theme: Theme = useTheme()
   const menuBreakepoint = useMediaQuery(theme.breakpoints.down('tablet'))
   const accountControllerBreakepoint = useMediaQuery(
-    theme.breakpoints.down('tablet'),
+    theme.breakpoints.down('tablet')
   )
   const logoBreakepoint = useMediaQuery(theme.breakpoints.down(585))
   const cartPriceBreakepoint = useMediaQuery(theme.breakpoints.down(490))
@@ -112,8 +112,16 @@ const Header = () => {
   const [authDialog, setAuthDialog] = useState(false)
   const [showFullSearch, setshowFullSearch] = useState(false)
   const [openMenu, setOpenMenu] = useState(false)
+  const [dialogMenu, setDialogMenu] = useState(false)
 
-  const openAuthDialog = () => setAuthDialog(true)
+  const openSignInAuthDialog = () => {
+    setAuthDialog(true)
+    setDialogMenu(false)
+  }
+  const openSignUpAuthDialog = () => {
+    setAuthDialog(true)
+    setDialogMenu(true)
+  }
   const closeAuthDialog = () => setAuthDialog(false)
 
   const switchShowFullSearch = () => {
@@ -193,11 +201,11 @@ const Header = () => {
                 )}
                 {!accountControllerBreakepoint && (
                   <Box className={styles.accountController}>
-                    <Button variant='text' onClick={openAuthDialog}>
+                    <Button variant='text' onClick={openSignInAuthDialog}>
                       <Typography>Log in</Typography>
                     </Button>
                     <Typography>|</Typography>
-                    <Button variant='text'>
+                    <Button variant='text' onClick={openSignUpAuthDialog}>
                       <Typography>Create account</Typography>
                     </Button>
                   </Box>
@@ -222,7 +230,12 @@ const Header = () => {
                   </CartBadge>
                 </Link>
               </RightSide>
-              <AuthDialog onClose={closeAuthDialog} open={authDialog} />
+              <AuthDialog
+                onClose={closeAuthDialog}
+                open={authDialog}
+                buttonChecked={dialogMenu}
+                toggleButton={() => setDialogMenu(!dialogMenu)}
+              />
             </>
           )}
         </MainContainer>

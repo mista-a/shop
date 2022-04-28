@@ -6,15 +6,16 @@ import AuthSwitcher from '../AuthSwitcher/AuthSwitcher'
 interface AuthDialogProps {
   onClose: () => void
   open: boolean
+  buttonChecked: boolean
+  toggleButton: () => void
 }
 
-const AuthDialog: FC<AuthDialogProps> = ({ onClose, open }) => {
-  const [buttonChecked, setButtonChecked] = useState(false)
-
-  const toggleButton = () => {
-    setButtonChecked(!buttonChecked)
-  }
-
+const AuthDialog: FC<AuthDialogProps> = ({
+  onClose,
+  open,
+  buttonChecked,
+  toggleButton,
+}) => {
   return (
     <Dialog open={open} onClose={onClose}>
       <DialogContent>
@@ -23,7 +24,7 @@ const AuthDialog: FC<AuthDialogProps> = ({ onClose, open }) => {
             buttonChecked={buttonChecked}
             toggleButton={toggleButton}
           />
-          {buttonChecked ? <div>reg</div> : <div>login</div>}
+          {buttonChecked ? <div>Когут лошара reg</div> : <div>login</div>}
         </DialogContentText>
       </DialogContent>
     </Dialog>
