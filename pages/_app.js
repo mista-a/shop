@@ -2,13 +2,14 @@ import { ThemeProvider } from '@mui/system'
 import { theme } from '../theme'
 import '../global.sass'
 import { Container } from '@mui/material'
+import MainLayout from '../layouts/MainLayout'
 
 function MyApp({ Component, pageProps }) {
   return (
     <ThemeProvider theme={theme}>
-      <Container>
+      <MainLayout>
         <Component {...pageProps} />
-      </Container>
+      </MainLayout>
     </ThemeProvider>
   )
 }
