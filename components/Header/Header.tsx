@@ -5,7 +5,6 @@ import {
   Typography,
   Badge,
   useMediaQuery,
-  Modal,
   BadgeProps,
   Drawer,
 } from '@mui/material'
@@ -22,6 +21,7 @@ import styled from '@emotion/styled'
 import Link from '../UI/Link/Link'
 import MainContainer from '../MainContainer/MainContainer'
 import { Theme, useTheme } from '@emotion/react'
+import AuthDialog from '../AuthDialog/AuthDialog'
 
 const Header = () => {
   const HeaderButton = styled(Button)(({ theme }) => ({
@@ -103,18 +103,18 @@ const Header = () => {
   const theme: Theme = useTheme()
   const menuBreakepoint = useMediaQuery(theme.breakpoints.down('tablet'))
   const accountControllerBreakepoint = useMediaQuery(
-    theme.breakpoints.down('tablet')
+    theme.breakpoints.down('tablet'),
   )
   const logoBreakepoint = useMediaQuery(theme.breakpoints.down(585))
   const cartPriceBreakepoint = useMediaQuery(theme.breakpoints.down(490))
   const searchBreakepoint = useMediaQuery(theme.breakpoints.down(720))
 
-  const [open, setOpen] = useState(false)
+  const [authDialog, setAuthDialog] = useState(false)
   const [showFullSearch, setshowFullSearch] = useState(false)
   const [openMenu, setOpenMenu] = useState(false)
 
-  const handleOpen = () => setOpen(true)
-  const handleClose = () => setOpen(false)
+  const openAuthDialog = () => setAuthDialog(true)
+  const closeAuthDialog = () => setAuthDialog(false)
 
   const switchShowFullSearch = () => {
     setshowFullSearch(!showFullSearch)
@@ -193,7 +193,7 @@ const Header = () => {
                 )}
                 {!accountControllerBreakepoint && (
                   <Box className={styles.accountController}>
-                    <Button variant='text' onClick={handleOpen}>
+                    <Button variant='text' onClick={openAuthDialog}>
                       <Typography>Log in</Typography>
                     </Button>
                     <Typography>|</Typography>
@@ -202,11 +202,6 @@ const Header = () => {
                     </Button>
                   </Box>
                 )}
-                <Modal open={open} onClose={handleClose}>
-                  <Box sx={style}>
-                    <Typography>Когут лох</Typography>
-                  </Box>
-                </Modal>
                 {accountControllerBreakepoint && (
                   <HeaderButton>
                     <UserIcon />
@@ -227,6 +222,7 @@ const Header = () => {
                   </CartBadge>
                 </Link>
               </RightSide>
+              <AuthDialog onClose={closeAuthDialog} open={authDialog} />
             </>
           )}
         </MainContainer>
