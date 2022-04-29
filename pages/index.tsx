@@ -1,6 +1,5 @@
 import { Container, Typography } from '@mui/material'
 import React from 'react'
-import MainLayout from '../layouts/MainLayout'
 import carouselImg from '../assets/images/carousel-img.png'
 import styles from './HomePage.module.sass'
 import Carousel from '../components/Carousel/Carousel'
@@ -27,7 +26,7 @@ const HomePage = () => {
   ]
 
   return (
-    <MainLayout>
+    <>
       <Carousel>
         {carouselData.map((carouselItem, index) => {
           return (
@@ -57,7 +56,7 @@ const HomePage = () => {
         Most popular
       </Typography>
       <ProductList />
-    </MainLayout>
+    </>
   )
 }
 
