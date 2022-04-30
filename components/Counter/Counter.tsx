@@ -1,4 +1,3 @@
-import { Button } from '@mui/material'
 import React, { useState } from 'react'
 import styles from './Counter.module.sass'
 
@@ -17,27 +16,14 @@ const Counter = () => {
   return (
     <div className={styles.counter}>
       <button
-        style={{
-          border: 'none',
-          background: 'none',
-          cursor: 'pointer',
-          padding: 0,
-        }}
-        onClick={increment}
-      >
-        +
-      </button>
-      <span>{counter}</span>
-      <button
-        style={{
-          border: 'none',
-          background: 'none',
-          cursor: 'pointer',
-          padding: 0,
-        }}
+        className={`${styles.counterButton} ${styles.decrement}`}
         onClick={decrement}
       >
         -
+      </button>
+      <span className={styles.value}>{counter}</span>
+      <button className={styles.counterButton} onClick={increment}>
+        +
       </button>
     </div>
   )
