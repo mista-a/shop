@@ -14,12 +14,13 @@ const app_service_1 = require("./app.service");
 const user_entity_1 = require("./user/entities/user.entity");
 const user_module_1 = require("./user/user.module");
 const product_module_1 = require("./product/product.module");
+const product_entity_1 = require("./product/entities/product.entity");
+const comment_module_1 = require("./comment/comment.module");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
     (0, common_1.Module)({
         imports: [
-            user_module_1.UserModule,
             typeorm_1.TypeOrmModule.forRoot({
                 type: 'postgres',
                 host: 'localhost',
@@ -27,10 +28,12 @@ AppModule = __decorate([
                 username: 'postgres',
                 password: 'ppassword',
                 database: 'shop',
-                entities: [user_entity_1.UserEntity],
+                entities: [user_entity_1.UserEntity, product_entity_1.ProductEntity],
                 synchronize: true,
             }),
+            user_module_1.UserModule,
             product_module_1.ProductModule,
+            comment_module_1.CommentModule,
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],

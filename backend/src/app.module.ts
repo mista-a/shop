@@ -5,10 +5,11 @@ import { AppService } from './app.service';
 import { UserEntity } from './user/entities/user.entity';
 import { UserModule } from './user/user.module';
 import { ProductModule } from './product/product.module';
+import { ProductEntity } from './product/entities/product.entity';
+import { CommentModule } from './comment/comment.module';
 
 @Module({
   imports: [
-    UserModule,
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: 'localhost',
@@ -16,10 +17,12 @@ import { ProductModule } from './product/product.module';
       username: 'postgres',
       password: 'ppassword',
       database: 'shop',
-      entities: [UserEntity],
+      entities: [UserEntity, ProductEntity],
       synchronize: true,
     }),
+    UserModule,
     ProductModule,
+    CommentModule,
   ],
   controllers: [AppController],
   providers: [AppService],

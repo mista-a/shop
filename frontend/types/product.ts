@@ -6,5 +6,5 @@ export interface IProduct {
   colors: string[]
   rating: number
   sizes: number[]
-  description: ''
+  description: string
 }

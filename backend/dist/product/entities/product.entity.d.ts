@@ -1,2 +1,6 @@
-export declare class Product {
+export declare class ProductEntity {
+    id: number;
+    name: string;
+    img: string;
+    description: string;
 }
