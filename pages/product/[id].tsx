@@ -14,6 +14,7 @@ import { IProduct } from '../../types/product'
 import { Box, width } from '@mui/system'
 import Counter from '../../components/Counter/Counter'
 import TextButton from '../../components/UI/TextButton'
+import AboutProduct from '../../components/AboutProduct/AboutProduct'
 
 const ProductPage = () => {
   const product = {
@@ -76,6 +77,7 @@ const ProductPage = () => {
             Add to cart
           </TextButton>
         </Box>
+        <AboutProduct></AboutProduct>
       </div>
     </div>
   )
