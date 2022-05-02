@@ -16,7 +16,7 @@ import { CommentModule } from './comment/comment.module';
       port: 5432,
       username: 'postgres',
       password: 'ppassword',
-      database: 'shop',
+      database: 'postgres',
       entities: [UserEntity, ProductEntity],
       synchronize: true,
     }),

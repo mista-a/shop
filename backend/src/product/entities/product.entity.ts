@@ -11,11 +11,17 @@ export class ProductEntity {
   @Column()
   img: string;
 
-  // @Column()
-  // colors: string[];
+  @Column({ default: 0 })
+  views: number;
 
-  // @Column()
-  // sizes: string[];
+  @Column({ default: 0 })
+  price: number;
+
+  @Column('text', { array: true, default: [] })
+  colors: string[];
+
+  @Column('text', { array: true, default: [] })
+  sizes: string[];
 
   @Column()
   description: string;
