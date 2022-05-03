@@ -54,11 +54,11 @@ export class ProductService {
     }
 
     if (dto.colors) {
-      qb.where(`products.colors ILIKE text (array :colors) `);
+      qb.where(`:colors = ANY(products.colors)`);
     }
 
     if (dto.sizes) {
-      qb.where(`products.sizes ILIKE %${dto.sizes}`);
+      qb.where(`:size =  ANY(products.sizes)`);
     }
 
     if (dto.type) {
@@ -68,6 +68,7 @@ export class ProductService {
     qb.setParameter('name', `%${dto.name}%`);
     qb.setParameter('price', `%${dto.price}%`);
     qb.setParameter('colors', `${dto.colors}`);
+    qb.setParameter('size', `${dto.sizes}`);
 
     const [products, total] = await qb.getManyAndCount();
 
