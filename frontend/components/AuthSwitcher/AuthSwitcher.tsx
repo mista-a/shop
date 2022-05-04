@@ -12,25 +12,27 @@ const AuthSwitecher: FC<AuthSwitecherProps> = ({
   toggleButton,
 }) => {
   return (
-    <label className={styles.input}>
-      <div className={styles.switcher}>
-        <div className={styles.switcherTextContainer}>
-          <Typography className={styles.switcherText}>Sign in</Typography>
-          <Typography className={styles.switcherText}>Sign up</Typography>
+    <div className={styles.switcherWrapper}>
+      <label className={styles.label}>
+        <div className={styles.switcher}>
+          <div className={styles.switcherTextContainer}>
+            <Typography className={styles.switcherText}>Sign in</Typography>
+            <Typography className={styles.switcherText}>Sign up</Typography>
+          </div>
+          <div
+            className={`${styles.button} ${
+              buttonChecked ? styles.buttonChecked : ''
+            }`}
+          ></div>
+          <input
+            className={styles.input}
+            type='checkbox'
+            onChange={toggleButton}
+            checked={buttonChecked}
+          />
         </div>
-        <div
-          className={`${styles.button} ${
-            buttonChecked ? styles.buttonChecked : ''
-          }`}
-        ></div>
-        <input
-          className={styles.input}
-          type='checkbox'
-          onChange={toggleButton}
-          checked={buttonChecked}
-        />
-      </div>
-    </label>
+      </label>
+    </div>
   )
 }
 

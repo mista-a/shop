@@ -45,8 +45,8 @@ const Header = () => {
     '& .MuiBadge-badge': {
       right: 3,
       top: 5,
-      minWidth: '25px',
-      minHeight: '25px',
+      minWidth: '29px',
+      minHeight: '29px',
       borderRadius: '25px',
       [theme.breakpoints.down(435)]: {
         right: 5,
@@ -103,7 +103,7 @@ const Header = () => {
   const theme: Theme = useTheme()
   const menuBreakepoint = useMediaQuery(theme.breakpoints.down('tablet'))
   const accountControllerBreakepoint = useMediaQuery(
-    theme.breakpoints.down('tablet')
+    theme.breakpoints.down('tablet'),
   )
   const logoBreakepoint = useMediaQuery(theme.breakpoints.down(585))
   const cartPriceBreakepoint = useMediaQuery(theme.breakpoints.down(490))

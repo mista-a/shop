@@ -1,7 +1,9 @@
-import styled from '@emotion/styled'
 import { Dialog, DialogContent, DialogContentText } from '@mui/material'
 import React, { FC, useState } from 'react'
 import AuthSwitcher from '../AuthSwitcher/AuthSwitcher'
+import Login from './Login/Login'
+import Registration from './Registration/Registration'
+import styles from './AuthDialog.module.sass'
 
 interface AuthDialogProps {
   onClose: () => void
@@ -24,7 +26,9 @@ const AuthDialog: FC<AuthDialogProps> = ({
             buttonChecked={buttonChecked}
             toggleButton={toggleButton}
           />
-          {buttonChecked ? <div>Когут лошара reg</div> : <div>login</div>}
+          <div className={styles.form}>
+            {buttonChecked ? <Registration /> : <Login />}
+          </div>
         </DialogContentText>
       </DialogContent>
     </Dialog>
