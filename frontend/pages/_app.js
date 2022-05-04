@@ -1,8 +1,9 @@
 import { ThemeProvider } from '@mui/system'
 import { theme } from '../theme'
 import '../global.sass'
-import { Container } from '@mui/material'
 import MainLayout from '../layouts/MainLayout'
+import { Provider } from 'react-redux'
+import { store, wrapper } from '../redux/store'
 
 function MyApp({ Component, pageProps }) {
   return (
@@ -14,4 +15,4 @@ function MyApp({ Component, pageProps }) {
   )
 }
 
-export default MyApp
+export default wrapper.withRedux(MyApp)

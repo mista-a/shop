@@ -22,6 +22,9 @@ import Link from '../UI/Link/Link'
 import MainContainer from '../MainContainer/MainContainer'
 import { Theme, useTheme } from '@emotion/react'
 import AuthDialog from '../AuthDialog/AuthDialog'
+import { useAppSelector } from '../../redux/hooks'
+import { useAppDispatch } from '../../redux/hooks'
+import { setUserData, selectUserData } from '../../redux/slices/user'
 
 const Header = () => {
   const HeaderButton = styled(Button)(({ theme }) => ({
@@ -114,6 +117,8 @@ const Header = () => {
   const [openMenu, setOpenMenu] = useState(false)
   const [dialogMenu, setDialogMenu] = useState(false)
 
+  const userData = useAppSelector(selectUserData)
+
   const openSignInAuthDialog = () => {
     setAuthDialog(true)
     setDialogMenu(false)
@@ -129,6 +134,12 @@ const Header = () => {
   }
 
   const toggleMenu = () => setOpenMenu(!openMenu)
+
+  const dispatch = useAppDispatch()
+
+  const logout = () => {
+    dispatch(setUserData(null))
+  }
 
   return (
     <AppBar position='sticky' className={styles.header}>
@@ -199,7 +210,15 @@ const Header = () => {
                     <SearchIcon />
                   </HeaderButton>
                 )}
-                {!accountControllerBreakepoint && (
+                {userData ? (
+                  <Button variant='outlined' onClick={logout}>
+                    Logout
+                  </Button>
+                ) : accountControllerBreakepoint ? (
+                  <HeaderButton>
+                    <UserIcon />
+                  </HeaderButton>
+                ) : (
                   <Box className={styles.accountController}>
                     <Button variant='text' onClick={openSignInAuthDialog}>
                       <Typography>Log in</Typography>
@@ -209,11 +228,6 @@ const Header = () => {
                       <Typography>Create account</Typography>
                     </Button>
                   </Box>
-                )}
-                {accountControllerBreakepoint && (
-                  <HeaderButton>
-                    <UserIcon />
-                  </HeaderButton>
                 )}
                 <HeaderButton className={styles.likeButton}>
                   <LikeIcon />

@@ -1,4 +1,4 @@
-import { Alert, Button, TextField } from '@mui/material'
+import { Alert } from '@mui/material'
 import React, { useState } from 'react'
 import styles from './Login.module.sass'
 import TextButton from '../../UI/TextButton'
@@ -9,9 +9,13 @@ import FormField from '../../FormField/FormField'
 import { LoginDto } from '../../../api/types'
 import { UserApi } from '../../../api/api'
 import { setCookie } from 'nookies'
+import { useAppDispatch } from '../../../redux/hooks'
+import { setUserData } from '../../../redux/slices/user'
 
 const Login = () => {
   const [errorMessage, setErrorMessage] = useState('')
+
+  const dispatch = useAppDispatch()
 
   const form = useForm({
     mode: 'onChange',
@@ -26,6 +30,7 @@ const Login = () => {
         parh: '/',
       })
       setErrorMessage('')
+      dispatch(setUserData(data))
     } catch (err) {
       console.warn('Register error', err)
       if (err.response) {
