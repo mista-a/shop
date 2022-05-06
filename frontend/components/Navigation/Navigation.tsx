@@ -1,6 +1,5 @@
-import { useTheme } from '@emotion/react'
-import { useMediaQuery } from '@mui/material'
-import { Box } from '@mui/system'
+import { Theme, useMediaQuery, useTheme } from '@mui/material'
+import { Box } from '@mui/material'
 import Link from 'next/link'
 import React from 'react'
 import { ReactComponent as ArrowIcon } from '../../assets/images/arrow-icon.svg'
@@ -16,7 +15,7 @@ const Navigation: React.FC = () => {
     Kids: ['Shoes', 'Costumes', 'Activewear'],
   }
 
-  const theme = useTheme()
+  const theme: Theme = useTheme()
   const navigationBreakepoint = useMediaQuery(theme.breakpoints.up('tablet'))
 
   return (

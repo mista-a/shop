@@ -5,8 +5,8 @@ import FormField from '../../FormField/FormField'
 import { RegisterFormSchema } from '../../../utils/validations'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { setCookie } from 'nookies'
-import { UserApi } from '../../../api/api'
-import { CreateUserDto } from '../../../api/types'
+import { UserApi } from '../../../API/API'
+import { CreateUserDto } from '../../../API/types'
 import { Alert } from '@mui/material'
 
 const Registration = () => {

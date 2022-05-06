@@ -17,7 +17,7 @@ import { AuthModule } from './auth/auth.module';
       port: 5432,
       username: 'postgres',
       password: 'ppassword',
-      database: 'postgres',
+      database: 'shop',
       entities: [UserEntity, ProductEntity],
       synchronize: true,
     }),

@@ -1,15 +1,10 @@
-import { Container, Typography } from '@mui/material'
+import { Typography } from '@mui/material'
 import React from 'react'
 import carouselImg from '../assets/images/carousel-img.png'
 import styles from './HomePage.module.sass'
 import Carousel from '../components/Carousel/Carousel'
 import CarouselItem from '../components/CarouselItem/CarouselItem'
 import ProductList from '../components/ProductList/ProductList'
-import { GetServerSideProps } from 'next'
-import { wrapper } from '../redux/store'
-import { parseCookies } from 'nookies'
-import { UserApi } from '../api/api'
-import { setUserData } from '../redux/slices/user'
 
 const HomePage = () => {
   const carouselData = [
@@ -67,16 +62,16 @@ const HomePage = () => {
 
 export default HomePage
 
-export const getServerSideProps: GetServerSideProps =
-  wrapper.getServerSideProps((store) => async (ctx) => {
-    try {
-      const { authToken } = parseCookies(ctx)
-      const userData = await UserApi.getMe(authToken)
-      store.dispatch(setUserData(userData))
+// export const getServerSideProps: GetServerSideProps =
+//   wrapper.getServerSideProps((store) => async (ctx) => {
+//     try {
+//       const { authToken } = parseCookies(ctx)
+//       const userData = await UserApi.getMe(authToken)
+//       store.dispatch(setUserData(userData))
 
-      return { props: {} }
-    } catch (err) {
-      console.log(err)
-      return { props: {} }
-    }
-  })
+//       return { props: {} }
+//     } catch (err) {
+//       console.log(err)
+//       return { props: {} }
+//     }
+//   })

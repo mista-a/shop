@@ -7,6 +7,7 @@ import {
   useMediaQuery,
   BadgeProps,
   Drawer,
+  Box,
 } from '@mui/material'
 import React, { useState } from 'react'
 import styles from './Header.module.sass'
@@ -16,18 +17,19 @@ import { ReactComponent as CartIcon } from '../../assets/images/cart-icon.svg'
 import { ReactComponent as SearchIcon } from '../../assets/images/search-icon.svg'
 import { ReactComponent as UserIcon } from '../../assets/images/user-icon.svg'
 import Input from '../UI/Input'
-import { Box, flexbox } from '@mui/system'
 import styled from '@emotion/styled'
 import Link from '../UI/Link/Link'
 import MainContainer from '../MainContainer/MainContainer'
-import { Theme, useTheme } from '@emotion/react'
+import { Theme, useTheme } from '@mui/material'
 import AuthDialog from '../AuthDialog/AuthDialog'
 import { useAppSelector } from '../../redux/hooks'
 import { useAppDispatch } from '../../redux/hooks'
 import { setUserData, selectUserData } from '../../redux/slices/user'
 
 const Header = () => {
-  const HeaderButton = styled(Button)(({ theme }) => ({
+  const theme: Theme = useTheme()
+
+  const HeaderButton = styled(Button)(({ theme: Theme }) => ({
     minHeight: '50px',
     minWidth: '50px',
     backgroundColor: 'white',
@@ -44,7 +46,7 @@ const Header = () => {
       backgroundColor: 'inherit',
     },
   }))
-  const CartBadge = styled(Badge)<BadgeProps>(({ theme }) => ({
+  const CartBadge = styled(Badge)<BadgeProps>(({ theme: Theme }) => ({
     '& .MuiBadge-badge': {
       right: 3,
       top: 5,
@@ -62,19 +64,19 @@ const Header = () => {
       },
     },
   }))
-  const CartButton = styled(HeaderButton)(({ theme }) => ({
+  const CartButton = styled(HeaderButton)(({ theme: Theme }) => ({
     padding: '0 15px',
     columnGap: '5px',
     [theme.breakpoints.down('mobile')]: {
       padding: '0 0',
     },
   }))
-  const Logo = styled(Typography)(({ theme }) => ({
+  const Logo = styled(Typography)(({ theme: Theme }) => ({
     [theme.breakpoints.down('mobile')]: {
       fontSize: '30px',
     },
   }))
-  const LeftSide = styled('div')(({ theme }) => ({
+  const LeftSide = styled('div')(({ theme: Theme }) => ({
     display: 'flex',
     columnGap: '30px',
     alignItems: 'center',
@@ -83,7 +85,7 @@ const Header = () => {
       columnGap: '10px',
     },
   }))
-  const RightSide = styled('div')(({ theme }) => ({
+  const RightSide = styled('div')(({ theme: Theme }) => ({
     display: 'flex',
     columnGap: '30px',
     alignItems: 'center',
@@ -103,7 +105,6 @@ const Header = () => {
     backgroundColor: 'white',
   }
 
-  const theme: Theme = useTheme()
   const menuBreakepoint = useMediaQuery(theme.breakpoints.down('tablet'))
   const accountControllerBreakepoint = useMediaQuery(
     theme.breakpoints.down('tablet'),
