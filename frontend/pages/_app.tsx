@@ -9,7 +9,7 @@ import { UserApi } from '../API/API'
 import { setUserData } from '../redux/slices/user'
 import { ThemeProvider } from '@mui/material'
 
-function ShopApp({ Component, pageProps }: AppProps) {
+function ShopApp({ Component, pageProps }) {
   return (
     <ThemeProvider theme={theme}>
       <MainLayout>
@@ -37,7 +37,7 @@ ShopApp.getInitialProps = wrapper.getInitialAppProps(
             : {}),
         },
       }
-    },
+    }
 )
 
 export default wrapper.withRedux(ShopApp)

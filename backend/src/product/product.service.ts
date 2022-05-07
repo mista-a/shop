@@ -45,7 +45,7 @@ export class ProductService {
       qb.orderBy('views', dto.views);
     }
 
-    if (dto.name) {
+    if (dto.name) {      
       qb.where(`products.name ILIKE :name`);
     }
 

@@ -9,7 +9,7 @@ import {
   Drawer,
   Box,
 } from '@mui/material'
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import styles from './Header.module.sass'
 import { ReactComponent as MenuIcon } from '../../assets/images/menu-icon.svg'
 import { ReactComponent as LikeIcon } from '../../assets/images/like-icon.svg'
@@ -25,6 +25,7 @@ import AuthDialog from '../AuthDialog/AuthDialog'
 import { useAppSelector } from '../../redux/hooks'
 import { useAppDispatch } from '../../redux/hooks'
 import { setUserData, selectUserData } from '../../redux/slices/user'
+import { destroyCookie } from 'nookies'
 
 const Header = () => {
   const theme: Theme = useTheme()
@@ -107,7 +108,7 @@ const Header = () => {
 
   const menuBreakepoint = useMediaQuery(theme.breakpoints.down('tablet'))
   const accountControllerBreakepoint = useMediaQuery(
-    theme.breakpoints.down('tablet'),
+    theme.breakpoints.down('tablet')
   )
   const logoBreakepoint = useMediaQuery(theme.breakpoints.down(585))
   const cartPriceBreakepoint = useMediaQuery(theme.breakpoints.down(490))
@@ -140,7 +141,14 @@ const Header = () => {
 
   const logout = () => {
     dispatch(setUserData(null))
+    try {
+      destroyCookie(null, 'authToken')
+    } catch (err) {
+      console.warn('Logout error', err)
+    }
   }
+
+  const [query, setQuery] = useState('')
 
   return (
     <AppBar position='sticky' className={styles.header}>
@@ -148,6 +156,8 @@ const Header = () => {
         <MainContainer className={styles.container}>
           {showFullSearch && searchBreakepoint ? (
             <Input
+              onChange={(e) => setQuery(e.target.value)}
+              value={query}
               className={styles.search}
               placeholder='Search'
               startAdornment={
@@ -161,6 +171,7 @@ const Header = () => {
               }
               endAdornment={
                 <Button disableRipple className={styles.searchButton}>
+                  <Link href={`search?name=${query}`} classLink={styles.link} />
                   <SearchIcon />
                 </Button>
               }
@@ -194,13 +205,19 @@ const Header = () => {
                   </Link>
                 )}
               </LeftSide>
-              <RightSide>
+              <div className={styles.rightSide}>
                 {!searchBreakepoint && (
                   <Input
+                    onChange={(e) => setQuery(e.target.value)}
+                    value={query}
                     className={styles.search}
                     placeholder='Search'
                     endAdornment={
                       <Button disableRipple className={styles.searchButton}>
+                        <Link
+                          href={`search?name=${query}`}
+                          classLink={styles.link}
+                        />
                         <SearchIcon />
                       </Button>
                     }
@@ -244,7 +261,7 @@ const Header = () => {
                     </CartButton>
                   </CartBadge>
                 </Link>
-              </RightSide>
+              </div>
               <AuthDialog
                 onClose={closeAuthDialog}
                 open={authDialog}

@@ -12,8 +12,6 @@ const HomePage = () => {
     { img: '', name: '', colors: [], id: null, views: null, price: null },
   ])
 
-  console.log(products)
-
   const carouselData = [
     {
       carouselImg: carouselImg,
