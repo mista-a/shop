@@ -26,4 +26,12 @@ export const UserApi = {
     })
     return data
   },
+  async getProducts() {
+    const { data } = await instance.get('/products')
+    return data
+  },
+  async getPopularProducts() {
+    const { data } = await instance.get('/products/popular')
+    return data
+  },
 }

@@ -1,12 +1,19 @@
 import { Typography } from '@mui/material'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import carouselImg from '../assets/images/carousel-img.png'
 import styles from './HomePage.module.sass'
 import Carousel from '../components/Carousel/Carousel'
 import CarouselItem from '../components/CarouselItem/CarouselItem'
 import ProductList from '../components/ProductList/ProductList'
+import { UserApi } from '../API/API'
 
 const HomePage = () => {
+  const [products, setProducts] = useState([
+    { img: '', name: '', colors: [], id: null, views: null, price: null },
+  ])
+
+  console.log(products)
+
   const carouselData = [
     {
       carouselImg: carouselImg,
@@ -24,6 +31,15 @@ const HomePage = () => {
       text: 'Set yourself up for wholesome goals with fresh workout gear',
     },
   ]
+
+  useEffect(() => {
+    const getProducts = async () => {
+      const products = await UserApi.getPopularProducts()
+      setProducts(products.products)
+    }
+
+    getProducts()
+  }, [])
 
   return (
     <>
@@ -55,23 +71,9 @@ const HomePage = () => {
       <Typography className={styles.categoryName} variant='h4'>
         Most popular
       </Typography>
-      <ProductList />
+      <ProductList products={products} />
     </>
   )
 }
 
 export default HomePage
-
-// export const getServerSideProps: GetServerSideProps =
-//   wrapper.getServerSideProps((store) => async (ctx) => {
-//     try {
-//       const { authToken } = parseCookies(ctx)
-//       const userData = await UserApi.getMe(authToken)
-//       store.dispatch(setUserData(userData))
-
-//       return { props: {} }
-//     } catch (err) {
-//       console.log(err)
-//       return { props: {} }
-//     }
-//   })

@@ -11,6 +11,8 @@ interface ProductCardProps {
 }
 
 const ProductCard: FC<ProductCardProps> = ({ product }) => {
+  console.log(product)
+
   const [inFavorite, setInFavorite] = useState(false)
 
   return (

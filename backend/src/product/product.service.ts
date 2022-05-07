@@ -25,7 +25,7 @@ export class ProductService {
     const qb = this.repository.createQueryBuilder();
 
     qb.orderBy('views', 'DESC');
-    qb.limit(10);
+    // qb.limit(10);
 
     const [products, total] = await qb.getManyAndCount();
 
@@ -38,8 +38,8 @@ export class ProductService {
   async search(dto: SearchProductDto) {
     const qb = this.repository.createQueryBuilder('products');
 
-    qb.limit(dto.limit || 0);
-    qb.take(dto.limit || 10);
+    // qb.limit(dto.limit || 0);
+    // qb.take(dto.limit || 10);
 
     if (dto.views) {
       qb.orderBy('views', dto.views);
@@ -61,14 +61,14 @@ export class ProductService {
       qb.where(`:size =  ANY(products.sizes)`);
     }
 
-    if (dto.type) {
-      qb.where(`products.type ILIKE %${dto.type}`);
-    }
+    // if (dto.type) {
+    //   qb.where(`products.type ILIKE %${dto.type}`);
+    // }
 
     qb.setParameter('name', `%${dto.name}%`);
     qb.setParameter('price', `%${dto.price}%`);
     qb.setParameter('colors', `${dto.colors}`);
-    qb.setParameter('size', `${dto.sizes}`);
+    // qb.setParameter('size', `${dto.sizes}`);
 
     const [products, total] = await qb.getManyAndCount();
 

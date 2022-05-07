@@ -3,6 +3,6 @@ export class CreateProductDto {
   price: number;
   img: string;
   colors: string[];
-  sizes: string[];
-  description: string;
+  // sizes?: string[];
+  // description?: string;
 }

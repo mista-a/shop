@@ -20,9 +20,9 @@ export class ProductEntity {
   @Column('text', { array: true, default: [] })
   colors: string[];
 
-  @Column('text', { array: true, default: [] })
-  sizes: string[];
+  // @Column('text', { array: true, default: [] })
+  // sizes: string[];
 
-  @Column()
-  description: string;
+  // @Column()
+  // description: string;
 }

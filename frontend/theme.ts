@@ -1,4 +1,4 @@
-import { createTheme } from '@mui/material'
+import { createTheme, Theme } from '@mui/material'
 
 declare module '@mui/material/styles' {
   interface BreakpointOverrides {
@@ -13,7 +13,7 @@ declare module '@mui/material/styles' {
   }
 }
 
-export const theme = createTheme({
+export const theme: Theme = createTheme({
   palette: {
     info: {
       main: '#FFB0AB',
