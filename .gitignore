@@ -6,6 +6,7 @@ frontend/yarn.lock
 backend/node_modules
 backend/dist
 backend/yarn.lock
+parser/node_modules
 /.pnp
 .pnp.js
 
