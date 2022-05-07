@@ -37,7 +37,7 @@ const puppeteer = require('puppeteer')
 
   for (let i = 1; i <= productCount; i++) {
     const textPrice = await page.$eval(
-      `#page-content > div > div:nth-child(3) > ul > li:nth-child(1) > article > div.item-details > strong > span`,
+      `#page-content > div > div:nth-child(3) > ul > li:nth-child(${i}) > article > div.item-details > strong > span`,
       (el) => el.innerText,
     )
     data[i].price = +textPrice.substring(2)
