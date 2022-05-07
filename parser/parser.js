@@ -60,7 +60,7 @@ const puppeteer = require('puppeteer')
     data[productCount].colors = colors
   }
 
-  // console.log(data)
+  console.log(data)
 
   // await page.screenshot({ path: 'a.png', fullPage: true })
 
