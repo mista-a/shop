@@ -1,6 +1,6 @@
-import { createTheme, Theme } from '@mui/material'
+import { createTheme, Theme } from '@mui/material/styles'
 
-declare module '@mui/material/styles' {
+declare module '@mui/material' {
   interface BreakpointOverrides {
     xs: false
     sm: false

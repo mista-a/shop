@@ -7,7 +7,7 @@ import { AppProps } from 'next/app'
 import { parseCookies } from 'nookies'
 import { UserApi } from '../API/API'
 import { setUserData } from '../redux/slices/user'
-import { ThemeProvider } from '@mui/material'
+import { ThemeProvider } from '@mui/material/styles'
 
 function ShopApp({ Component, pageProps }) {
   return (
@@ -37,7 +37,7 @@ ShopApp.getInitialProps = wrapper.getInitialAppProps(
             : {}),
         },
       }
-    }
+    },
 )
 
 export default wrapper.withRedux(ShopApp)

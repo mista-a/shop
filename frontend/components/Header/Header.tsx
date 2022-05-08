@@ -108,7 +108,7 @@ const Header = () => {
 
   const menuBreakepoint = useMediaQuery(theme.breakpoints.down('tablet'))
   const accountControllerBreakepoint = useMediaQuery(
-    theme.breakpoints.down('tablet')
+    theme.breakpoints.down('tablet'),
   )
   const logoBreakepoint = useMediaQuery(theme.breakpoints.down(585))
   const cartPriceBreakepoint = useMediaQuery(theme.breakpoints.down(490))
@@ -171,7 +171,10 @@ const Header = () => {
               }
               endAdornment={
                 <Button disableRipple className={styles.searchButton}>
-                  <Link href={`search?name=${query}`} classLink={styles.link} />
+                  <Link
+                    href={`/search?name=${query}`}
+                    classLink={styles.link}
+                  />
                   <SearchIcon />
                 </Button>
               }
@@ -215,7 +218,7 @@ const Header = () => {
                     endAdornment={
                       <Button disableRipple className={styles.searchButton}>
                         <Link
-                          href={`search?name=${query}`}
+                          href={`/search?name=${query}`}
                           classLink={styles.link}
                         />
                         <SearchIcon />
