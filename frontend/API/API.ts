@@ -27,12 +27,16 @@ export const UserApi = {
     return data
   },
   async getProducts(query = '') {
-    console.log(query);
-    
+    console.log(query)
+
     const { data } = await instance.get(`/products${query}`)
     return data.products
   },
   async getPopularProducts() {
+    const { data } = await instance.get('/products/popular')
+    return data
+  },
+  async getFavorite() {
     const { data } = await instance.get('/products/popular')
     return data
   },

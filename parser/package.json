@@ -1,7 +1,7 @@
 {
   "name": "parser",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "parser.js",
   "license": "MIT",
   "dependencies": {
     "puppeteer": "^13.7.0"

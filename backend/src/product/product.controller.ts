@@ -21,9 +21,10 @@ import { UserEntity } from 'src/user/entities/user.entity';
 export class ProductController {
   constructor(private readonly productService: ProductService) {}
 
-  @UseGuards(JwtAuthGuard)
+  // @UseGuards(JwtAuthGuard)
   @Post()
-  create(@User() user: UserEntity, @Body() createProductDto: CreateProductDto) {
+  // @User() user: UserEntity,
+  create(@Body() createProductDto: CreateProductDto) {
     return this.productService.create(createProductDto);
   }
 
@@ -33,8 +34,21 @@ export class ProductController {
   }
 
   @Get('/popular')
-  getPopularProducts() {
+  getPopularProducts(dto: UpdateProductDto) {
     return this.productService.popular();
+  }
+
+  @Patch('favorite/:id')
+  toggleFavorite(
+    @Param('id') id: string,
+    @Body() updateProductDto: UpdateProductDto,
+  ) {
+    return this.productService.update(+id, updateProductDto);
+  }
+
+  @Get('/favorite')
+  getFavorite(dto: UpdateProductDto) {
+    return this.productService.getFavorite(dto);
   }
 
   @Get('/search')

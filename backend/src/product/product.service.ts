@@ -35,6 +35,28 @@ export class ProductService {
     };
   }
 
+  async getFavorite(dto: UpdateProductDto) {
+    const qb = this.repository.createQueryBuilder();
+    qb.orderBy('favorite', 'DESC');
+    qb.where(`favorite = TRUE`);
+    // qb.limit(dto.limit || 0);
+    const [products, total] = await qb.getManyAndCount();
+    return {
+      products,
+      total,
+    };
+  }
+
+  // async toggleFavorite(id: number, dto: UpdateProductDto) {
+  //   const find = await this.repository.findOneBy({ id });
+
+  //   if (!find) {
+  //     throw new NotFoundException('Product not found');
+  //   }
+
+  //   return this.repository.update(id, dto);
+  // }
+
   async search(dto: SearchProductDto) {
     const qb = this.repository.createQueryBuilder('products');
 
@@ -45,7 +67,7 @@ export class ProductService {
       qb.orderBy('views', dto.views);
     }
 
-    if (dto.name) {      
+    if (dto.name) {
       qb.where(`products.name ILIKE :name`);
     }
 
@@ -94,7 +116,7 @@ export class ProductService {
   }
 
   async update(id: number, dto: UpdateProductDto) {
-    const find = await this.repository.findOneBy({ id: +id });
+    const find = await this.repository.findOneBy({ id });
 
     if (!find) {
       throw new NotFoundException('Product not found');

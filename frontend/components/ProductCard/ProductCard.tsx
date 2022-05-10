@@ -1,6 +1,6 @@
 import { Card, CardMedia, Typography } from '@mui/material'
 import Link from '../UI/Link/Link'
-import React, { FC, useState } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import cardImg from '../../assets/images/card-img.png'
 import styles from './Product.module.sass'
 import { ReactComponent as LikeIcon } from '../../assets/images/like-icon.svg'
@@ -13,6 +13,10 @@ interface ProductCardProps {
 const ProductCard: FC<ProductCardProps> = ({ product }) => {
   const [inFavorite, setInFavorite] = useState(false)
 
+  useEffect(() => {}, [])
+
+  const changeInFavorite = () => {}
+
   return (
     <div className={styles.card}>
       <div className={styles.imgWrapper}>
@@ -23,10 +27,7 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
             alt={product.name}
           />
         </Link>
-        <button
-          className={styles.likeButton}
-          onClick={() => setInFavorite(!inFavorite)}
-        >
+        <button className={styles.likeButton} onClick={changeInFavorite}>
           <LikeIcon />
         </button>
       </div>
