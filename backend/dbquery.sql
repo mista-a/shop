@@ -4,7 +4,7 @@ CREATE TABLE products(
   name VARCHAR ,
   price NUMERIC ,
   colors TEXT[],
-  views NUMERIC
+  showCase TEXT[]
 );
 INSERT INTO products(img,name,price,colors) VALUES ('https://lp2.hm.com/hmgoepprod?set=source[/4b/f5/4bf53236eacea3a6ae70cc9749ec25f00547170d.jpg],origin[dam],category[],type[DESCRIPTIVESTILLLIFE],res[z],hmver[2]&call=url[file:/product/main]','Relaxed Fit Short-sleeved Linen-blend Shirt',24,'{"rgb(132, 124, 97)"}');
 INSERT INTO products(img,name,price,colors) VALUES ('https://lp2.hm.com/hmgoepprod?set=source[/9f/93/9f93774e6c1171b7e5e1c64135f8fc0599984f8f.jpg],origin[dam],category[],type[DESCRIPTIVESTILLLIFE],res[z],hmver[2]&call=url[file:/product/main]','Relaxed Fit Patterned Cotton T-shirt',17,'{"rgb(133, 125, 108)","rgb(213, 82, 49)"}');

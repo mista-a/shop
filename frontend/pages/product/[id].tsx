@@ -6,7 +6,7 @@ import {
   Select,
   Typography,
 } from '@mui/material'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import productImg1 from '../../assets/images/delete/product-img1.png'
 import styles from './ProductPage.module.sass'
 import { ReactComponent as LikeIcon } from '../../assets/images/like-icon.svg'
@@ -15,19 +15,27 @@ import { Box } from '@mui/material'
 import Counter from '../../components/Counter/Counter'
 import TextButton from '../../components/UI/TextButton'
 import AboutProduct from '../../components/AboutProduct/AboutProduct'
+import { UserApi } from '../../API/API'
+import { useRouter } from 'next/router'
 
-const ProductPage = () => {
-  const product = {
-    name: 'Short Dress',
-    price: 17.99,
-    sizes: ['XS', 'S', 'M', 'L'],
-    colors: ['red', 'purple', 'black', 'yellow'],
-  }
-
+const ProductPage = ({ product }) => {
+  const [products, setProducts] = useState([])
   const [activeColor, setActiveColor] = useState(product.colors[0])
 
+  const router = useRouter()
+
+  const { id } = router.query
+
+  useEffect(() => {
+    const getProducts = async () => {
+      const products = await UserApi.getProductsById(id)
+      setProducts(products)
+    }
+    getProducts()
+  })
+
   return (
-    <div className={styles.productPage}>
+    <div>
       <img
         src={productImg1.src}
         alt={product.name}
@@ -55,19 +63,14 @@ const ProductPage = () => {
           </FormControl>
         </Box>
         <Box className={styles.colors}>
-          {product.colors.map((color) => (
+          {product.showcase.map((showcaseItem) => (
             <div className={activeColor === color && styles.activeColor}>
               <Button
                 className={styles.color}
-                sx={{
-                  backgroundColor: `${color}`,
-                  '&.MuiButtonBase-root:hover': {
-                    backgroundColor: `${color}`,
-                    opacity: '50%',
-                  },
-                }}
                 onClick={() => setActiveColor(color)}
-              ></Button>
+              >
+                <img src={showcaseItem} />
+              </Button>
             </div>
           ))}
         </Box>
