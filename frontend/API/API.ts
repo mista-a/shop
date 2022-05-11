@@ -32,7 +32,7 @@ export const UserApi = {
   },
   async getProductsById(id) {
     const { data } = await instance.get(`/products/${id}`)
-    return data.products
+    return data
   },
   async getPopularProducts() {
     const { data } = await instance.get('/products/popular')

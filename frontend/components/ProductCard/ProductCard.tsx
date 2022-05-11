@@ -33,16 +33,15 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
       </div>
       <Typography>{product.name}</Typography>{' '}
       <div className={styles.colors}>
-        {product.colors.map((color, index) => {
+        {product.colors.map((color) => {
           return (
-            <Link href={'/color'} key={index}>
-              <div
-                className={styles.color}
-                style={{
-                  backgroundColor: color,
-                }}
-              ></div>
-            </Link>
+            <div
+              key={product.id + ' ' + color}
+              className={styles.color}
+              style={{
+                backgroundColor: color,
+              }}
+            />
           )
         })}
       </div>

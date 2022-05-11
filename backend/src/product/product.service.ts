@@ -14,7 +14,13 @@ export class ProductService {
   ) {}
 
   create(dto: CreateProductDto) {
-    return this.repository.save(dto);
+    return this.repository.save({
+      name: dto.name,
+      price: dto.price,
+      img: dto.img,
+      colors: dto.colors,
+      showcase: dto.showcase,
+    });
   }
 
   findAll() {

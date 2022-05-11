@@ -26,6 +26,9 @@ export class ProductEntity {
   @Column({ default: false })
   favorite: boolean;
 
+  @Column('jsonb', { nullable: true })
+  showCase: object[];
+
   // @Column('text', { array: true, default: [] })
   // sizes: string[];
 

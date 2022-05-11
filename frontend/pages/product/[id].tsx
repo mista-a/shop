@@ -18,24 +18,33 @@ import AboutProduct from '../../components/AboutProduct/AboutProduct'
 import { UserApi } from '../../API/API'
 import { useRouter } from 'next/router'
 
-const ProductPage = ({ product }) => {
-  const [products, setProducts] = useState([])
-  const [activeColor, setActiveColor] = useState(product.colors[0])
+const ProductPage = () => {
+  const [product, setProduct] = useState({
+    colors: [],
+    name: '',
+    price: null,
+    sizes: [],
+    showcase: [],
+  })
+
+  const [activeShowcaseItem, setActiveShowcaseItem] = useState('')
 
   const router = useRouter()
 
   const { id } = router.query
 
   useEffect(() => {
-    const getProducts = async () => {
-      const products = await UserApi.getProductsById(id)
-      setProducts(products)
-    }
-    getProducts()
-  })
+    ;(async () => {
+      const product = await UserApi.getProductsById(id)
+      setProduct(product)
+      setActiveShowcaseItem(product.showcase[0])
+    })()
+  }, [])
+
+  console.log(product.showcase[0])
 
   return (
-    <div>
+    <div className={styles.productPage}>
       <img
         src={productImg1.src}
         alt={product.name}
@@ -52,26 +61,27 @@ const ProductPage = ({ product }) => {
           <LikeIcon />
         </div>
         <Typography>$ {product.price}</Typography>
-        <Box>
-          <FormControl sx={{ width: 235 }}>
-            <InputLabel id='sizeLabel'>Select size</InputLabel>
-            <Select labelId='sizeLabel' id='sizeSelect' label='Select size'>
+        {/* <Box> */}
+        {/* <FormControl sx={{ width: 235 }}> */}
+        {/* <InputLabel id='sizeLabel'>Select size</InputLabel> */}
+        {/* <Select labelId='sizeLabel' id='sizeSelect' label='Select size'>
               {product.sizes.map((size) => {
                 return <MenuItem value={size}>{size}</MenuItem>
               })}
-            </Select>
-          </FormControl>
-        </Box>
-        <Box className={styles.colors}>
+            </Select> */}
+        {/* </FormControl> */}
+        {/* </Box> */}
+        <Box>
           {product.showcase.map((showcaseItem) => (
-            <div className={activeColor === color && styles.activeColor}>
-              <Button
-                className={styles.color}
-                onClick={() => setActiveColor(color)}
-              >
-                <img src={showcaseItem} />
-              </Button>
-            </div>
+            <Button
+              variant='text'
+              className={`${styles.showcaseItem} ${
+                activeShowcaseItem === showcaseItem && styles.activeShowcaseItem
+              }`}
+              onClick={() => setActiveShowcaseItem(showcaseItem)}
+            >
+              <img src={showcaseItem} />
+            </Button>
           ))}
         </Box>
         <Box className={styles.addToCart}>

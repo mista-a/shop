@@ -60,6 +60,7 @@ export const theme: Theme = createTheme({
           color: 'black',
           textTransform: 'none',
           disableRipple: 'true',
+          minWidth: 0,
           '&:hover': {
             backgroundColor: 'transparent',
             boxShadow: 'none',
