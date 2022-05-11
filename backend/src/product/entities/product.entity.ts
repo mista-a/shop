@@ -20,14 +20,11 @@ export class ProductEntity {
   @Column('text', { array: true, default: [] })
   colors: string[];
 
-  @Column('text', { array: true, default: [] })
-  showcase: string[];
-
   @Column({ default: false })
   favorite: boolean;
 
-  @Column('jsonb', { nullable: true })
-  showCase: object[];
+  @Column('json')
+  showcase: object;
 
   // @Column('text', { array: true, default: [] })
   // sizes: string[];

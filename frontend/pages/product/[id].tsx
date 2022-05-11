@@ -24,10 +24,14 @@ const ProductPage = () => {
     name: '',
     price: null,
     sizes: [],
-    showcase: [],
+    showcase: { imgs: [], minImg: '' },
   })
 
+  console.log(product)
+
   const [activeShowcaseItem, setActiveShowcaseItem] = useState('')
+
+  console.log(product)
 
   const router = useRouter()
 
@@ -41,17 +45,17 @@ const ProductPage = () => {
     })()
   }, [])
 
-  console.log(product.showcase[0])
+  console.log(product.showcase.imgs)
 
   return (
     <div className={styles.productPage}>
       <img
-        src={productImg1.src}
+        src={product.showcase.imgs[0]}
         alt={product.name}
         className={styles.mainProductImg}
       />
       <img
-        src={productImg1.src}
+        src={product.showcase.imgs[1]}
         alt={product.name}
         className={styles.mainProductImg}
       />
@@ -71,18 +75,17 @@ const ProductPage = () => {
             </Select> */}
         {/* </FormControl> */}
         {/* </Box> */}
+        {/* ${activeShowcaseItem === showcaseItem && styles.activeShowcaseItem}`} */}
         <Box>
-          {product.showcase.map((showcaseItem) => (
-            <Button
-              variant='text'
-              className={`${styles.showcaseItem} ${
-                activeShowcaseItem === showcaseItem && styles.activeShowcaseItem
-              }`}
-              onClick={() => setActiveShowcaseItem(showcaseItem)}
-            >
-              <img src={showcaseItem} />
-            </Button>
-          ))}
+          {/* {product.showcase.minImg.map((showcaseItem) => ( */}
+          <Button
+            variant='text'
+            className={`${styles.showcaseItem} `}
+            // onClick={() => setActiveShowcaseItem(showcaseItem)}
+          >
+            <img src={product.showcase.minImg} />
+          </Button>
+          {/* ))} */}
         </Box>
         <Box className={styles.addToCart}>
           <Counter />

@@ -5,7 +5,7 @@ const fs = require('fs')
   const browser = await puppeteer.launch()
   const page = await browser.newPage()
   await page.setUserAgent(
-    'Mozilla/5.0 (Windows NT; Win 64; x64; rv:73.0) Gecko/20100101 Firefox/73.0',
+    'Mozilla/5.0 (Windows NT; Win 64; x64; rv:73.0) Gecko/20100101 Firefox/73.0'
   )
   const initLink = 'https://www2.hm.com/en_us/men/new-arrivals/clothes.html'
 
@@ -20,15 +20,14 @@ const fs = require('fs')
 
   await page.goto(initLink)
   await (async () => {
-    const totalProducts =
-      (await page.evaluate(
-        () => document.querySelectorAll('.product-item').length,
-      )) - 35
+    const totalProducts = await page.evaluate(
+      () => document.querySelectorAll('.product-item').length
+    )
 
     const data = []
 
     await page.click(
-      '#page-content > div > div:nth-child(3) > div.products-filter-container > div.products-filter.sticky-on-scroll > form > fieldset.filter-toggleimages.js-filter-toggleimages > ul > li:nth-child(2) > label',
+      '#page-content > div > div:nth-child(3) > div.products-filter-container > div.products-filter.sticky-on-scroll > form > fieldset.filter-toggleimages.js-filter-toggleimages > ul > li:nth-child(2) > label'
     )
 
     for (
@@ -44,30 +43,30 @@ const fs = require('fs')
 
       data[productsCount - 1].img = await page.$eval(
         `#page-content > div > div:nth-child(3) > ul > li:nth-child(${productsCountStr}) > article > div.image-container > a > img`,
-        (el) => el.src,
+        (el) => el.src
       )
 
       data[productsCount - 1].name = await page.$eval(
         `#page-content > div > div:nth-child(3) > ul > li:nth-child(${productsCountStr}) > article > div.item-details > h3 > a`,
-        (el) => el.innerText,
+        (el) => el.innerText
       )
 
       const textPrice = await page.$eval(
         `#page-content > div > div:nth-child(3) > ul > li:nth-child(${productsCountStr}) > article > div.item-details > strong > span`,
-        (el) => el.innerText,
+        (el) => el.innerText
       )
       data[productsCount - 1].price = +textPrice.substring(2)
 
       const colorsCount = await page.$eval(
         `#page-content > div > div:nth-child(3) > ul > li:nth-child(${productsCountStr}) > article > div.item-details > ul`,
-        (el) => el.childElementCount,
+        (el) => el.childElementCount
       )
       let colors = []
 
       for (let colorCount = 1; colorCount <= colorsCount; colorCount++) {
         const color = await page.$eval(
           `#page-content > div > div:nth-child(3) > ul > li:nth-child(${productsCountStr}) > article > div.item-details > ul > li:nth-child(${colorCount.toString()}) > a`,
-          (el) => el.style.backgroundColor,
+          (el) => el.style.backgroundColor
         )
         colors.push(color)
       }
@@ -76,7 +75,7 @@ const fs = require('fs')
       //ProductPage
       let link = await page.$eval(
         `#page-content > div > div:nth-child(3) > ul > li:nth-child(${productsCountStr}) > article > div.image-container > a`,
-        (el) => el.href,
+        (el) => el.href
       )
 
       await to(link)
@@ -85,11 +84,11 @@ const fs = require('fs')
 
       let showcaseCount = await page.$eval(
         `#main-content > div.product.parbase > div.layout.pdp-wrapper.product-detail.sticky-footer-wrapper.js-reviews > div.module.product-description.sticky-wrapper > div.sub-content.product-detail-info.product-detail-meta.inner.sticky-on-scroll.semi-sticky > div > div.product-colors.miniatures.clearfix.slider-completed.loaded > div > ul > li > ul`,
-        (el) => el.childElementCount,
+        (el) => el.childElementCount
       )
 
       const colorLink = await page.$$eval('.filter-option', (a) =>
-        a.map(({ href }) => href),
+        a.map(({ href }) => href)
       )
 
       showcaseItems = []
@@ -109,20 +108,20 @@ const fs = require('fs')
         imgs.push(
           await page.$eval(
             '#main-content > div.product.parbase > div.layout.pdp-wrapper.product-detail.sticky-footer-wrapper.js-reviews > div.module.product-description.sticky-wrapper > figure.pdp-image.product-detail-images.product-detail-main-image > div > img',
-            (el) => el.src,
-          ),
+            (el) => el.src
+          )
         )
 
         let secondImgs = await page.$$eval(
           '.product-detail-thumbnail-image',
-          (img) => img.map(({ src }) => src),
+          (img) => img.map(({ src }) => src)
         )
 
         imgs.push(...imgs, ...secondImgs)
 
         let showcaseMiniImg = await page.$eval(
           `#filter-colour-${productId} > img`,
-          (el) => el.src,
+          (el) => el.src
         )
 
         showcaseItems[showcaseItemCount].miniImg = showcaseMiniImg
@@ -146,7 +145,7 @@ const fs = require('fs')
 
       await to(initLink)
       await page.click(
-        '#page-content > div > div:nth-child(3) > div.products-filter-container > div.products-filter.sticky-on-scroll > form > fieldset.filter-toggleimages.js-filter-toggleimages > ul > li:nth-child(2) > label',
+        '#page-content > div > div:nth-child(3) > div.products-filter-container > div.products-filter.sticky-on-scroll > form > fieldset.filter-toggleimages.js-filter-toggleimages > ul > li:nth-child(2) > label'
       )
 
       console.log(`${productsCount}/${totalProducts}`)
@@ -163,7 +162,7 @@ const fs = require('fs')
       name VARCHAR ,
       price NUMERIC ,
       colors TEXT[],
-      showCase TEXT[],
+      showCase json,
       views NUMERIC
     );\n`)
 
@@ -172,10 +171,10 @@ const fs = require('fs')
         `INSERT INTO products (img, name, price, colors, showCase) VALUES ('${
           product.img
         }','${product.name}',${product.price},'{"${product.colors.join(
-          '","',
+          '","'
         )}"}','${product.showCase.map((showCaseItem) =>
-          JSON.stringify(showCaseItem),
-        )}',);\n`,
+          JSON.stringify(showCaseItem)
+        )}',);\n`
       )
     })
   })()
