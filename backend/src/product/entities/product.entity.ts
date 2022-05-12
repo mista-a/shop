@@ -24,7 +24,7 @@ export class ProductEntity {
   favorite: boolean;
 
   @Column('json')
-  showcase: object;
+  showcase: object[];
 
   // @Column('text', { array: true, default: [] })
   // sizes: string[];

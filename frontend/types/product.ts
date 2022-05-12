@@ -7,5 +7,5 @@ export interface IProduct {
   rating: number
   sizes: number[]
   description: string
-  showcase: string[]
+  showcase: any
 }

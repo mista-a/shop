@@ -14,10 +14,6 @@ const fs = require('fs')
     await page.waitForTimeout(time)
   }
 
-  const GetProperty = async (element, property) => {
-    return await (await element.getProperty(property)).jsonValue()
-  }
-
   await page.goto(initLink)
   await (async () => {
     const totalProducts = await page.evaluate(
@@ -78,7 +74,7 @@ const fs = require('fs')
         (el) => el.href
       )
 
-      await to(link)
+      await to(link, 5000)
 
       console.log(link)
 
@@ -172,9 +168,7 @@ const fs = require('fs')
           product.img
         }','${product.name}',${product.price},'{"${product.colors.join(
           '","'
-        )}"}','${product.showCase.map((showCaseItem) =>
-          JSON.stringify(showCaseItem)
-        )}',);\n`
+        )}"}','${JSON.stringify(product.showCase)}',);\n`
       )
     })
   })()

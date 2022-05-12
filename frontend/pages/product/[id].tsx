@@ -24,12 +24,13 @@ const ProductPage = () => {
     name: '',
     price: null,
     sizes: [],
-    showcase: { imgs: [], minImg: '' },
+    showcase: [{ imgs: ['', ''], miniImg: '' }],
   })
 
-  console.log(product)
-
-  const [activeShowcaseItem, setActiveShowcaseItem] = useState('')
+  const [activeShowcaseItem, setActiveShowcaseItem] = useState(
+    product.showcase[0].miniImg
+  )
+  console.log(activeShowcaseItem)
 
   console.log(product)
 
@@ -39,53 +40,64 @@ const ProductPage = () => {
 
   useEffect(() => {
     ;(async () => {
-      const product = await UserApi.getProductsById(id)
+      // const product = await Api().user.getProductsById(id)
+      const product = await UserApi().getProductsById(id)
       setProduct(product)
-      setActiveShowcaseItem(product.showcase[0])
+      setActiveShowcaseItem(product.showcase[0].miniImg)
     })()
   }, [])
 
-  console.log(product.showcase.imgs)
+  console.log(product.showcase[0].imgs[0])
 
   return (
     <div className={styles.productPage}>
-      <img
-        src={product.showcase.imgs[0]}
-        alt={product.name}
-        className={styles.mainProductImg}
-      />
-      <img
-        src={product.showcase.imgs[1]}
-        alt={product.name}
-        className={styles.mainProductImg}
-      />
+      {product.showcase.map((showcaseItem) => {
+        return (
+          showcaseItem.miniImg === activeShowcaseItem && (
+            <>
+              <img
+                src={showcaseItem.imgs[0]}
+                alt={product.name}
+                className={styles.mainProductImg}
+              />
+              <img
+                src={showcaseItem.imgs[2]}
+                alt={product.name}
+                className={styles.mainProductImg}
+              />
+            </>
+          )
+        )
+      })}
       <div className={styles.options}>
         <div className={styles.optionsHeader}>
           <Typography>{product.name}</Typography>
           <LikeIcon />
         </div>
         <Typography>$ {product.price}</Typography>
-        {/* <Box> */}
-        {/* <FormControl sx={{ width: 235 }}> */}
-        {/* <InputLabel id='sizeLabel'>Select size</InputLabel> */}
-        {/* <Select labelId='sizeLabel' id='sizeSelect' label='Select size'>
+        {/* <Box>
+          <FormControl sx={{ width: 235 }}>
+            <InputLabel id='sizeLabel'>Select size</InputLabel>
+            <Select labelId='sizeLabel' id='sizeSelect' label='Select size'>
               {product.sizes.map((size) => {
                 return <MenuItem value={size}>{size}</MenuItem>
               })}
-            </Select> */}
-        {/* </FormControl> */}
-        {/* </Box> */}
-        {/* ${activeShowcaseItem === showcaseItem && styles.activeShowcaseItem}`} */}
+            </Select>
+          </FormControl>
+        </Box> */}
         <Box>
-          {/* {product.showcase.minImg.map((showcaseItem) => ( */}
-          <Button
-            variant='text'
-            className={`${styles.showcaseItem} `}
-            // onClick={() => setActiveShowcaseItem(showcaseItem)}
-          >
-            <img src={product.showcase.minImg} />
-          </Button>
-          {/* ))} */}
+          {product.showcase.map((showcaseItem) => (
+            <Button
+              variant='text'
+              className={`showcaseItem ${
+                activeShowcaseItem === showcaseItem.miniImg &&
+                styles.activeShowcaseItem
+              }`}
+              onClick={() => setActiveShowcaseItem(showcaseItem.miniImg)}
+            >
+              <img src={showcaseItem.miniImg} />
+            </Button>
+          ))}
         </Box>
         <Box className={styles.addToCart}>
           <Counter />
