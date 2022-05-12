@@ -8,6 +8,7 @@ import { parseCookies } from 'nookies'
 import { UserApi } from '../API/API'
 import { setUserData } from '../redux/slices/user'
 import { ThemeProvider } from '@mui/material/styles'
+import { Api } from '../API'
 
 function ShopApp({ Component, pageProps }) {
   return (
@@ -24,7 +25,7 @@ ShopApp.getInitialProps = wrapper.getInitialAppProps(
     async ({ ctx, Component }) => {
       try {
         const { authToken } = parseCookies(ctx)
-        const userData = await UserApi.getMe(authToken)
+        const userData = await Api(ctx).user.getMe()
         store.dispatch(setUserData(userData))
       } catch (err) {
         console.log(err)
@@ -37,7 +38,7 @@ ShopApp.getInitialProps = wrapper.getInitialAppProps(
             : {}),
         },
       }
-    },
+    }
 )
 
 export default wrapper.withRedux(ShopApp)

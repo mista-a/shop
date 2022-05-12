@@ -11,6 +11,7 @@ import { UserApi } from '../../../API/API'
 import { setCookie } from 'nookies'
 import { useAppDispatch } from '../../../redux/hooks'
 import { setUserData } from '../../../redux/slices/user'
+import { Api } from '../../../API'
 
 const Login = () => {
   const [errorMessage, setErrorMessage] = useState('')
@@ -24,7 +25,9 @@ const Login = () => {
 
   const login = async (dto: LoginDto) => {
     try {
-      const data = await UserApi.login(dto)
+      const data = await Api().user.login(dto)
+      console.log(data)
+
       setCookie(null, 'authToken', data.token, {
         maxAge: 30 * 24 * 60 * 60,
         parh: '/',

@@ -5,7 +5,7 @@ import styles from './HomePage.module.sass'
 import Carousel from '../components/Carousel/Carousel'
 import CarouselItem from '../components/CarouselItem/CarouselItem'
 import ProductList from '../components/ProductList/ProductList'
-import { UserApi } from '../API/API'
+import { Api } from '../API/index'
 
 const HomePage = () => {
   const [products, setProducts] = useState([
@@ -32,7 +32,7 @@ const HomePage = () => {
 
   useEffect(() => {
     const getProducts = async () => {
-      const products = await UserApi.getPopularProducts()
+      const products = await Api().user.getPopularProducts()
       setProducts(products.products)
     }
 
