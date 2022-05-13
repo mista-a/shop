@@ -1,4 +1,4 @@
-import { Button } from '@mui/material'
+import { Button, Typography } from '@mui/material'
 import React, { FC, useState } from 'react'
 import Color from '../Color/Color'
 import styles from './Colors.module.sass'
@@ -47,16 +47,19 @@ const Colors: FC = () => {
       <div className={styles.colors}>
         {colors.map((color) => {
           return (
-            <Color
-              key={color.id}
-              color={color.color}
-              id={color.id}
-              deleteColor={deleteColor}
-              changeColor={changeColor}
-            />
+            <div key={color.id}>
+              <Color
+                color={color.color}
+                id={color.id}
+                deleteColor={deleteColor}
+                changeColor={changeColor}
+              />
+            </div>
           )
         })}
       </div>
+      <Typography>Mini image</Typography>
+      {/* <input type='file' /> */}
     </>
   )
 }

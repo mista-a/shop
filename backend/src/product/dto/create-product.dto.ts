@@ -10,11 +10,11 @@ export class CreateProductDto {
   @IsString()
   img: string;
 
-  @IsArray()
-  colors: string[];
+  // @IsArray()
+  // colors?: string[];
 
-  @IsArray()
-  showcase: any;
+  // @IsArray()
+  // showcase?: any;
   // sizes?: string[];
   // description?: string;
 }

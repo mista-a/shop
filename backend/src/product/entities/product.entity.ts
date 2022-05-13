@@ -17,14 +17,14 @@ export class ProductEntity {
   @Column({ default: 0 })
   price: number;
 
-  @Column('text', { array: true, default: [] })
-  colors: string[];
+  // @Column('text', { array: true, default: [] })
+  // colors: string[];
 
   @Column({ default: false })
   favorite: boolean;
 
-  @Column('json')
-  showcase: object[];
+  // @Column('json')
+  // showcase: object[];
 
   // @Column('text', { array: true, default: [] })
   // sizes: string[];
