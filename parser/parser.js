@@ -99,7 +99,6 @@ const fs = require('fs')
 
         await page.click(`#filter-colour-${productId} > img`)
         await page.waitForTimeout(3000)
-        await page.screenshot({ path: './page.png', fullPage: true })
 
         imgs.push(
           await page.$eval(
