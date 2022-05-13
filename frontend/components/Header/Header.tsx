@@ -143,7 +143,7 @@ const Header = () => {
   const logout = () => {
     dispatch(setUserData(null))
     try {
-      destroyCookie(null, 'authToken')
+      destroyCookie(null, 'shopToken')
     } catch (err) {
       console.warn('Logout error', err)
     }

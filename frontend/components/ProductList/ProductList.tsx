@@ -10,6 +10,8 @@ interface ProductListProps {
 }
 
 const ProductList: FC<ProductListProps> = ({ products }) => {
+  // console.log(products)
+
   const theme: Theme = useTheme()
 
   const ProductListGrid: FC = styled('div')(() => ({

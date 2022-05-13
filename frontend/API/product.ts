@@ -6,12 +6,14 @@ export const ProductApi = (instance: AxiosInstance) => ({
     const { data } = await instance.get(`/products${query}`)
     return data.products
   },
-  async getProductsById(id) {
+  async getById(id) {
     const { data } = await instance.get(`/products/${id}`)
     return data
   },
-  async getPopularProducts() {
+  async getPopular() {
     const { data } = await instance.get('/products/popular')
+    console.log(data)
+
     return data
   },
 })

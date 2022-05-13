@@ -20,8 +20,8 @@ ShopApp.getInitialProps = wrapper.getInitialAppProps(
   (store) =>
     async ({ ctx, Component }) => {
       try {
-        const userData = await Api(ctx).user.getMe()
-        store.dispatch(setUserData(userData))
+        // const userData = await Api(ctx).user.getMe()
+        // store.dispatch(setUserData(userData))
       } catch (err) {
         if (ctx.asPath === '/admin') {
           ctx.res.writeHead(302, {

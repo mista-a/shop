@@ -14,6 +14,7 @@ import {
 import React, { useState } from 'react'
 import Input from '../../components/UI/Input'
 import styles from './AdminPage.module.sass'
+import Colors from '../../components/Colors/Colors'
 
 const AdminPage = () => {
   const [activeSize, setActiveSize] = useState<string[]>([])
@@ -52,7 +53,9 @@ const AdminPage = () => {
         </Select>
       </FormControl>
       <TextareaAutosize aria-label='Description' placeholder='Description' />
+      <input type='file' />
       <Button type='submit'>Отправить</Button>
+      <Colors />
     </div>
   )
 }

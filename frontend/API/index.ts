@@ -6,6 +6,7 @@ import { ProductApi } from './product'
 
 export type ApiReturnType = {
   user: ReturnType<typeof UserApi>
+  product: ReturnType<typeof ProductApi>
 }
 
 export const Api = (ctx?: NextPageContext | GetServerSidePropsContext) => {

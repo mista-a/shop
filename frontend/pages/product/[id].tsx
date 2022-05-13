@@ -31,7 +31,7 @@ const ProductPage = () => {
 
   useEffect(() => {
     ;(async () => {
-      const product = await Api().product.getProductsById(id)
+      const product = await Api().product.getById(id)
       setProduct(product)
       setActiveShowcaseItem(product.showcase[0].miniImg)
     })()
@@ -101,8 +101,13 @@ const ProductPage = () => {
   )
 }
 
-export const getServerSidePropas = (ctx) => {
-  return { props: {} }
-}
+// export const getServerSidePropas = (ctx) => {
+//   try {
+//     const product = Api().product.getById(id)
+//   } catch (err) {
+//     console.log(err)
+//   }
+//   return { props: {} }
+// }
 
 export default ProductPage

@@ -1,16 +1,21 @@
 import { Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import carouselImg from '../assets/images/carousel-img.png'
-import styles from './HomePage.module.sass'
+import styles from './Home.module.sass'
 import Carousel from '../components/Carousel/Carousel'
 import CarouselItem from '../components/CarouselItem/CarouselItem'
 import ProductList from '../components/ProductList/ProductList'
 import { Api } from '../API/index'
+import { NextPage } from 'next'
 
-const HomePage = () => {
-  const [products, setProducts] = useState([
-    { img: '', name: '', colors: [], id: null, views: null, price: null },
-  ])
+interface HomeProps {
+  products: Array<any>
+}
+
+const Home: NextPage<HomeProps> = ({ products }) => {
+  // const [products, setProducts] = useState([
+  //   { img: '', name: '', colors: [], id: null, views: null, price: null },
+  // ])
 
   const carouselData = [
     {
@@ -30,14 +35,14 @@ const HomePage = () => {
     },
   ]
 
-  useEffect(() => {
-    const getProducts = async () => {
-      const products = await Api().user.getPopularProducts()
-      setProducts(products.products)
-    }
+  // useEffect(() => {
+  //   const getProducts = async () => {
+  //     const products = await Api().product.getPopular()
+  //     setProducts(products.products)
+  //   }
 
-    getProducts()
-  }, [])
+  //   getProducts()
+  // }, [])
 
   return (
     <>
@@ -74,4 +79,15 @@ const HomePage = () => {
   )
 }
 
-export default HomePage
+export const getServerSideProps = async (ctx) => {
+  try {
+    const products = await Api().product.getPopular()
+
+    return { props: { products: products.products } }
+  } catch (err) {
+    console.log(err)
+  }
+  return { props: { products: null } }
+}
+
+export default Home
