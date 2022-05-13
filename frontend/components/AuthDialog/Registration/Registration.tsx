@@ -5,9 +5,9 @@ import FormField from '../../FormField/FormField'
 import { RegisterFormSchema } from '../../../utils/validations'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { setCookie } from 'nookies'
-import { UserApi } from '../../../API/API'
 import { CreateUserDto } from '../../../API/types'
 import { Alert } from '@mui/material'
+import { Api } from '../../../API'
 
 const Registration = () => {
   const [errorMessage, setErrorMessage] = useState('')
@@ -19,7 +19,7 @@ const Registration = () => {
 
   const register = async (dto: CreateUserDto) => {
     try {
-      const data = await UserApi.register(dto)
+      const data = await Api().user.register(dto)
       setCookie(null, 'authToken', data.token, {
         maxAge: 30 * 24 * 60 * 60,
         parh: '/',

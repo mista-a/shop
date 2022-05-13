@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
-import { UserApi } from '../../API/API'
+import { Api } from '../../API'
 import ProductList from '../../components/ProductList/ProductList'
 
 const SearchPage = () => {
@@ -13,7 +13,9 @@ const SearchPage = () => {
 
   useEffect(() => {
     ;(async () => {
-      const products = await UserApi.getProducts(`/search?name=${query.name}`)
+      const products = await Api().product.getProducts(
+        `/search?name=${query.name}`,
+      )
 
       setProducts(products)
     })()

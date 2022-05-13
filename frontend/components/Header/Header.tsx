@@ -9,7 +9,7 @@ import {
   Drawer,
   Box,
 } from '@mui/material'
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import styles from './Header.module.sass'
 import { ReactComponent as MenuIcon } from '../../assets/images/menu-icon.svg'
 import { ReactComponent as LikeIcon } from '../../assets/images/like-icon.svg'
@@ -118,6 +118,7 @@ const Header = () => {
   const [showFullSearch, setshowFullSearch] = useState(false)
   const [openMenu, setOpenMenu] = useState(false)
   const [dialogMenu, setDialogMenu] = useState(false)
+  const [query, setQuery] = useState('')
 
   const userData = useAppSelector(selectUserData)
 
@@ -148,7 +149,11 @@ const Header = () => {
     }
   }
 
-  const [query, setQuery] = useState('')
+  useEffect(() => {
+    if (authDialog && userData) {
+      setAuthDialog(false)
+    }
+  }, [authDialog, userData])
 
   return (
     <AppBar position='sticky' className={styles.header}>

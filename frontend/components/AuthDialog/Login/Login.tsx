@@ -7,7 +7,6 @@ import { LoginFormSchema } from '../../../utils/validations'
 import { yupResolver } from '@hookform/resolvers/yup'
 import FormField from '../../FormField/FormField'
 import { LoginDto } from '../../../API/types'
-import { UserApi } from '../../../API/API'
 import { setCookie } from 'nookies'
 import { useAppDispatch } from '../../../redux/hooks'
 import { setUserData } from '../../../redux/slices/user'
@@ -26,9 +25,7 @@ const Login = () => {
   const login = async (dto: LoginDto) => {
     try {
       const data = await Api().user.login(dto)
-      console.log(data)
-
-      setCookie(null, 'authToken', data.token, {
+      setCookie(null, 'shopToken', data.token, {
         maxAge: 30 * 24 * 60 * 60,
         parh: '/',
       })
