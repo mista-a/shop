@@ -20,8 +20,8 @@ export const UserApi = (instance: AxiosInstance) => ({
     const { data } = await instance.get<ResponseUser>('/users/me')
     return data
   },
-  async getFavorite() {
-    const { data } = await instance.get('/products/popular')
+  async getFavorite(userId) {
+    const { data } = await instance.get(`/users/favorite/${userId}`)
     return data
   },
 })

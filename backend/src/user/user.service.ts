@@ -5,6 +5,7 @@ import { UserEntity } from './entities/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { LoginUserDto } from './dto/login-user.dto';
+import { CreateProductDto } from 'src/product/dto/create-product.dto';
 
 @Injectable()
 export class UserService {
@@ -23,6 +24,23 @@ export class UserService {
 
   findById(id: number) {
     return this.repository.findOneBy({ id });
+  }
+
+  async getFavorite(id: number) {
+    const user = this.repository.findOneBy({ id });
+    return (await user).favorite;
+  }
+
+  async addToFavorite(id: number, dto: UpdateUserDto) {
+    const user = this.repository.findOneBy({ id });
+    (await user).favorite.push({
+      price: dto.price,
+      img: dto.img,
+      name: dto.name,
+    });
+    this.repository.update(id, {
+      favorite: (await user).favorite,
+    });
   }
 
   findByCond(cond: LoginUserDto) {

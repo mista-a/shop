@@ -13,4 +13,7 @@ export class UserEntity {
 
   @Column()
   password: string;
+
+  @Column('json', { default: [] })
+  favorite: [{ price: number; img: string; name: string }];
 }

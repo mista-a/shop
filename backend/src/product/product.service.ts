@@ -53,6 +53,18 @@ export class ProductService {
     };
   }
 
+  async postFavorite(dto: UpdateProductDto) {
+    const qb = this.repository.createQueryBuilder();
+    qb.orderBy('favorite', 'DESC');
+    qb.where(`favorite = TRUE`);
+    // qb.limit(dto.limit || 0);
+    const [products, total] = await qb.getManyAndCount();
+    return {
+      products,
+      total,
+    };
+  }
+
   // async toggleFavorite(id: number, dto: UpdateProductDto) {
   //   const find = await this.repository.findOneBy({ id });
 

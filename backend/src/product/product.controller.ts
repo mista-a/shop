@@ -46,10 +46,15 @@ export class ProductController {
     return this.productService.update(+id, updateProductDto);
   }
 
-  @Get('/favorite')
-  getFavorite(dto: UpdateProductDto) {
-    return this.productService.getFavorite(dto);
-  }
+  // @Get('/favorite')
+  // getFavorite(dto: UpdateProductDto) {
+  //   return this.productService.getFavorite(dto);
+  // }
+
+  // @Post('/favorite')
+  // postFavorite(dto: UpdateProductDto) {
+  //   return this.productService.getFavorite(dto);
+  // }
 
   @Get('/search')
   searchProducts(@Query() dto: SearchProductDto) {

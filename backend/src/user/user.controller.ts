@@ -12,6 +12,7 @@ import {
 import { UserService } from './user.service';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { CreateProductDto } from 'src/product/dto/create-product.dto';
 
 @Controller('users')
 export class UserController {
@@ -26,6 +27,16 @@ export class UserController {
   @Get('me')
   getProfile(@Request() req) {
     return this.userService.findById(req.user.id);
+  }
+
+  @Get('/favorite/:id')
+  getFavorite(@Param('id') id: string) {
+    return this.userService.getFavorite(+id);
+  }
+
+  @Post('/favorite/:id')
+  addToFavorite(@Param('id') id: string, @Body() dto: UpdateUserDto) {
+    return this.userService.addToFavorite(+id, dto);
   }
 
   @Get(':id')
