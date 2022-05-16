@@ -20,10 +20,7 @@ export class AuthController {
   }
 
   @Post('register')
-  register(@Body() dto: CreateUserDto) {
-    return this.authService.register(dto);
-  }
-  createCart(@User() userId: number) {
-    return this.userService.createCart(userId);
+  register(@User() userId, @Body() dto: CreateUserDto) {
+    return this.authService.register(userId, dto);
   }
 }

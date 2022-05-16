@@ -26,14 +26,9 @@ export class UserService {
     private cartRepo: Repository<CartEntity>,
   ) {}
 
-  async createCart(userId: number) {
-    console.log('1');
-
-    return await this.cartRepo.save({ user: { id: userId, cartItems: [] } });
-  }
-
   async create(dto: CreateUserDto) {
-    return this.repository.save(dto);
+  
+    return this.repository.save({email: dto.email, name: dto.name, password: dto.password});
   }
 
   findAll() {
@@ -60,47 +55,33 @@ export class UserService {
     userId: number,
     cartItems: { productId: number; count: number }[],
   ) {
-    // const qb = this.cartRepo.createQueryBuilder();
-    // qb.insert().into(CartEntity).values({ id: 1, cartItems: [] }).execute();
-    const findUser = await this.repository.findOneBy({ id: userId });
+    let findUser = await this.repository.findOne({where: { id: userId }});
     if (!findUser.cart) {
-      const cart = await this.cartRepo.save({
-        id: findUser.id,
-        cartItems: [],
+      const qb = this.cartRepo.createQueryBuilder();
+      qb.insert().into(CartEntity).values({ id: findUser.id, cartItems: [] }).execute()
+      findUser = await this.repository.save({
+        ...findUser,
+        cart: {id: findUser.id}
       });
-
-      const newCart = this.productRepo.findOne({
-        where: { id: cart.id },
-        relations: ['user'],
-      });
-
-      console.log(newCart);
     }
+    let cart = [];
+    if (findUser) {
+      cartItems.forEach(async ({ productId, count }) => {
+        const product = await this.productRepo.findOneBy({ id: productId });
 
-    // console.log(CartEntity);
-
-    // // findUser.cart = { id: userId, cartItems: [], user: userId };
-
-    // console.log(findUser);
-
-    // let cart = [];
-    // if (findUser) {
-    //   cartItems.forEach(async ({ productId, count }) => {
-    //     const product = await this.productRepo.findOneBy({ id: productId });
-
-    //     if (product) {
-    //       cart.push({ item: product, count });
-    //     }
-    //   });
-    //   findUser.cart.cartItems = cart;
-    //   await this.repository.save(findUser);
-    //   return {
-    //     statusCode: 200,
-    //     message: 'Success',
-    //     response: { cart: cartItems },
-    //   };
-    // }
-    // throw new UnauthorizedException('Invalid Credentials');
+        if (product) {
+          cart.push({ item: product, count });
+        }
+      });
+      findUser.cart.cartItems = cart;
+      await this.repository.save(findUser);
+      return {
+        statusCode: 200,
+        message: 'Success',
+        response: { cart: cartItems },
+      };
+    }
+    throw new UnauthorizedException('Invalid Credentials');
   }
 
   // async addToCart(userId: number, cartItems: { productId: number }) {
