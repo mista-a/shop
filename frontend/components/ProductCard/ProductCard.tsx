@@ -11,11 +11,11 @@ interface ProductCardProps {
 }
 
 const ProductCard: FC<ProductCardProps> = ({ product }) => {
-  const [inFavorite, setInFavorite] = useState(false)
+  const [inCart, setInCart] = useState(false)
 
   useEffect(() => {}, [])
 
-  const changeInFavorite = () => {}
+  const changeInCart = () => {}
 
   return (
     <div className={styles.card}>
@@ -27,7 +27,7 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
             alt={product.name}
           />
         </Link>
-        <button className={styles.likeButton} onClick={changeInFavorite}>
+        <button className={styles.likeButton} onClick={changeInCart}>
           <LikeIcon />
         </button>
       </div>

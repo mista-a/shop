@@ -13,6 +13,7 @@ import { UserService } from './user.service';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { CreateProductDto } from 'src/product/dto/create-product.dto';
+import { ProductEntity } from 'src/product/entities/product.entity';
 
 @Controller('users')
 export class UserController {
@@ -29,14 +30,17 @@ export class UserController {
     return this.userService.findById(req.user.id);
   }
 
-  @Get('/favorite/:id')
-  getFavorite(@Param('id') id: string) {
-    return this.userService.getFavorite(+id);
+  @Get('/cart/:id')
+  getCart(@Param('id') id: string) {
+    return this.userService.getCart(+id);
   }
 
-  @Post('/favorite/:id')
-  addToFavorite(@Param('id') id: string, @Body() dto: UpdateUserDto) {
-    return this.userService.addToFavorite(+id, dto);
+  @Post('/cart/:id')
+  addToCart(
+    @Param('id') id: string,
+    @Body() cartItems: { productId: number; count: number }[],
+  ) {
+    return this.userService.addToCart(+id, cartItems);
   }
 
   @Get(':id')

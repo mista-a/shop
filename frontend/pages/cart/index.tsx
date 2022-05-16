@@ -1,29 +1,31 @@
 import { NextPage } from 'next'
 import React from 'react'
 import { Api } from '../../API'
+import ProductList from '../../components/ProductList/ProductList'
 
-const Cart = ({ favorite }) => {
-  console.log(favorite)
-  return <div></div>
+const Cart = ({ products }) => {
+  console.log(products)
+
+  return <ProductList products={products} />
 }
 
 export const getServerSideProps = async (ctx) => {
   try {
-    const userId = await Api(ctx).user.getMe()
-    const favorite = await Api().user.getFavorite(userId)
+    // const userId = await Api(ctx).user.getMe()
+    const products = await Api().user.getCart(1)
 
-    return { props: { favorite } }
+    return { props: { products } }
   } catch (err) {
     console.log(err)
-    return {
-      props: {},
-      redirect: {
-        destination: '/',
-        permanent: false,
-      },
-    }
+    // return {
+    //   props: {},
+    //   redirect: {
+    //     destination: '/',
+    //     permanent: false,
+    //   },
+    // }
   }
-  return { props: { userId: null } }
+  return { props: { products: null } }
 }
 
 export default Cart

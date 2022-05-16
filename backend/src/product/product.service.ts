@@ -41,31 +41,31 @@ export class ProductService {
     };
   }
 
-  async getFavorite(dto: UpdateProductDto) {
-    const qb = this.repository.createQueryBuilder();
-    qb.orderBy('favorite', 'DESC');
-    qb.where(`favorite = TRUE`);
-    // qb.limit(dto.limit || 0);
-    const [products, total] = await qb.getManyAndCount();
-    return {
-      products,
-      total,
-    };
-  }
+  // async getCart(dto: UpdateProductDto) {
+  //   const qb = this.repository.createQueryBuilder();
+  //   qb.orderBy('cart', 'DESC');
+  //   qb.where(`cart = TRUE`);
+  //   // qb.limit(dto.limit || 0);
+  //   const [products, total] = await qb.getManyAndCount();
+  //   return {
+  //     products,
+  //     total,
+  //   };
+  // }
 
-  async postFavorite(dto: UpdateProductDto) {
-    const qb = this.repository.createQueryBuilder();
-    qb.orderBy('favorite', 'DESC');
-    qb.where(`favorite = TRUE`);
-    // qb.limit(dto.limit || 0);
-    const [products, total] = await qb.getManyAndCount();
-    return {
-      products,
-      total,
-    };
-  }
+  // async postCart(dto: UpdateProductDto) {
+  //   const qb = this.repository.createQueryBuilder();
+  //   qb.orderBy('cart', 'DESC');
+  //   qb.where(`cart = TRUE`);
+  //   // qb.limit(dto.limit || 0);
+  //   const [products, total] = await qb.getManyAndCount();
+  //   return {
+  //     products,
+  //     total,
+  //   };
+  // }
 
-  // async toggleFavorite(id: number, dto: UpdateProductDto) {
+  // async toggleCart(id: number, dto: UpdateProductDto) {
   //   const find = await this.repository.findOneBy({ id });
 
   //   if (!find) {

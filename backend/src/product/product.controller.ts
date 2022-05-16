@@ -38,23 +38,13 @@ export class ProductController {
     return this.productService.popular();
   }
 
-  @Patch('favorite/:id')
+  @Patch('cart/:id')
   toggleFavorite(
     @Param('id') id: string,
     @Body() updateProductDto: UpdateProductDto,
   ) {
     return this.productService.update(+id, updateProductDto);
   }
-
-  // @Get('/favorite')
-  // getFavorite(dto: UpdateProductDto) {
-  //   return this.productService.getFavorite(dto);
-  // }
-
-  // @Post('/favorite')
-  // postFavorite(dto: UpdateProductDto) {
-  //   return this.productService.getFavorite(dto);
-  // }
 
   @Get('/search')
   searchProducts(@Query() dto: SearchProductDto) {

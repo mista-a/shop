@@ -2,11 +2,11 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { UserEntity } from './user/entities/user.entity';
+import { UserEntity } from 'src/user/entities/user.entity';
 import { UserModule } from './user/user.module';
+import { CartEntity } from 'src/user/entities/cart.entity';
 import { ProductModule } from './product/product.module';
 import { ProductEntity } from './product/entities/product.entity';
-import { CommentModule } from './comment/comment.module';
 import { AuthModule } from './auth/auth.module';
 
 @Module({
@@ -18,12 +18,11 @@ import { AuthModule } from './auth/auth.module';
       username: 'postgres',
       password: 'ppassword',
       database: 'shop',
-      entities: [UserEntity, ProductEntity],
+      entities: [UserEntity, ProductEntity, CartEntity],
       synchronize: true,
     }),
     UserModule,
     ProductModule,
-    CommentModule,
     AuthModule,
   ],
   controllers: [AppController],
