@@ -1,5 +1,10 @@
 import { IsArray, IsNumber, IsString } from 'class-validator';
 
+// class showcaseItem {
+//   miniImg: string
+//   imgs: string[]
+// }
+
 export class CreateProductDto {
   @IsString()
   name: string;
@@ -10,11 +15,11 @@ export class CreateProductDto {
   @IsString()
   img: string;
 
-  // @IsArray()
-  // colors?: string[];
+  @IsArray()
+  colors: string[];
 
-  // @IsArray()
-  // showcase?: any;
+  
+  showcase: any;
   // sizes?: string[];
   // description?: string;
 }

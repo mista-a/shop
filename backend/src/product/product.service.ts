@@ -18,8 +18,8 @@ export class ProductService {
       name: dto.name,
       price: dto.price,
       img: dto.img,
-      // colors: dto.colors,
-      // showcase: dto.showcase,
+      showcase: dto.showcase,
+      colors: dto.colors,
     });
   }
 

@@ -1,12 +1,17 @@
 import { AxiosInstance } from 'axios'
 import { CreateUserDto, LoginDto, ResponseUser } from './types'
 
+// class showcaseItem {
+//   miniImg: string
+//   imgs: string[]
+// }
+
 type CreateProductDto = {
   name: string
   img: string
   price: string
   // colors: Array<string>
-  // showcase: any
+  showcase: any[]
 }
 
 export const ProductApi = (instance: AxiosInstance) => ({
@@ -14,7 +19,7 @@ export const ProductApi = (instance: AxiosInstance) => ({
     const { data } = await instance.get(`/products${query}`)
     return data.products
   },
-  async getById(id) {
+  async getById(id) {    
     const { data } = await instance.get(`/products/${id}`)
     return data
   },

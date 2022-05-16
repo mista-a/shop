@@ -9,35 +9,12 @@ import AboutProduct from '../../components/AboutProduct/AboutProduct'
 import { useRouter } from 'next/router'
 import { Api } from '../../API'
 
-const ProductPage = () => {
-  const [product, setProduct] = useState({
-    colors: [],
-    name: '',
-    price: null,
-    sizes: [],
-    showcase: [{ imgs: ['', ''], miniImg: '' }],
-  })
+// NextFunctionComponent
 
+const ProductPage = ({ product }) => {
   const [activeShowcaseItem, setActiveShowcaseItem] = useState(
-    product.showcase[0].miniImg,
+    product.showcase[0].miniImg
   )
-  console.log(activeShowcaseItem)
-
-  console.log(product)
-
-  const router = useRouter()
-
-  const { id } = router.query
-
-  useEffect(() => {
-    ;(async () => {
-      const product = await Api().product.getById(id)
-      setProduct(product)
-      setActiveShowcaseItem(product.showcase[0].miniImg)
-    })()
-  }, [])
-
-  console.log(product.showcase[0].imgs[0])
 
   return (
     <div className={styles.productPage}>
@@ -65,16 +42,16 @@ const ProductPage = () => {
           <LikeIcon />
         </div>
         <Typography>$ {product.price}</Typography>
-        {/* <Box>
-          <FormControl sx={{ width: 235 }}>
+        <Box>
+          {/* <FormControl sx={{ width: 235 }}>
             <InputLabel id='sizeLabel'>Select size</InputLabel>
             <Select labelId='sizeLabel' id='sizeSelect' label='Select size'>
               {product.sizes.map((size) => {
                 return <MenuItem value={size}>{size}</MenuItem>
               })}
             </Select>
-          </FormControl>
-        </Box> */}
+          </FormControl> */}
+        </Box>
         <Box>
           {product.showcase.map((showcaseItem) => (
             <Button
@@ -101,13 +78,15 @@ const ProductPage = () => {
   )
 }
 
-// export const getServerSidePropas = (ctx) => {
-//   try {
-//     const product = Api().product.getById(id)
-//   } catch (err) {
-//     console.log(err)
-//   }
-//   return { props: {} }
-// }
+export const getServerSideProps = async (ctx) => {
+  try {
+    const id = ctx.params.id
+    const product = await Api().product.getById(id)
+    return { props: { product } }
+  } catch (err) {
+    console.log(err)
+  }
+  return { props: { product: null } }
+}
 
 export default ProductPage
