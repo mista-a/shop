@@ -6,13 +6,15 @@ import ProductList from '../../components/ProductList/ProductList'
 const Cart = ({ products }) => {
   console.log(products)
 
+  return <div></div>
   return <ProductList products={products} />
 }
 
 export const getServerSideProps = async (ctx) => {
   try {
     // const userId = await Api(ctx).user.getMe()
-    const products = await Api().user.getCart(1)
+    let products = await Api().user.getCart(1)
+    products = products.response.cart.cartItems
 
     return { props: { products } }
   } catch (err) {
