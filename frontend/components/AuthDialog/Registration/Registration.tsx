@@ -20,7 +20,7 @@ const Registration = () => {
   const register = async (dto: CreateUserDto) => {
     try {
       const data = await Api().user.register(dto)
-      setCookie(null, 'authToken', data.token, {
+      setCookie(null, 'shopToken', data.token, {
         maxAge: 30 * 24 * 60 * 60,
         parh: '/',
       })

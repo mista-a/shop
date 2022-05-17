@@ -13,8 +13,15 @@ import { Api } from '../../API'
 
 const ProductPage = ({ product }) => {
   const [activeShowcaseItem, setActiveShowcaseItem] = useState(
-    product.showcase[0].miniImg
+    product.showcase[0].miniImg,
   )
+
+  const [counter, setCounter] = useState(1)
+
+  const addToCart = async () => {
+    let cartItems = [{ productId: product.id, counter }]
+    await Api().user.addToCart(cartItems)
+  }
 
   return (
     <div className={styles.productPage}>
@@ -67,8 +74,8 @@ const ProductPage = ({ product }) => {
           ))}
         </Box>
         <Box className={styles.addToCart}>
-          <Counter />
-          <TextButton className={styles.addToCartButton}>
+          <Counter counter={counter} setCounter={setCounter} />
+          <TextButton className={styles.addToCartButton} onClick={addToCart}>
             Add to cart
           </TextButton>
         </Box>

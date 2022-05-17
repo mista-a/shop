@@ -14,7 +14,7 @@ import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { SearchProductDto } from './dto/search-product';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
-import { User } from 'src/user/decorators/user.decorator';
+import { User } from 'src/decorators/user.decorator';
 import { UserEntity } from 'src/user/entities/user.entity';
 
 @Controller('products')

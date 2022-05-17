@@ -1,15 +1,20 @@
-import React, { useState } from 'react'
+import React, { FC, useState } from 'react'
 import styles from './Counter.module.sass'
 
-const Counter = () => {
-  const [counter, setCounter] = useState(1)
+interface CounterProps {
+  counter: number
+  setCounter: (counter?: number) => void
+}
+
+const Counter: FC<CounterProps> = ({ counter, setCounter }) => {
+  // const [counter, setCounter] = useState(defaultCounter || 1)
 
   const increment = () => {
-    setCounter((prevState) => prevState + 1)
+    setCounter(counter + 1)
   }
   const decrement = () => {
     if (counter > 1) {
-      setCounter((prevState) => prevState - 1)
+      setCounter(counter - 1)
     }
   }
 

@@ -14,6 +14,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { CreateProductDto } from 'src/product/dto/create-product.dto';
 import { ProductEntity } from 'src/product/entities/product.entity';
+import { User } from '../decorators/user.decorator';
 
 @Controller('users')
 export class UserController {
@@ -30,27 +31,30 @@ export class UserController {
     return this.userService.findById(req.user.id);
   }
 
-  @Get('/cart/:id')
-  getCart(@Param('id') id: string) {
-    return this.userService.getCart(+id);
+  @UseGuards(JwtAuthGuard)
+  @Patch('me')
+  update(@Request() req, @Body() updateUserDto: UpdateUserDto) {
+    return this.userService.update(+req.user.id, updateUserDto);
   }
 
-  @Post('/cart/:id')
+  @UseGuards(JwtAuthGuard)
+  @Get('/cart')
+  // @Param('id') id: string
+  getCart(@User() id) {
+    return this.userService.getCart(id);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Post('/cart')
   addToCart(
-    @Param('id') id: string,
+    @User() id,
     @Body() cartItems: { productId: number; count: number }[],
   ) {
-    return this.userService.addToCart(+id, cartItems);
+    return this.userService.addToCart(id, cartItems);
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.userService.findById(+id);
-  }
-
-  @UseGuards(JwtAuthGuard)
-  @Patch('me')
-  update(@Request() req, @Body() updateUserDto: UpdateUserDto) {
-    return this.userService.update(+req.user.id, updateUserDto);
   }
 }

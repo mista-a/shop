@@ -20,8 +20,13 @@ export const UserApi = (instance: AxiosInstance) => ({
     const { data } = await instance.get<ResponseUser>('/users/me')
     return data
   },
-  async getCart(userId) {
-    const { data } = await instance.get(`/users/cart/${userId}`)
+  async getCart() {
+    const { data } = await instance.get(`/users/cart`)
+    return data
+  },
+  // cartItem: { productId: number; count: number }[]
+  async addToCart(cartItems) {
+    const { data } = await instance.post(`/users/cart`, cartItems)
     return data
   },
 })

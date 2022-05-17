@@ -41,9 +41,9 @@ export class ProductService {
     };
   }
 
-  // async getCart(dto: UpdateProductDto) {
+  // async getFavorite(dto: UpdateProductDto) {
   //   const qb = this.repository.createQueryBuilder();
-  //   qb.orderBy('cart', 'DESC');
+  //   qb.orderBy('favorite', 'DESC');
   //   qb.where(`cart = TRUE`);
   //   // qb.limit(dto.limit || 0);
   //   const [products, total] = await qb.getManyAndCount();
@@ -53,19 +53,7 @@ export class ProductService {
   //   };
   // }
 
-  // async postCart(dto: UpdateProductDto) {
-  //   const qb = this.repository.createQueryBuilder();
-  //   qb.orderBy('cart', 'DESC');
-  //   qb.where(`cart = TRUE`);
-  //   // qb.limit(dto.limit || 0);
-  //   const [products, total] = await qb.getManyAndCount();
-  //   return {
-  //     products,
-  //     total,
-  //   };
-  // }
-
-  // async toggleCart(id: number, dto: UpdateProductDto) {
+  // async toggleFavorite(id: number, dto: UpdateProductDto) {
   //   const find = await this.repository.findOneBy({ id });
 
   //   if (!find) {

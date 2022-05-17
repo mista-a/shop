@@ -27,8 +27,11 @@ export class UserService {
   ) {}
 
   async create(dto: CreateUserDto) {
-  
-    return this.repository.save({email: dto.email, name: dto.name, password: dto.password});
+    return this.repository.save({
+      email: dto.email,
+      name: dto.name,
+      password: dto.password,
+    });
   }
 
   findAll() {
@@ -55,25 +58,30 @@ export class UserService {
     userId: number,
     cartItems: { productId: number; count: number }[],
   ) {
-    let findUser = await this.repository.findOne({where: { id: userId }});
-    if (!findUser.cart) {
-      const qb = this.cartRepo.createQueryBuilder();
-      qb.insert().into(CartEntity).values({ id: findUser.id, cartItems: [] }).execute()
-      findUser = await this.repository.save({
-        ...findUser,
-        cart: {id: findUser.id}
-      });
-    }
-    let cart = [];
-    if (findUser) {
-      cartItems.forEach(async ({ productId, count }) => {
-        const product = await this.productRepo.findOneBy({ id: productId });
+    console.log(cartItems);
 
-        if (product) {
-          cart.push({ item: product, count });
-        }
-      });
-      findUser.cart.cartItems = cart;
+    let findUser = await this.repository.findOne({ where: { id: userId } });
+    if (findUser) {
+      if (!findUser.cart) {
+        const qb = this.cartRepo.createQueryBuilder();
+        qb.insert()
+          .into(CartEntity)
+          .values({ id: findUser.id, cartItems: [] })
+          .execute();
+        findUser = await this.repository.save({
+          ...findUser,
+          cart: { id: findUser.id },
+        });
+      }
+      let cart = findUser.cart.cartItems;
+      (() => {
+        cartItems.forEach(async ({ productId, count }) => {
+          const product = await this.productRepo.findOneBy({ id: productId });
+          if (product) {
+            cart.push({ item: product, count });
+          }
+        });
+      })();
       await this.repository.save(findUser);
       return {
         statusCode: 200,
@@ -84,47 +92,7 @@ export class UserService {
     throw new UnauthorizedException('Invalid Credentials');
   }
 
-  // async addToCart(userId: number, cartItems: { productId: number }) {
-  //   const findUser = await this.repository.findOneBy({ id: userId });
-  //   if (findUser) {
-  //     const product = await this.productRepo.findOneBy({
-  //       id: cartItems.productId,
-  //     });
-  //     if (product) {
-  //       findUser.cart.cartItems.push({ item: product, count: 1 });
-  //       await this.repository.save(findUser);
-  //       return {
-  //         statusCode: 200,
-  //         message: 'Success',
-  //         response: {
-  //           wishList: findUser.cart.cartItems,
-  //         },
-  //       };
-  //     }
-  //     throw new UnprocessableEntityException(
-  //       "Product with given id doesn't exists",
-  //     );
-  //   }
-  //   throw new UnauthorizedException('Invalid Credentials');
-  // }
-
-  // addToCart(id: number, cart: ProductEntity) {
-  //   this.repository.update(id, cart);
-  // }
-
-  // async addToCart(id: number, dto: ProductEntity) {
-  //   const user = this.repository.findOneBy({ id });
-  //   (await user).cart.push({
-  //     price: dto.price,
-  //     img: dto.img,
-  //     name: dto.name,
-  //   });
-  //   this.repository.update(id, {
-  //     cart: (await user).cart,
-  //   });
-  // }
-
-  findByCond(cond: LoginUserDto) {
+  findByCond(cond) {
     return this.repository.findOne({ where: cond });
   }
 

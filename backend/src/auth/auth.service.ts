@@ -3,7 +3,7 @@ import { UserEntity } from 'src/user/entities/user.entity';
 import { UserService } from 'src/user/user.service';
 import { JwtService } from '@nestjs/jwt';
 import { CreateUserDto } from 'src/user/dto/create-user.dto';
-import { User } from 'src/user/decorators/user.decorator';
+import { User } from 'src/decorators/user.decorator';
 
 @Injectable()
 export class AuthService {
@@ -37,7 +37,7 @@ export class AuthService {
     };
   }
 
-  async register(@User() userId, dto: CreateUserDto) {
+  async register(dto: CreateUserDto) {
     try {
       const { password, ...user } = await this.userService.create(dto);
       return {
