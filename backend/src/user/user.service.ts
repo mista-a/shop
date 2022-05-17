@@ -43,7 +43,18 @@ export class UserService {
   }
 
   async getCart(userId: number) {
-    const findUser = await this.repository.findOneBy({ id: userId });
+    let findUser = await this.repository.findOneBy({ id: userId });
+    if (!findUser.cart) {      
+      const qb = this.cartRepo.createQueryBuilder();
+      qb.insert()
+          .into(CartEntity)
+          .values({ id: findUser.id, cartItems: [] })
+          .execute();
+          findUser = await this.repository.save({
+            ...findUser,
+            cart: { id: findUser.id },
+          });
+    }
     if (findUser) {
       return {
         statusCode: 200,
@@ -58,8 +69,7 @@ export class UserService {
     userId: number,
     cartItems: { productId: number; count: number }[],
   ) {
-    console.log(cartItems);
-
+    
     let findUser = await this.repository.findOne({ where: { id: userId } });
     if (findUser) {
       if (!findUser.cart) {
@@ -76,9 +86,11 @@ export class UserService {
       let cart = findUser.cart.cartItems;
       (() => {
         cartItems.forEach(async ({ productId, count }) => {
-          const product = await this.productRepo.findOneBy({ id: productId });
-          if (product) {
-            cart.push({ item: product, count });
+          if (!cart.find((product) => product.item.id === productId) ?? false) {            
+            const product = await this.productRepo.findOneBy({ id: productId });
+            if (product) {
+              cart.push({ item: product, count });
+            }
           }
         });
       })();

@@ -13,13 +13,13 @@ import { Api } from '../../API'
 
 const ProductPage = ({ product }) => {
   const [activeShowcaseItem, setActiveShowcaseItem] = useState(
-    product.showcase[0].miniImg,
+    product.showcase[0].miniImg
   )
 
   const [counter, setCounter] = useState(1)
 
   const addToCart = async () => {
-    let cartItems = [{ productId: product.id, counter }]
+    let cartItems = [{ productId: product.id, count: counter }]
     await Api().user.addToCart(cartItems)
   }
 
@@ -30,14 +30,14 @@ const ProductPage = ({ product }) => {
           showcaseItem.miniImg === activeShowcaseItem && (
             <>
               <img
+                className={styles.mainProductImg}
                 src={showcaseItem.imgs[0]}
                 alt={product.name}
-                className={styles.mainProductImg}
               />
               <img
+                className={styles.mainProductImg}
                 src={showcaseItem.imgs[2]}
                 alt={product.name}
-                className={styles.mainProductImg}
               />
             </>
           )
@@ -59,7 +59,7 @@ const ProductPage = ({ product }) => {
             </Select>
           </FormControl> */}
         </Box>
-        <Box>
+        <Box className={styles.showcase}>
           {product.showcase.map((showcaseItem) => (
             <Button
               variant='text'

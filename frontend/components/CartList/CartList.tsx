@@ -2,6 +2,7 @@ import { styled, Theme, useTheme } from '@mui/material'
 import React, { FC } from 'react'
 import Counter from '../Counter/Counter'
 import ProductCard from '../ProductCard/ProductCard'
+import CartCard from '../CartCard/CartCard'
 import styles from './CartList.module.sass'
 
 interface CartListProps {
@@ -10,6 +11,8 @@ interface CartListProps {
 
 const CartList: FC<CartListProps> = ({ products }) => {
   const theme: Theme = useTheme()
+  console.log(products)
+
   const ProductListGrid: FC = styled('div')(() => ({
     display: 'grid',
     gridTemplateColumns: 'repeat(4, 1fr)',
@@ -27,12 +30,7 @@ const CartList: FC<CartListProps> = ({ products }) => {
       <ProductListGrid>
         {/* <div className={styles.cartList}> */}
         {products.map((product) => {
-          return (
-            <div>
-              <ProductCard product={product.item} />
-              <Counter defaultCounter={product.counter} />
-            </div>
-          )
+          return <CartCard product={product} />
         })}
       </ProductListGrid>
     </div>
