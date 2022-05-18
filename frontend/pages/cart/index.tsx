@@ -21,13 +21,13 @@ export const getServerSideProps = async (ctx) => {
     return { props: { products } }
   } catch (err) {
     console.log(err)
-    // return {
-    //   props: {},
-    //   redirect: {
-    //     destination: '/',
-    //     permanent: false,
-    //   },
-    // }
+    return {
+      props: {},
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    }
   }
   return { props: { products: null } }
 }

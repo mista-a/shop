@@ -4,12 +4,7 @@ import styles from './Carousel.module.sass'
 const Carousel: FC = ({ children }) => {
   const carouselRef = useRef<any>()
   const [activeItem, setActiveItem] = useState(0)
-  const [drag, setDrag] = useState({
-    isScrolling: false,
-    startX: 0,
-    endX: 0,
-    a: 0,
-  })
+  console.log(activeItem)
 
   const updateActiveItem = (item) => {
     if (item >= Children.count(children)) {
@@ -31,32 +26,8 @@ const Carousel: FC = ({ children }) => {
     }
   })
 
-  const onMouseDown = (e) => {
-    setDrag({ ...drag, startX: e.screenX, isScrolling: true })
-  }
-
-  const onMouseMove = (e) => {
-    if (drag.isScrolling) {
-      setDrag({ ...drag, a: -(drag.startX / 1000 - drag.endX / 1000) })
-    }
-  }
-
-  const onMouseUp = (e) => {
-    setDrag({
-      ...drag,
-      endX: e.screenX,
-      isScrolling: false,
-    })
-  }
-
   return (
-    <div
-      ref={carouselRef}
-      className={styles.carousel}
-      onMouseDown={onMouseDown}
-      onMouseMove={onMouseMove}
-      onMouseUp={onMouseUp}
-    >
+    <div ref={carouselRef} className={styles.carousel}>
       <div
         className={styles.inner}
         style={{ transform: `translateX(-${activeItem * 100}%)` }}

@@ -11,11 +11,11 @@ interface ProductCardProps {
 }
 
 const ProductCard: FC<ProductCardProps> = ({ product }) => {
-  const [inCart, setInCart] = useState(false)
+  const [inFavorite, setInFavorite] = useState(false)
 
   useEffect(() => {}, [])
 
-  const changeInCart = () => {}
+  const changeInFavorite = () => {}
 
   return (
     <div className={styles.card}>
@@ -27,13 +27,13 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
             alt={product.name}
           />
         </Link>
-        <button className={styles.likeButton} onClick={changeInCart}>
+        <button className={styles.likeButton} onClick={changeInFavorite}>
           <LikeIcon />
         </button>
       </div>
       <Typography>{product.name}</Typography>{' '}
       <div className={styles.colors}>
-        {/* {product.colors.map((color, index) => {
+        {product.colors.map((color, index) => {
           return (
             <div
               key={index}
@@ -43,7 +43,7 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
               }}
             />
           )
-        })} */}
+        })}
       </div>
       <Typography>$ {product.price}</Typography>
     </div>

@@ -35,15 +35,6 @@ const Home: NextPage<HomeProps> = ({ products }) => {
     },
   ]
 
-  // useEffect(() => {
-  //   const getProducts = async () => {
-  //     const products = await Api().product.getPopular()
-  //     setProducts(products.products)
-  //   }
-
-  //   getProducts()
-  // }, [])
-
   return (
     <>
       <Carousel>

@@ -9,7 +9,7 @@ export class CreateProductDto {
   @IsString()
   name: string;
 
-  @IsNumber()
+  // @IsNumber()
   price: number;
 
   @IsString()
@@ -18,7 +18,6 @@ export class CreateProductDto {
   @IsArray()
   colors: string[];
 
-  
   showcase: any;
   // sizes?: string[];
   // description?: string;
