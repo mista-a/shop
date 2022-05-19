@@ -5,12 +5,15 @@ import { UpdateProductDto } from './dto/update-product.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { SearchProductDto } from './dto/search-product';
+import { CategoryEntity } from './entities/category.entity';
 
 @Injectable()
 export class ProductService {
   constructor(
     @InjectRepository(ProductEntity)
     private repository: Repository<ProductEntity>,
+    @InjectRepository(CategoryEntity)
+    private category: Repository<CategoryEntity>,
   ) {}
 
   create(dto: CreateProductDto) {
@@ -25,6 +28,10 @@ export class ProductService {
 
   findAll() {
     return this.repository.find();
+  }
+
+  findAllCategories() {
+    return this.category.find();
   }
 
   async popular() {

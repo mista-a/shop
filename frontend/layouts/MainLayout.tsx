@@ -1,4 +1,5 @@
 import React, { FC } from 'react'
+import { Api } from '../API'
 import Footer from '../components/Footer/Footer'
 import Header from '../components/Header/Header'
 import MainContainer from '../components/MainContainer/MainContainer'

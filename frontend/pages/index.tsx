@@ -10,9 +10,10 @@ import { NextPage } from 'next'
 
 interface HomeProps {
   products: Array<any>
+  categories: { id: number; name: string }
 }
 
-const Home: NextPage<HomeProps> = ({ products }) => {
+const Home: NextPage<HomeProps> = ({ products, categories }) => {
   // const [products, setProducts] = useState([
   //   { img: '', name: '', colors: [], id: null, views: null, price: null },
   // ])
@@ -73,8 +74,9 @@ const Home: NextPage<HomeProps> = ({ products }) => {
 export const getServerSideProps = async (ctx) => {
   try {
     const products = await Api().product.getPopular()
+    const categories = await Api().product.getCategories()
 
-    return { props: { products: products.products } }
+    return { props: { products: products.products, categories } }
   } catch (err) {
     console.log(err)
   }

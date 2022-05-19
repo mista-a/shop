@@ -20,6 +20,7 @@ ShopApp.getInitialProps = wrapper.getInitialAppProps(
   (store) =>
     async ({ ctx, Component }) => {
       try {
+        const categories = await Api().product.getCategories()
         const userData = await Api(ctx).user.getMe()
         store.dispatch(setUserData(userData))
       } catch (err) {
@@ -39,7 +40,19 @@ ShopApp.getInitialProps = wrapper.getInitialAppProps(
             : {}),
         },
       }
-    },
+    }
 )
+
+export const getServerSideProps = async (ctx) => {
+  try {
+    const products = await Api().product.getPopular()
+    const categories = await Api().product.getCategories()
+
+    return { props: { products: products.products, categories } }
+  } catch (err) {
+    console.log(err)
+  }
+  return { props: { products: null } }
+}
 
 export default wrapper.withRedux(ShopApp)

@@ -30,4 +30,8 @@ export const ProductApi = (instance: AxiosInstance) => ({
   async create(dto: CreateProductDto) {
     await instance.post<CreateProductDto>('/products', dto)
   },
+  async getCategories() {
+    const {data} = await instance.get<CreateProductDto>('/categories')
+    return data
+  },
 })
