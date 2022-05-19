@@ -1,5 +1,6 @@
 const puppeteer = require('puppeteer')
 const fs = require('fs')
+const to = require('../../utils/to')
 
 ;(async () => {
   const browser = await puppeteer.launch()
@@ -8,11 +9,6 @@ const fs = require('fs')
     'Mozilla/5.0 (Windows NT; Win 64; x64; rv:73.0) Gecko/20100101 Firefox/73.0',
   )
   const initLink = 'https://www2.hm.com/en_us/men/new-arrivals/clothes.html'
-
-  const to = async (link, time = 2500) => {
-    await page.goto(link)
-    await page.waitForTimeout(time)
-  }
 
   await page.goto(initLink)
   await (async () => {
@@ -36,7 +32,6 @@ const fs = require('fs')
       productsCountStr = productsCount.toString()
 
       //ProdcuctsListPage
-
       data[productsCount - 1].img = await page.$eval(
         `#page-content > div > div:nth-child(3) > ul > li:nth-child(${productsCountStr}) > article > div.image-container > a > img`,
         (el) => el.src,
