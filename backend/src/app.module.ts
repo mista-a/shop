@@ -8,6 +8,8 @@ import { CartEntity } from 'src/user/entities/cart.entity';
 import { ProductModule } from './product/product.module';
 import { ProductEntity } from './product/entities/product.entity';
 import { AuthModule } from './auth/auth.module';
+import { CategoryEntity } from './product/entities/category.entity';
+import { SubCategoryEntity } from './product/entities/subCategory.entity';
 
 @Module({
   imports: [
@@ -18,7 +20,13 @@ import { AuthModule } from './auth/auth.module';
       username: 'postgres',
       password: 'ppassword',
       database: 'shop',
-      entities: [UserEntity, ProductEntity, CartEntity],
+      entities: [
+        UserEntity,
+        ProductEntity,
+        CartEntity,
+        CategoryEntity,
+        SubCategoryEntity,
+      ],
       synchronize: true,
     }),
     UserModule,

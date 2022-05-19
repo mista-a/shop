@@ -1,4 +1,14 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  OneToMany,
+  ManyToOne,
+  JoinTable,
+  ManyToMany,
+} from 'typeorm';
+import { CategoryEntity } from './category.entity';
+import { SubCategoryEntity } from './subCategory.entity';
 
 @Entity('products')
 export class ProductEntity {
@@ -25,6 +35,14 @@ export class ProductEntity {
 
   @Column('json')
   showcase: any;
+
+  @ManyToMany(() => CategoryEntity)
+  @JoinTable()
+  category: CategoryEntity;
+
+  @ManyToOne(() => SubCategoryEntity)
+  @JoinTable()
+  subcategories: SubCategoryEntity[];
 
   // @Column('text', { array: true, default: [] })
   // sizes: string[];
