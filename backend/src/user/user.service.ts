@@ -44,16 +44,16 @@ export class UserService {
 
   async getCart(userId: number) {
     let findUser = await this.repository.findOneBy({ id: userId });
-    if (!findUser.cart) {      
+    if (!findUser.cart) {
       const qb = this.cartRepo.createQueryBuilder();
       qb.insert()
-          .into(CartEntity)
-          .values({ id: findUser.id, cartItems: [] })
-          .execute();
-          findUser = await this.repository.save({
-            ...findUser,
-            cart: { id: findUser.id },
-          });
+        .into(CartEntity)
+        .values({ id: findUser.id, cartItems: [] })
+        .execute();
+      findUser = await this.repository.save({
+        ...findUser,
+        cart: { id: findUser.id },
+      });
     }
     if (findUser) {
       return {
@@ -67,10 +67,9 @@ export class UserService {
 
   async addToCart(
     userId: number,
-    cartItems: { productId: number; count: number }[],
+    cartItem: { productId: number; count: number; type: string },
   ) {
-    
-    let findUser = await this.repository.findOne({ where: { id: userId } });
+    let findUser = await this.repository.findOneBy({ id: userId });
     if (findUser) {
       if (!findUser.cart) {
         const qb = this.cartRepo.createQueryBuilder();
@@ -84,21 +83,45 @@ export class UserService {
         });
       }
       let cart = findUser.cart.cartItems;
-      (() => {
-        cartItems.forEach(async ({ productId, count }) => {
-          if (!cart.find((product) => product.item.id === productId) ?? false) {            
-            const product = await this.productRepo.findOneBy({ id: productId });
-            if (product) {
-              cart.push({ item: product, count });
-            }
+      (async () => {
+        const { productId, count, type } = cartItem;
+        const product = await this.productRepo.findOneBy({ id: productId });
+        if (!cart.find((product) => product.item.id === productId) ?? false) {
+          if (product) {
+            cart.push({ item: product, count, type });
           }
-        });
+        } else {
+          cart.forEach((oldProduct, index) => {
+            if (oldProduct.item.id === productId) {
+              findUser.cart.cartItems[index] = { item: product, count, type };
+            }
+          });
+        }
       })();
       await this.repository.save(findUser);
       return {
         statusCode: 200,
         message: 'Success',
-        response: { cart: cartItems },
+        response: { cart: cartItem },
+      };
+    }
+    throw new UnauthorizedException('Invalid Credentials');
+  }
+
+  async deleteFromCart(userId: number, productId: number) {
+    let findUser = await this.repository.findOneBy({ id: userId });
+    if (findUser) {
+      let cart = findUser.cart.cartItems;
+      cart.forEach((product, index) => {
+        if (product.item.id === productId) {
+          cart.splice(index, 1);
+        }
+      });
+      await this.repository.save(findUser);
+      return {
+        statusCode: 200,
+        message: 'Success',
+        response: { cart },
       };
     }
     throw new UnauthorizedException('Invalid Credentials');

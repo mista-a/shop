@@ -4,7 +4,6 @@ import styles from './Carousel.module.sass'
 const Carousel: FC = ({ children }) => {
   const carouselRef = useRef<any>()
   const [activeItem, setActiveItem] = useState(0)
-  console.log(activeItem)
 
   const updateActiveItem = (item) => {
     if (item >= Children.count(children)) {

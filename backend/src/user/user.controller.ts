@@ -48,9 +48,15 @@ export class UserController {
   @Post('/cart')
   addToCart(
     @User() id,
-    @Body() cartItems: { productId: number; count: number }[],
+    @Body() cartItem: { productId: number; count: number; type: string },
   ) {
-    return this.userService.addToCart(id, cartItems);
+    return this.userService.addToCart(id, cartItem);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Delete('/cart')
+  deleteFromCart(@User() id, @Body() productId: { productId }) {
+    return this.userService.deleteFromCart(id, productId.productId);
   }
 
   @Get(':id')

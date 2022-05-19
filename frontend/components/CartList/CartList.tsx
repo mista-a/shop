@@ -11,7 +11,6 @@ interface CartListProps {
 
 const CartList: FC<CartListProps> = ({ products }) => {
   const theme: Theme = useTheme()
-  console.log(products)
 
   const ProductListGrid: FC = styled('div')(() => ({
     display: 'grid',
@@ -25,15 +24,24 @@ const CartList: FC<CartListProps> = ({ products }) => {
     },
   }))
 
-  return (
-    <div>
-      <ProductListGrid>
-        {/* <div className={styles.cartList}> */}
-        {products.map((product) => {
-          return <CartCard product={product} />
-        })}
-      </ProductListGrid>
+  // cart.forEach((product, index) => {
+  //   if (product.item.id === productId) {
+  //     cart.splice(index, 1)
+  //   }
+  // })
+  console.log(products)
+
+  return products.length ? (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 30 }}>
+      {/* <ProductListGrid> */}
+      {/* <div className={styles.cartList}> */}
+      {products.map((product) => {
+        return <CartCard product={product} products={products} />
+      })}
+      {/* </ProductListGrid> */}
     </div>
+  ) : (
+    <span className={styles.emptyError}>Корзина пуста</span>
   )
 }
 

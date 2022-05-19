@@ -24,11 +24,10 @@ export const UserApi = (instance: AxiosInstance) => ({
     const { data } = await instance.get(`/users/cart`)
     return data
   },
-  // cartItem: { productId: number; count: number }[]
-  async addToCart(cartItems) {
-    console.log(cartItems, 'post');
-    
-    const { data } = await instance.post(`/users/cart`, cartItems)
-    return data
+  async addToCart(productId: number, count: number, type: string) {
+    await instance.post(`/users/cart`, { productId, count, type })
+  },
+  async deleteFromCart(productId: number) {
+    await instance.delete(`/users/cart`, { data: { productId } })
   },
 })

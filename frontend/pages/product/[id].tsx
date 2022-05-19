@@ -13,14 +13,14 @@ import { Api } from '../../API'
 
 const ProductPage = ({ product }) => {
   const [activeShowcaseItem, setActiveShowcaseItem] = useState(
-    product.showcase[0].miniImg
+    product.showcase[0].miniImg,
   )
 
   const [counter, setCounter] = useState(1)
 
   const addToCart = async () => {
-    let cartItems = [{ productId: product.id, count: counter }]
-    await Api().user.addToCart(cartItems)
+    let type = activeShowcaseItem
+    await Api().user.addToCart(product.id, counter, type)
   }
 
   return (

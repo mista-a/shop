@@ -16,7 +16,7 @@ export class CartEntity {
   id: number;
 
   @Column('json')
-  cartItems: { item: ProductEntity; count: number }[];
+  cartItems: { item: ProductEntity; count: number; type: string }[];
 
   @OneToOne(() => UserEntity)
   public user: UserEntity;

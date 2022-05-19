@@ -13,9 +13,7 @@ const SearchPage = () => {
 
   useEffect(() => {
     ;(async () => {
-      const products = await Api().product.getProducts(
-        `/search?name=${query.name}`,
-      )
+      const products = await Api().product.getAll(`/search?name=${query.name}`)
 
       setProducts(products)
     })()

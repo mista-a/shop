@@ -5,8 +5,6 @@ import CartList from '../../components/CartList/CartList'
 import ProductList from '../../components/ProductList/ProductList'
 
 const Cart = ({ products }) => {
-  console.log(products)
-
   // return <div></div>
   // return <ProductList products={products} />
   return <CartList products={products} />
@@ -14,10 +12,8 @@ const Cart = ({ products }) => {
 
 export const getServerSideProps = async (ctx) => {
   try {
-    // const userId = await Api(ctx).user.getMe()
     let products = await Api(ctx).user.getCart()
     products = products.response.cart.cartItems
-
     return { props: { products } }
   } catch (err) {
     console.log(err)
@@ -29,7 +25,6 @@ export const getServerSideProps = async (ctx) => {
       },
     }
   }
-  return { props: { products: null } }
 }
 
 export default Cart
