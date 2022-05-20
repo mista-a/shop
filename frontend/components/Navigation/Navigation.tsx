@@ -14,13 +14,13 @@ const Navigation = ({ categories }) => {
   return (
     navigationBreakepoint && (
       <Box className={styles.navigation}>
-        {categories.map(({ name, id }) => {
+        {/* {categories.map(({ name, id }) => {
           return (
             <Link href={`/${textToLink(name)}`} key={id}>
               <span className={styles.navigationItem}>
                 {name} <ArrowIcon />
-                <div className={styles.categoryLinks}>
-                  {/* {categoris[category].map((categoryLink, index) => {
+                <div className={styles.categoryLinks}> */}
+        {/* {categoris[category].map((categoryLink, index) => {
                     return (
                       <Link
                         href={`${textToLink(category)}/${textToLink(
@@ -34,11 +34,11 @@ const Navigation = ({ categories }) => {
                       </Link>
                     )
                   })} */}
-                </div>
+        {/* </div>
               </span>
             </Link>
           )
-        })}
+        })} */}
         {/* {Object.keys(categoris).map((category, index) => {
           return (
             <Link href={`/${textToLink(category)}`} key={index}>

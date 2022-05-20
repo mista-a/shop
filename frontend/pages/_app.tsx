@@ -20,7 +20,7 @@ ShopApp.getInitialProps = wrapper.getInitialAppProps(
   (store) =>
     async ({ ctx, Component }) => {
       try {
-        const categories = await Api().product.getCategories()
+        // const categories = await Api().product.getCategories()
         const userData = await Api(ctx).user.getMe()
         store.dispatch(setUserData(userData))
       } catch (err) {
@@ -40,7 +40,7 @@ ShopApp.getInitialProps = wrapper.getInitialAppProps(
             : {}),
         },
       }
-    }
+    },
 )
 
 export const getServerSideProps = async (ctx) => {

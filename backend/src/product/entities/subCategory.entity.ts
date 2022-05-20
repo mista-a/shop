@@ -1,14 +1,24 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToMany } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  ManyToMany,
+  ManyToOne,
+  OneToMany,
+} from 'typeorm';
 import { CategoryEntity } from './category.entity';
+import { ProductEntity } from './product.entity';
 
 @Entity('subcategory')
 export class SubCategoryEntity {
   @PrimaryGeneratedColumn()
   id: number;
-
   @Column()
   name: string;
 
-  // @ManyToMany(() => CategoryEntity)
-  // category: CategoryEntity[];
+  @OneToMany(() => ProductEntity, (product) => product.category)
+  products: ProductEntity[];
+
+  @ManyToMany(() => CategoryEntity, (category) => category.subCategories)
+  category: CategoryEntity;
 }

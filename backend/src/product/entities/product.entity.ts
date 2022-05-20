@@ -36,13 +36,14 @@ export class ProductEntity {
   @Column('json')
   showcase: any;
 
-  @ManyToMany(() => CategoryEntity)
-  @JoinTable()
+  @ManyToOne(() => CategoryEntity)
   category: CategoryEntity;
 
   @ManyToOne(() => SubCategoryEntity)
-  @JoinTable()
-  subcategories: SubCategoryEntity[];
+  subCategory: SubCategoryEntity;
+
+  // @OneToMany(() => SubCategoryEntity, (subcategories) => subcategories.product)
+  // subcategories: SubCategoryEntity[];
 
   // @Column('text', { array: true, default: [] })
   // sizes: string[];

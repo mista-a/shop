@@ -38,13 +38,13 @@ export class ProductController {
     return this.productService.popular();
   }
 
-  @Patch('cart/:id')
-  toggleFavorite(
-    @Param('id') id: string,
-    @Body() updateProductDto: UpdateProductDto,
-  ) {
-    return this.productService.update(+id, updateProductDto);
-  }
+  // @Patch('cart/:id')
+  // toggleFavorite(
+  //   @Param('id') id: string,
+  //   @Body() updateProductDto: UpdateProductDto,
+  // ) {
+  //   return this.productService.update(+id, updateProductDto);
+  // }
 
   @Get('/search')
   searchProducts(@Query() dto: SearchProductDto) {
@@ -56,15 +56,30 @@ export class ProductController {
     return this.productService.findAllCategories();
   }
 
+  @Get('/category/:name')
+  getByCategory(@Param('name') name: string) {
+    return this.productService.findByCategory(name);
+  }
+
+  @Get('/category/:name/subcategories')
+  subCategories(@Param('name') name: string) {
+    return this.productService.findSubCategories(name);
+  }
+
+  @Get('/subcategories/:name')
+  getBySubCategories(@Param('name') name: string) {
+    return this.productService.getBySubCategories(name);
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.productService.findOne(+id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateProductDto: UpdateProductDto) {
-    return this.productService.update(+id, updateProductDto);
-  }
+  // @Patch(':id')
+  // update(@Param('id') id: string, @Body() updateProductDto: UpdateProductDto) {
+  //   return this.productService.update(+id, updateProductDto);
+  // }
 
   @Delete(':id')
   remove(@Param('id') id: string) {

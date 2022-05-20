@@ -74,9 +74,9 @@ const Home: NextPage<HomeProps> = ({ products, categories }) => {
 export const getServerSideProps = async (ctx) => {
   try {
     const products = await Api().product.getPopular()
-    const categories = await Api().product.getCategories()
+    // const categories = await Api().product.getCategories()
 
-    return { props: { products: products.products, categories } }
+    return { props: { products: products.products } }
   } catch (err) {
     console.log(err)
   }

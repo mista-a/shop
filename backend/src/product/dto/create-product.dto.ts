@@ -18,6 +18,9 @@ export class CreateProductDto {
   @IsArray()
   colors: string[];
 
+  @IsString()
+  category: string;
+
   showcase: any;
   // sizes?: string[];
   // description?: string;

@@ -6,6 +6,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { SearchProductDto } from './dto/search-product';
 import { CategoryEntity } from './entities/category.entity';
+import { SubCategoryEntity } from './entities/subCategory.entity';
 
 @Injectable()
 export class ProductService {
@@ -14,6 +15,8 @@ export class ProductService {
     private repository: Repository<ProductEntity>,
     @InjectRepository(CategoryEntity)
     private category: Repository<CategoryEntity>,
+    @InjectRepository(SubCategoryEntity)
+    private subCategory: Repository<SubCategoryEntity>,
   ) {}
 
   create(dto: CreateProductDto) {
@@ -23,6 +26,7 @@ export class ProductService {
       img: dto.img,
       showcase: dto.showcase,
       colors: dto.colors,
+      category: { name: dto.category },
     });
   }
 
@@ -32,6 +36,37 @@ export class ProductService {
 
   findAllCategories() {
     return this.category.find();
+  }
+
+  async findByCategory(name: string) {
+    name = name.substring(1, 1) + name[0].toUpperCase() + name.substring(1);
+    console.log(name);
+    return this.category.find({
+      where: {
+        name,
+      },
+      relations: ['products'],
+    });
+  }
+
+  findSubCategories(name: string) {
+    name = name.substring(1, 1) + name[0].toUpperCase() + name.substring(1);
+    return this.category.find({
+      where: {
+        name,
+      },
+      relations: ['subCategories'],
+    });
+  }
+
+  getBySubCategories(name: string) {
+    name = name.substring(1, 1) + name[0].toUpperCase() + name.substring(1);
+    return this.subCategory.find({
+      where: {
+        name,
+      },
+      relations: ['products'],
+    });
   }
 
   async popular() {
@@ -128,15 +163,15 @@ export class ProductService {
     return this.repository.findOneBy({ id: +id });
   }
 
-  async update(id: number, dto: UpdateProductDto) {
-    const find = await this.repository.findOneBy({ id });
+  // async update(id: number, dto: UpdateProductDto) {
+  //   const find = await this.repository.findOneBy({ id });
 
-    if (!find) {
-      throw new NotFoundException('Product not found');
-    }
+  //   if (!find) {
+  //     throw new NotFoundException('Product not found');
+  //   }
 
-    return this.repository.update(id, dto);
-  }
+  //   return this.repository.update(id, dto);
+  // }
 
   async remove(id: number) {
     const find = await this.repository.findOneBy({ id: +id });
