@@ -9,7 +9,7 @@ import {
 import { CategoryEntity } from './category.entity';
 import { ProductEntity } from './product.entity';
 
-@Entity('subcategory')
+@Entity('subCategory')
 export class SubCategoryEntity {
   @PrimaryGeneratedColumn()
   id: number;
