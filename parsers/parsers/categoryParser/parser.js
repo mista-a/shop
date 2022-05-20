@@ -13,54 +13,42 @@ const to = require('../../utils/to')
 
   await page.goto(initLink)
 
-  await (async () => {
-    await page.hover(
-      'body > div:nth-child(40) > header > nav > ul.menu__primary > li:nth-child(2)',
-    )
-    await page.screenshot({ path: 'page.png', fullPage: true })
-    const totalCategoris = await page.evaluate(() => {
-      return Array.from(
-        document.querySelector(
-          'body > div:nth-child(40) > header > nav > ul.menu__primary > li.menu__super.menu__super--has-sub.js-traverse-trigger.menu__super--open > ul > li.menu__block.menu--unfolded > ul',
-        ).children,
-      ).length
-    })
-    console.log(totalCategoris)
+  data = { category: {} }
 
-    // const data = []
-    // for (
-    //   let productsCount = 1;
-    //   productsCount <= totalProducts;
-    //   productsCount++
-    // ) {
-    //   data.push({})
-    //   await to(initLink)
-    //   await page.click(
-    //     '#page-content > div > div:nth-child(3) > div.products-filter-container > div.products-filter.sticky-on-scroll > form > fieldset.filter-toggleimages.js-filter-toggleimages > ul > li:nth-child(2) > label',
-    //   )
-    //   console.log(`${productsCount}/${totalProducts}`)
-    // }
-    // //Convert obj in sql querys
-    // // console.log(data)
-    // let logger = fs.createWriteStream('categoryData.sql')
-    // logger.write(`CREATE TABLE products(
-    //   id SERIAL,
-    //   img VARCHAR ,
-    //   name VARCHAR ,
-    //   price NUMERIC ,
-    //   colors TEXT[],
-    //   showCase json,
-    //   views NUMERIC
-    // );\n`)
-    // data.forEach((product) => {
-    //   logger.write(
-    //     `INSERT INTO products (img, name, price, colors, showCase) VALUES ('${
-    //       product.img
-    //     }','${product.name}',${product.price},'{"${product.colors.join(
-    //       '","',
-    //     )}"}','${JSON.stringify(product.showCase)}',);\n`,
+  await (async () => {
+    for (let categoryCount = 2; categoryCount <= 4 + 2; categoryCount++) {
+      console.log(categoryCount)
+      let category = await page.$eval(
+        `body > div:nth-child(38) > header > nav > ul.menu__primary > li:nth-child(${categoryCount}) > a > span`,
+        (el) => el.innerText,
+      )
+
+      if (category === 'Divided') continue
+
+      // data[category] = {}
+
+      console.log(category)
+    }
+
+    // await page.screenshot({ path: 'page.png', fullPage: true })
+    // const totalCategoris = await page.evaluate(() => {
+    //   return (
+    //     Array.from(
+    //       document.querySelector(
+    //         'body > header > nav > ul.menu__primary > li.menu__super.menu__super--has-sub.js-traverse-trigger.menu__super--open > ul > li.menu__block.menu--unfolded > ul',
+    //       ).children,
+    //     ).length - 27
     //   )
     // })
+
+    // for (
+    //   let categorisCount = 3;
+    //   categorisCount <= totalCategoris - 5;
+    //   categorisCount++
+    // ) {
+    //   data.push()
+    //   data[dataCount]
+    // }
   })()
   await browser.close()
 })()
