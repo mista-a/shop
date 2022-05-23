@@ -71,6 +71,12 @@ export class UserController {
     return this.userService.deleteFromCart(id, productId.productId);
   }
 
+  @UseGuards(JwtAuthGuard)
+  @Get('/cart/price')
+  getCartPrice(@User() id: number) {
+    return this.userService.getCartPrice(id);
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.userService.findById(+id);

@@ -1,5 +1,6 @@
+import { Button } from '@mui/material'
 import { NextPage } from 'next'
-import React from 'react'
+import React, { useState } from 'react'
 import { Api } from '../../API'
 import CartList from '../../components/CartList/CartList'
 import ProductList from '../../components/ProductList/ProductList'
@@ -7,7 +8,21 @@ import ProductList from '../../components/ProductList/ProductList'
 const Cart = ({ products }) => {
   // return <div></div>
   // return <ProductList products={products} />
-  return <CartList products={products} />
+  const [clearCart, setClearCart] = useState(false)
+  return !clearCart ? (
+    <div>
+      <CartList products={products} />
+      <Button
+        onClick={() => {
+          setClearCart(true)
+        }}
+      >
+        Купить
+      </Button>
+    </div>
+  ) : (
+    <div></div>
+  )
 }
 
 export const getServerSideProps = async (ctx) => {

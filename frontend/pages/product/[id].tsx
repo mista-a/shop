@@ -13,7 +13,7 @@ import { Api } from '../../API'
 
 const ProductPage = ({ product }) => {
   const [activeShowcaseItem, setActiveShowcaseItem] = useState(
-    product.showcase[0].miniImg,
+    product.showcase[0].miniImg
   )
 
   const [counter, setCounter] = useState(1)
@@ -46,7 +46,7 @@ const ProductPage = ({ product }) => {
       <div className={styles.options}>
         <div className={styles.optionsHeader}>
           <Typography>{product.name}</Typography>
-          <LikeIcon />
+          {/* <LikeIcon /> */}
         </div>
         <Typography>$ {product.price}</Typography>
         <Box>
@@ -79,7 +79,7 @@ const ProductPage = ({ product }) => {
             Add to cart
           </TextButton>
         </Box>
-        <AboutProduct></AboutProduct>
+        {/* <AboutProduct></AboutProduct> */}
       </div>
     </div>
   )

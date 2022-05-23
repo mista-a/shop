@@ -35,7 +35,10 @@ export const UserApi = (instance: AxiosInstance) => ({
   },
   async getFavorites() {
     const { data } = await instance.get(`/users/favorites`)
-    console.log(data)
+    return data
+  },
+  async getCartPrice() {
+    const { data } = await instance.get(`/users/cart/price`)
 
     return data
   },

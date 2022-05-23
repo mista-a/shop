@@ -44,7 +44,6 @@ export class ProductService {
 
   async findByCategory(name: string) {
     name = name.substring(1, 1) + name[0].toUpperCase() + name.substring(1);
-    console.log(name);
     return this.category.find({
       where: {
         name,
@@ -89,15 +88,16 @@ export class ProductService {
     qb.orderBy('views', 'DESC');
     // qb.limit(10);
 
-    const [products, total] = await qb.getManyAndCount();
+    const [products, total] = await qb.getManyAndCount();    
 
+    if(user.inFavorite.length !== 0) {      
     for (const favoriteProduct of user.inFavorite) {
       products.map((product) => {
         if (favoriteProduct.id === product.id) {
           product.favorite = true;
         }
       });
-    }
+    }}
 
     return {
       products,

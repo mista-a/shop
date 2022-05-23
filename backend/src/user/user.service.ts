@@ -154,6 +154,15 @@ export class UserService {
     throw new UnauthorizedException('Invalid Credentials');
   }
 
+  async getCartPrice(userId: number) {
+    
+    const user = await this.repository.findOneBy({id: userId})
+    let price = 0
+    user.cart.cartItems.forEach((product) => {price += (product.item.price * product.count)});
+    
+    return price
+  }
+
   findByCond(cond) {
     return this.repository.findOne({ where: cond });
   }

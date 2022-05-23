@@ -26,6 +26,7 @@ import { useAppSelector } from '../../redux/hooks'
 import { useAppDispatch } from '../../redux/hooks'
 import { setUserData, selectUserData } from '../../redux/slices/user'
 import { destroyCookie } from 'nookies'
+import { Api } from '../../API'
 
 const Header = () => {
   const theme: Theme = useTheme()
@@ -108,7 +109,7 @@ const Header = () => {
 
   const menuBreakepoint = useMediaQuery(theme.breakpoints.down('tablet'))
   const accountControllerBreakepoint = useMediaQuery(
-    theme.breakpoints.down('tablet'),
+    theme.breakpoints.down('tablet')
   )
   const logoBreakepoint = useMediaQuery(theme.breakpoints.down(585))
   const cartPriceBreakepoint = useMediaQuery(theme.breakpoints.down(490))
@@ -154,6 +155,16 @@ const Header = () => {
       setAuthDialog(false)
     }
   }, [authDialog, userData])
+
+  const [cartPrice, setCartPrice] = useState(0)
+
+  useEffect(() => {
+    ;(async () => {
+      const cartPrice = await Api().user.getCartPrice()
+
+      setCartPrice(cartPrice)
+    })()
+  }, [])
 
   return (
     <AppBar position='sticky' className={styles.header}>
@@ -267,7 +278,9 @@ const Header = () => {
                       className={styles.cartButton}
                     >
                       <CartIcon />
-                      {!cartPriceBreakepoint && <Typography>15.33$</Typography>}
+                      {!cartPriceBreakepoint && (
+                        <Typography>{cartPrice}$</Typography>
+                      )}
                     </CartButton>
                   </CartBadge>
                 </Link>
@@ -285,5 +298,15 @@ const Header = () => {
     </AppBar>
   )
 }
+
+// export const getServerSideProps = async (ctx) => {
+//   try {
+//     const { cartPrice } = await Api(ctx).user.getCartPrice()
+//     return { props: { cartPrice } }
+//   } catch (err) {
+//     console.warn(err)
+//     return { props: { cartPrice: 0 } }
+//   }
+// }
 
 export default Header
