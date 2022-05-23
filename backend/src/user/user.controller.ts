@@ -38,9 +38,21 @@ export class UserController {
   }
 
   @UseGuards(JwtAuthGuard)
+  @Post('/favorites')
+  toggleFavorite(@User() id: number, @Body() data: { productId: number }) {
+    return this.userService.toggleFavorite(id, data.productId);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('/favorites')
+  getFavorites(@User() id: number) {
+    return this.userService.getFavorites(id);
+  }
+
+  @UseGuards(JwtAuthGuard)
   @Get('/cart')
   // @Param('id') id: string
-  getCart(@User() id) {
+  getCart(@User() id: number) {
     return this.userService.getCart(id);
   }
 
@@ -55,7 +67,7 @@ export class UserController {
 
   @UseGuards(JwtAuthGuard)
   @Delete('/cart')
-  deleteFromCart(@User() id, @Body() productId: { productId }) {
+  deleteFromCart(@User() id: number, @Body() productId: { productId }) {
     return this.userService.deleteFromCart(id, productId.productId);
   }
 

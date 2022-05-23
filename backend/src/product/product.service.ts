@@ -7,6 +7,7 @@ import { Repository } from 'typeorm';
 import { SearchProductDto } from './dto/search-product';
 import { CategoryEntity } from './entities/category.entity';
 import { SubCategoryEntity } from './entities/subCategory.entity';
+import { UserEntity } from 'src/user/entities/user.entity';
 
 @Injectable()
 export class ProductService {
@@ -17,6 +18,8 @@ export class ProductService {
     private category: Repository<CategoryEntity>,
     @InjectRepository(SubCategoryEntity)
     private subCategory: Repository<SubCategoryEntity>,
+    @InjectRepository(UserEntity)
+    private user: Repository<UserEntity>,
   ) {}
 
   create(dto: CreateProductDto) {
@@ -31,6 +34,7 @@ export class ProductService {
   }
 
   findAll() {
+    // this.user.
     return this.repository.find();
   }
 
@@ -69,13 +73,31 @@ export class ProductService {
     });
   }
 
-  async popular() {
+  async popular(id?: number) {
+    let user: UserEntity;
+    if (id) {
+      user = await this.user.findOne({
+        where: {
+          id,
+        },
+        relations: ['inFavorite'],
+      });
+    }
+
     const qb = this.repository.createQueryBuilder();
 
     qb.orderBy('views', 'DESC');
     // qb.limit(10);
 
     const [products, total] = await qb.getManyAndCount();
+
+    for (const favoriteProduct of user.inFavorite) {
+      products.map((product) => {
+        if (favoriteProduct.id === product.id) {
+          product.favorite = true;
+        }
+      });
+    }
 
     return {
       products,

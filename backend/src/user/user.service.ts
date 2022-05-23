@@ -42,6 +42,33 @@ export class UserService {
     return this.repository.findOneBy({ id });
   }
 
+  async toggleFavorite(id: number, productId: number) {
+    const user = this.repository.findOne({
+      where: { id },
+      relations: ['inFavorite'],
+    });
+    let inFavorite = false;
+    const qb = this.repository.createQueryBuilder();
+    for (let product of (await user).inFavorite) {
+      if (product.id === productId) {
+        inFavorite = true;
+        await qb.relation(UserEntity, 'inFavorite').of(id).remove(productId);
+        return;
+      }
+    }
+    if (!inFavorite) {
+      await qb.relation(UserEntity, 'inFavorite').of(id).add(productId);
+    }
+  }
+
+  async getFavorites(id: number) {
+    const favorites = await this.repository.findOne({
+      where: { id },
+      relations: ['inFavorite'],
+    });
+    return favorites.inFavorite;
+  }
+
   async getCart(userId: number) {
     let findUser = await this.repository.findOneBy({ id: userId });
     if (!findUser.cart) {

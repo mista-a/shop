@@ -18,6 +18,29 @@ const Home: NextPage<HomeProps> = ({ products, categories }) => {
   //   { img: '', name: '', colors: [], id: null, views: null, price: null },
   // ])
 
+  const [localProducts, setlocalProducts] = useState(products)
+
+  useEffect(() => {
+    ;(async () => {
+      const { products } = await Api().product.getPopularAuth()
+      setlocalProducts(products)
+    })()
+  }, [])
+
+  const onAddToFavorite = async (productId: number) => {
+    try {
+      await Api().user.addToFavorite(productId)
+      localProducts.map((product) => {
+        if (product.id === productId) {
+          product.favorite = !product.favorite
+        }
+      })
+      setlocalProducts([...localProducts])
+    } catch {}
+  }
+
+  // console.log(localeProducts)
+
   const carouselData = [
     {
       carouselImg: carouselImg,
@@ -66,21 +89,21 @@ const Home: NextPage<HomeProps> = ({ products, categories }) => {
       <Typography className={styles.categoryName} variant='h4'>
         Most popular
       </Typography>
-      <ProductList products={products} />
+      <ProductList products={localProducts} onAddToFavorite={onAddToFavorite} />
     </>
   )
 }
 
 export const getServerSideProps = async (ctx) => {
   try {
-    const products = await Api().product.getPopular()
+    const { products } = await Api(ctx).product.getPopularAuth()
     // const categories = await Api().product.getCategories()
-
-    return { props: { products: products.products } }
+    return { props: { products } }
   } catch (err) {
-    console.log(err)
+    const { products } = await Api().product.getPopular()
+    // const categories = await Api().product.getCategories()
+    return { props: { products } }
   }
-  return { props: { products: null } }
 }
 
 export default Home

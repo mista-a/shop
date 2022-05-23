@@ -30,4 +30,13 @@ export const UserApi = (instance: AxiosInstance) => ({
   async deleteFromCart(productId: number) {
     await instance.delete(`/users/cart`, { data: { productId } })
   },
+  async addToFavorite(productId: number) {
+    await instance.post(`/users/favorites`, { productId })
+  },
+  async getFavorites() {
+    const { data } = await instance.get(`/users/favorites`)
+    console.log(data)
+
+    return data
+  },
 })

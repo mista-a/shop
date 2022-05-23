@@ -32,6 +32,10 @@ export class UserEntity {
   @JoinColumn({ name: 'cartId' })
   cart: CartEntity;
 
+  @ManyToMany(() => ProductEntity)
+  @JoinTable()
+  inFavorite: ProductEntity[];
+
   // @Column('json', { default: [], unique: true })
   // cart: [{ price: number; img: string; name: string }];
 }

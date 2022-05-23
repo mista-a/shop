@@ -19,9 +19,17 @@
     top: 15px
     cursor: pointer
     padding: 0
-    height: 25px
-.likeButtonActiveSVG *
-    fill: red
+    height: 24px
+.likeIcon > path
+    transition: all .5s
+    fill: none
+    stroke: black
+    &:hover
+        fill: #f07070
+        stroke: #f07070
+.ActiveLikeIcon > path
+    fill: #f07070
+    stroke: #f07070
 .colors
     display: flex
     column-gap: 5px

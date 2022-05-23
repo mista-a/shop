@@ -7,16 +7,12 @@ import { ReactComponent as LikeIcon } from '../../assets/images/like-icon.svg'
 import { IProduct } from '../../types/product'
 
 interface ProductCardProps {
-  product: IProduct
+  // product: IProduct
 }
 
-const ProductCard: FC<ProductCardProps> = ({ product }) => {
-  const [inFavorite, setInFavorite] = useState(false)
+// : FC<ProductCardProps>
 
-  useEffect(() => {}, [])
-
-  const changeInFavorite = () => {}
-
+const ProductCard = ({ product, onAddToFavorite }) => {
   return (
     <div className={styles.card}>
       <div className={styles.imgWrapper}>
@@ -27,8 +23,15 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
             alt={product.name}
           />
         </Link>
-        <button className={styles.likeButton} onClick={changeInFavorite}>
-          <LikeIcon />
+        <button
+          className={styles.likeButton}
+          onClick={() => onAddToFavorite(product.id)}
+        >
+          <LikeIcon
+            className={
+              product.favorite ? styles.ActiveLikeIcon : styles.likeIcon
+            }
+          />
         </button>
       </div>
       <Typography>{product.name}</Typography>{' '}

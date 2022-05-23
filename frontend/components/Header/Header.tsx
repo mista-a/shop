@@ -256,7 +256,9 @@ const Header = () => {
                   </Box>
                 )}
                 <HeaderButton className={styles.likeButton}>
-                  <LikeIcon />
+                  <Link href={'/favorite'} classLink={styles.likeLink}>
+                    <LikeIcon />
+                  </Link>
                 </HeaderButton>
                 <Link href={'/cart'}>
                   <CartBadge badgeContent={10} color='info'>

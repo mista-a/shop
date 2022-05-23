@@ -19,7 +19,7 @@ export const ProductApi = (instance: AxiosInstance) => ({
     const { data } = await instance.get(`/products${query}`)
     return data.products
   },
-  async getById(id) {    
+  async getById(id) {
     const { data } = await instance.get(`/products/${id}`)
     return data
   },
@@ -27,11 +27,15 @@ export const ProductApi = (instance: AxiosInstance) => ({
     const { data } = await instance.get('/products/popular')
     return data
   },
+  async getPopularAuth() {
+    const { data } = await instance.get('/products/popular/auth')
+    return data
+  },
   async create(dto: CreateProductDto) {
     await instance.post<CreateProductDto>('/products', dto)
   },
   async getCategories() {
-    const {data} = await instance.get<CreateProductDto>('/categories')
+    const { data } = await instance.get<CreateProductDto>('/categories')
     return data
   },
 })

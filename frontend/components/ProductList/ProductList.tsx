@@ -1,15 +1,17 @@
-import React, { FC } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import ProductCard from '../ProductCard/ProductCard'
 import cardImg from '../../assets/images/card-img.png'
 import styles from './ProductList.module.sass'
 import { styled } from '@mui/material/styles'
 import { Theme, useTheme } from '@mui/material'
+import { Api } from '../../API'
 
 interface ProductListProps {
   products: any
 }
 
-const ProductList: FC<ProductListProps> = ({ products }) => {
+// : FC<ProductListProps>
+const ProductList = ({ products, onAddToFavorite }) => {
   const theme: Theme = useTheme()
   const ProductListGrid: FC = styled('div')(() => ({
     display: 'grid',
@@ -23,10 +25,34 @@ const ProductList: FC<ProductListProps> = ({ products }) => {
     },
   }))
 
+  // const [products, setProducts] = useState([])
+
+  // useEffect(() => {
+  // Api().product.getPopular
+  // },[])
+
+  // const onAddToFavorite = async (productId: number) => {
+  //   try {
+  //     Api().user.addToFavorite(productId)
+  //     products.forEach((product) => {
+  //       if (product.id === productId) {
+  //         console.log(!product.favorite)
+  //         product.favorite = !product.favorite
+  //       }
+  //     })
+  //   } catch {}
+  // }
+
   return (
     <ProductListGrid>
       {products.map((product) => {
-        return <ProductCard product={product} key={product.id} />
+        return (
+          <ProductCard
+            product={product}
+            key={product.id}
+            onAddToFavorite={onAddToFavorite}
+          />
+        )
       })}
     </ProductListGrid>
   )

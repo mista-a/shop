@@ -29,7 +29,7 @@ export class ProductController {
   }
 
   @Get()
-  findAll() {
+  findAll(@User() id) {
     return this.productService.findAll();
   }
 
@@ -38,13 +38,11 @@ export class ProductController {
     return this.productService.popular();
   }
 
-  // @Patch('cart/:id')
-  // toggleFavorite(
-  //   @Param('id') id: string,
-  //   @Body() updateProductDto: UpdateProductDto,
-  // ) {
-  //   return this.productService.update(+id, updateProductDto);
-  // }
+  @UseGuards(JwtAuthGuard)
+  @Get('/popular/auth')
+  getAuthPopularProducts(@User() id: number, dto: UpdateProductDto) {
+    return this.productService.popular(id);
+  }
 
   @Get('/search')
   searchProducts(@Query() dto: SearchProductDto) {

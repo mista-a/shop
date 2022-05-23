@@ -16,11 +16,11 @@ const to = require('../../utils/to')
       () => document.querySelectorAll('.product-item').length,
     )
 
-    const data = []
+    // const data = []
 
-    await page.click(
-      '#page-content > div > div:nth-child(3) > div.products-filter-container > div.products-filter.sticky-on-scroll > form > fieldset.filter-toggleimages.js-filter-toggleimages > ul > li:nth-child(2) > label',
-    )
+    // await page.click(
+    //   '#page-content > div > div:nth-child(3) > div.products-filter-container > div.products-filter.sticky-on-scroll > form > fieldset.filter-toggleimages.js-filter-toggleimages > ul > li:nth-child(2) > label',
+    // )
 
     for (
       let productsCount = 1;
@@ -144,27 +144,27 @@ const to = require('../../utils/to')
 
     // console.log(data)
 
-    let logger = fs.createWriteStream('data.sql')
+    // let logger = fs.createWriteStream('data.sql')
 
-    logger.write(`CREATE TABLE products(
-      id SERIAL,
-      img VARCHAR ,
-      name VARCHAR ,
-      price NUMERIC ,
-      colors TEXT[],
-      showCase json,
-      views NUMERIC
-    );\n`)
+    // logger.write(`CREATE TABLE products(
+    //   id SERIAL,
+    //   img VARCHAR ,
+    //   name VARCHAR ,
+    //   price NUMERIC ,
+    //   colors TEXT[],
+    //   showCase json,
+    //   views NUMERIC
+    // );\n`)
 
-    data.forEach((product) => {
-      logger.write(
-        `INSERT INTO products (img, name, price, colors, showCase) VALUES ('${
-          product.img
-        }','${product.name}',${product.price},'{"${product.colors.join(
-          '","',
-        )}"}','${JSON.stringify(product.showCase)}',);\n`,
-      )
-    })
+    // data.forEach((product) => {
+    //   logger.write(
+    //     `INSERT INTO products (img, name, price, colors, showCase) VALUES ('${
+    //       product.img
+    //     }','${product.name}',${product.price},'{"${product.colors.join(
+    //       '","',
+    //     )}"}','${JSON.stringify(product.showCase)}',);\n`,
+    //   )
+    // })
   })()
   await browser.close()
 })()
