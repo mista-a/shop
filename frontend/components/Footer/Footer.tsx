@@ -17,6 +17,7 @@ import { theme } from '../../theme'
 const Footer: FC = () => {
   const WhiteTypography = styled(Typography)(({ theme }) => ({
     color: 'white',
+    textDecoration: 'underline',
   }))
 
   const Resources = styled(Grid)(({ theme }) => ({
@@ -81,7 +82,9 @@ const Footer: FC = () => {
                 href={'/terms-and-conditions'}
                 classLink={styles.resourceLink}
               >
-                <WhiteTypography>Terms and Conditions</WhiteTypography>
+                <WhiteTypography className={styles.resourceLink}>
+                  Terms and Conditions
+                </WhiteTypography>
               </Link>
               <Link href={'/privacy-policy'} classLink={styles.resourceLink}>
                 <WhiteTypography className={styles.resourcelink}>
@@ -92,10 +95,12 @@ const Footer: FC = () => {
                 href={'/shipping-and-returns'}
                 classLink={styles.resourceLink}
               >
-                <WhiteTypography>{'Shipping & Returns'}</WhiteTypography>
+                <WhiteTypography>Shipping & Returns</WhiteTypography>
               </Link>
               <Link href={'/contact-us'} classLink={styles.resourceLink}>
-                <WhiteTypography>Contact Us</WhiteTypography>
+                <WhiteTypography className={styles.resourcelink}>
+                  Contact Us
+                </WhiteTypography>
               </Link>
             </ResourcesLinks>
           </Resources>
