@@ -1,17 +1,16 @@
-import { styled, Theme, useTheme } from '@mui/material'
+import { styled } from '@mui/material'
 import React, { FC } from 'react'
 import Counter from '../Counter/Counter'
 import ProductCard from '../ProductCard/ProductCard'
 import CartCard from '../CartCard/CartCard'
 import styles from './CartList.module.sass'
+import { theme } from '../../theme'
 
 interface CartListProps {
   products: Array<any>
 }
 
 const CartList: FC<CartListProps> = ({ products }) => {
-  const theme: Theme = useTheme()
-
   const ProductListGrid: FC = styled('div')(() => ({
     display: 'grid',
     gridTemplateColumns: 'repeat(4, 1fr)',

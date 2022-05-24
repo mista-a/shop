@@ -20,17 +20,15 @@ import Input from '../UI/Input'
 import styled from '@emotion/styled'
 import Link from '../UI/Link/Link'
 import MainContainer from '../MainContainer/MainContainer'
-import { Theme, useTheme } from '@mui/material'
 import AuthDialog from '../AuthDialog/AuthDialog'
 import { useAppSelector } from '../../redux/hooks'
 import { useAppDispatch } from '../../redux/hooks'
 import { setUserData, selectUserData } from '../../redux/slices/user'
 import { destroyCookie } from 'nookies'
 import { Api } from '../../API'
+import { theme } from '../../theme'
 
 const Header = () => {
-  const theme: Theme = useTheme()
-
   const HeaderButton = styled(Button)(({ theme: Theme }) => ({
     minHeight: '50px',
     minWidth: '50px',
@@ -109,7 +107,7 @@ const Header = () => {
 
   const menuBreakepoint = useMediaQuery(theme.breakpoints.down('tablet'))
   const accountControllerBreakepoint = useMediaQuery(
-    theme.breakpoints.down('tablet')
+    theme.breakpoints.down('tablet'),
   )
   const logoBreakepoint = useMediaQuery(theme.breakpoints.down(585))
   const cartPriceBreakepoint = useMediaQuery(theme.breakpoints.down(490))
@@ -160,11 +158,12 @@ const Header = () => {
 
   useEffect(() => {
     ;(async () => {
-      const cartPrice = await Api().user.getCartPrice()
-
-      setCartPrice(cartPrice)
+      if (userData) {
+        const cartPrice = await Api().user.getCartPrice()
+        setCartPrice(cartPrice)
+      }
     })()
-  }, [])
+  }, [userData])
 
   return (
     <AppBar position='sticky' className={styles.header}>

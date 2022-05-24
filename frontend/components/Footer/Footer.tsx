@@ -1,5 +1,10 @@
-import styled from '@emotion/styled'
-import { Container, Grid, Typography, useMediaQuery } from '@mui/material'
+import {
+  Container,
+  Grid,
+  styled,
+  Typography,
+  useMediaQuery,
+} from '@mui/material'
 import React, { FC } from 'react'
 import styles from './Footer.module.sass'
 import { ReactComponent as GithubLogo } from '../../assets/images/github-logo.svg'

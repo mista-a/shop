@@ -3,8 +3,8 @@ import ProductCard from '../ProductCard/ProductCard'
 import cardImg from '../../assets/images/card-img.png'
 import styles from './ProductList.module.sass'
 import { styled } from '@mui/material/styles'
-import { Theme, useTheme } from '@mui/material'
 import { Api } from '../../API'
+import { theme } from '../../theme'
 
 interface ProductListProps {
   products: any
@@ -12,7 +12,6 @@ interface ProductListProps {
 
 // : FC<ProductListProps>
 const ProductList = ({ products, onAddToFavorite }) => {
-  const theme: Theme = useTheme()
   const ProductListGrid: FC = styled('div')(() => ({
     display: 'grid',
     gridTemplateColumns: 'repeat(4, 1fr)',
