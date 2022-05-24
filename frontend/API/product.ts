@@ -1,5 +1,10 @@
 import { AxiosInstance } from 'axios'
-import { CreateUserDto, LoginDto, ResponseUser } from './types'
+import {
+  CreateUserDto,
+  LoginDto,
+  ResponseCategories,
+  ResponseUser,
+} from './types'
 
 // class showcaseItem {
 //   miniImg: string
@@ -35,7 +40,13 @@ export const ProductApi = (instance: AxiosInstance) => ({
     await instance.post<CreateProductDto>('/products', dto)
   },
   async getCategories() {
-    const { data } = await instance.get<CreateProductDto>('/categories')
+    const { data } = await instance.get<ResponseCategories>(
+      '/products/categories',
+    )
+    return data
+  },
+  async getSubCategories() {
+    const { data } = await instance.get('/products/subcategories')
     return data
   },
 })

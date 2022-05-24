@@ -21,9 +21,9 @@ const subCategoiesIds = {
   'https://www2.hm.com/en_us/women/products/socks-tights.html': 16,
   'https://www2.hm.com/en_us/women/products/workout-clothes.html': 17,
   'https://www2.hm.com/en_us/men/products/t-shirts-tank-tops.html': 18,
-  'https://www2.hm.com/en_us/men/products/pants.html': 19,
+  'https://www2.hm.com/en_us/men/products/pants.html': 2,
   'https://www2.hm.com/en_us/men/products/shirts.html': 20,
-  'https://www2.hm.com/en_us/men/products/shorts.html': 21,
+  'https://www2.hm.com/en_us/men/products/shorts.html': 5,
   'https://www2.hm.com/en_us/men/products/hoodies-sweatshirts.html': 22,
   'https://www2.hm.com/en_us/men/products/suits-blazers.html': 23,
   'https://www2.hm.com/en_us/men/products/jackets-coats.html': 24,
@@ -51,8 +51,7 @@ const subCategoiesIds = {
     await page.waitForTimeout(time)
   }
 
-  const initLink =
-    'https://www2.hm.com/en_us/women/products/cardigans-sweaters.html'
+  const initLink = 'https://www2.hm.com/en_us/men/products/sportswear.html'
 
   await to(initLink)
 
@@ -203,7 +202,7 @@ const subCategoiesIds = {
 
     data.forEach((product) => {
       logger.write(
-        `INSERT INTO products ("categoryId", "subCategoryId", img, name, price, colors, showCase) VALUES (1, 11, '${
+        `INSERT INTO products ("categoryId", "subCategoryId", img, name, price, colors, showCase) VALUES (2, 30, '${
           product.img
         }','${product.name}',${product.price},'{"${product.colors.join(
           '","',

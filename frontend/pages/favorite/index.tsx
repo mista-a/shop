@@ -14,8 +14,14 @@ export const getServerSideProps = async (ctx) => {
     return { props: { favorites } }
   } catch (err) {
     console.warn(err)
+    return {
+      props: {},
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    }
   }
-  return { props: { favorites: null } }
 }
 
 export default Favorite

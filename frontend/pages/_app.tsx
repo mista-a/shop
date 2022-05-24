@@ -5,6 +5,7 @@ import { wrapper } from '../redux/store'
 import { setUserData } from '../redux/slices/user'
 import { ThemeProvider } from '@mui/material/styles'
 import { Api } from '../API'
+import { setCategoriesData } from '../redux/slices/categories'
 
 function ShopApp({ Component, pageProps }) {
   return (
@@ -20,7 +21,8 @@ ShopApp.getInitialProps = wrapper.getInitialAppProps(
   (store) =>
     async ({ ctx, Component }) => {
       try {
-        // const categories = await Api().product.getCategories()
+        const categories = await Api().product.getCategories()
+        store.dispatch(setCategoriesData(categories))
         const userData = await Api(ctx).user.getMe()
         store.dispatch(setUserData(userData))
       } catch (err) {

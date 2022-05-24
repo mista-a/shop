@@ -1,3 +1,5 @@
+import { Category } from '../types/category'
+
 export type LoginDto = {
   email: string
   password: string
@@ -12,4 +14,8 @@ export type ResponseUser = {
   email: string
   name: string
   token: string
+}
+
+export type ResponseCategories = {
+  categories: Category[]
 }

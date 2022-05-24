@@ -38,8 +38,22 @@ export class ProductService {
     return this.repository.find();
   }
 
-  findAllCategories() {
-    return this.category.find();
+  async findAllCategories() {
+    let categories = await this.category.find();
+
+    await Promise.all(
+      categories.map(async (category) => {
+        const { subCategories } = await this.category.findOne({
+          where: {
+            name: category.name,
+          },
+          relations: ['subCategories'],
+        });
+        category.subCategories = subCategories;
+      }),
+    );
+
+    return { categories };
   }
 
   async findByCategory(name: string) {
@@ -73,6 +87,13 @@ export class ProductService {
   }
 
   async popular(id?: number) {
+    const qb = this.repository.createQueryBuilder();
+
+    qb.orderBy('views', 'DESC');
+    // qb.limit(10);
+
+    const [products, total] = await qb.getManyAndCount();
+
     let user: UserEntity;
     if (id) {
       user = await this.user.findOne({
@@ -81,23 +102,17 @@ export class ProductService {
         },
         relations: ['inFavorite'],
       });
-    }
 
-    const qb = this.repository.createQueryBuilder();
-
-    qb.orderBy('views', 'DESC');
-    // qb.limit(10);
-
-    const [products, total] = await qb.getManyAndCount();    
-
-    if(user.inFavorite.length !== 0) {      
-    for (const favoriteProduct of user.inFavorite) {
-      products.map((product) => {
-        if (favoriteProduct.id === product.id) {
-          product.favorite = true;
+      if (user.inFavorite.length !== 0) {
+        for (const favoriteProduct of user.inFavorite) {
+          products.map((product) => {
+            if (favoriteProduct.id === product.id) {
+              product.favorite = true;
+            }
+          });
         }
-      });
-    }}
+      }
+    }
 
     return {
       products,

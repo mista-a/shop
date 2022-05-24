@@ -7,25 +7,31 @@ import CarouselItem from '../components/CarouselItem/CarouselItem'
 import ProductList from '../components/ProductList/ProductList'
 import { Api } from '../API/index'
 import { NextPage } from 'next'
+import { useAppSelector } from '../redux/hooks'
 
 interface HomeProps {
   products: Array<any>
-  categories: { id: number; name: string }
 }
 
-const Home: NextPage<HomeProps> = ({ products, categories }) => {
+const Home: NextPage<HomeProps> = ({ products }) => {
   // const [products, setProducts] = useState([
   //   { img: '', name: '', colors: [], id: null, views: null, price: null },
   // ])
 
   const [localProducts, setlocalProducts] = useState(products)
 
+  const userData = useAppSelector((state) => state.user).data
+
   useEffect(() => {
     ;(async () => {
-      const { products } = await Api().product.getPopularAuth()
+      let products
+      userData
+        ? ({ products } = await Api().product.getPopularAuth())
+        : ({ products } = await Api().product.getPopular())
+
       setlocalProducts(products)
     })()
-  }, [])
+  }, [userData])
 
   const onAddToFavorite = async (productId: number) => {
     try {
@@ -38,8 +44,6 @@ const Home: NextPage<HomeProps> = ({ products, categories }) => {
       setlocalProducts([...localProducts])
     } catch {}
   }
-
-  // console.log(localeProducts)
 
   const carouselData = [
     {
@@ -97,14 +101,10 @@ const Home: NextPage<HomeProps> = ({ products, categories }) => {
 export const getServerSideProps = async (ctx) => {
   try {
     const { products } = await Api(ctx).product.getPopularAuth()
-
-    // const categories = await Api().product.getCategories()
-    return { props: { products: [] } }
+    return { props: { products } }
   } catch (err) {
     const { products } = await Api().product.getPopular()
-
-    // const categories = await Api().product.getCategories()
-    return { props: { products: [] } }
+    return { props: { products } }
   }
 }
 
