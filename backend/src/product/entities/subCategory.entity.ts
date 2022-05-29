@@ -16,7 +16,7 @@ export class SubCategoryEntity {
   @Column()
   name: string;
 
-  @OneToMany(() => ProductEntity, (product) => product.category)
+  @OneToMany(() => ProductEntity, (product) => product.subCategory)
   products: ProductEntity[];
 
   @ManyToMany(() => CategoryEntity, (category) => category.subCategories)

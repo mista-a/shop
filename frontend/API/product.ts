@@ -49,4 +49,8 @@ export const ProductApi = (instance: AxiosInstance) => ({
     const { data } = await instance.get('/products/subcategories')
     return data
   },
+  async getBySubCategories(name: string) {
+    const { data } = await instance.get(`/products/subcategories/${name}`)
+    return data
+  },
 })

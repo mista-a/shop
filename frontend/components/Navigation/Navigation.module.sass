@@ -4,21 +4,15 @@
   position: relative
   margin-bottom: 30px
   display: flex
-  &Item
+.category
+  position: relative
+  &:hover .subCategories
     display: flex
-    align-items: center
-    column-gap: 5px
-    cursor: pointer
-    padding: 16px
-    &:hover .categoryLinks
-      display: flex
-.categoryLinks
+.subCategories
   display: none
   position: absolute
   background-color: #f1f1f1
   z-index: 1
-  top: 40px
   flex-direction: column
-  max-width: 100px
-  width: 100%
-.link
+.subCategory
+  padding: 5px

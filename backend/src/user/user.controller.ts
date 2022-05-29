@@ -15,6 +15,7 @@ import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { CreateProductDto } from 'src/product/dto/create-product.dto';
 import { ProductEntity } from 'src/product/entities/product.entity';
 import { User } from '../decorators/user.decorator';
+import { addToCartDto } from './dto/add-to-cart.dto';
 
 @Controller('users')
 export class UserController {
@@ -58,23 +59,19 @@ export class UserController {
 
   @UseGuards(JwtAuthGuard)
   @Post('/cart')
-  addToCart(
-    @User() id,
-    @Body() cartItem: { productId: number; count: number; type: string },
-  ) {
-    return this.userService.addToCart(id, cartItem);
+  addToCart(@User() userId: number, @Body() dto: addToCartDto) {
+    return this.userService.addToCart(
+      userId,
+      dto.typeId,
+      dto.count,
+      dto.productId,
+    );
   }
 
   @UseGuards(JwtAuthGuard)
   @Delete('/cart')
-  deleteFromCart(@User() id: number, @Body() productId: { productId }) {
+  deleteFromCart(@User() id: number, @Body() productId: { productId: number }) {
     return this.userService.deleteFromCart(id, productId.productId);
-  }
-
-  @UseGuards(JwtAuthGuard)
-  @Get('/cart/price')
-  getCartPrice(@User() id: number) {
-    return this.userService.getCartPrice(id);
   }
 
   @Get(':id')

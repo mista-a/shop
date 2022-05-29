@@ -56,6 +56,29 @@ export class ProductService {
     return { categories };
   }
 
+  async checkInFavorite(id, products) {
+    let user: UserEntity;
+    if (id) {
+      user = await this.user.findOne({
+        where: {
+          id,
+        },
+        relations: ['favorites'],
+      });
+
+      if (user.favorites.length) {
+        user.favorites.map((favoriteProduct) => {
+          products.map((product) => {
+            if (favoriteProduct.id === product.id) {
+              product.inFavorite = true;
+            }
+          });
+        });
+      }
+    }
+    return products;
+  }
+
   async findByCategory(name: string) {
     name = name.substring(1, 1) + name[0].toUpperCase() + name.substring(1);
     return this.category.find({
@@ -76,71 +99,51 @@ export class ProductService {
     });
   }
 
-  getBySubCategories(name: string) {
-    name = name.substring(1, 1) + name[0].toUpperCase() + name.substring(1);
-    return this.subCategory.find({
-      where: {
-        name,
-      },
-      relations: ['products'],
-    });
+  async getBySubCategory(userId: number, name: string, limit = 12, page = 1) {
+    name = name
+      .split('-')
+      .map(
+        (name) =>
+          name.substring(1, 1) + name[0].toUpperCase() + name.substring(1),
+      )
+      .join(' ');
+
+    const subCategory = await this.subCategory
+      .createQueryBuilder('subCategory')
+      .where({ name })
+      .leftJoinAndSelect('subCategory.products', ':subCategory')
+      .limit(limit)
+      .offset((page - 1) * limit)
+      .getOne();
+
+    let products = [];
+    if (subCategory?.products) {
+      products = subCategory.products;
+    }
+
+    products = await this.checkInFavorite(userId, products);
+
+    return {
+      products,
+      page,
+    };
   }
 
-  async popular(id?: number) {
+  async popular(userId?: number) {
     const qb = this.repository.createQueryBuilder();
 
     qb.orderBy('views', 'DESC');
-    // qb.limit(10);
+    qb.limit(12);
 
-    const [products, total] = await qb.getManyAndCount();
+    let [products, total] = await qb.getManyAndCount();
 
-    let user: UserEntity;
-    if (id) {
-      user = await this.user.findOne({
-        where: {
-          id,
-        },
-        relations: ['inFavorite'],
-      });
-
-      if (user.inFavorite.length !== 0) {
-        for (const favoriteProduct of user.inFavorite) {
-          products.map((product) => {
-            if (favoriteProduct.id === product.id) {
-              product.favorite = true;
-            }
-          });
-        }
-      }
-    }
+    products = await this.checkInFavorite(userId, products);
 
     return {
       products,
       total,
     };
   }
-
-  // async getFavorite(dto: UpdateProductDto) {
-  //   const qb = this.repository.createQueryBuilder();
-  //   qb.orderBy('favorite', 'DESC');
-  //   qb.where(`cart = TRUE`);
-  //   // qb.limit(dto.limit || 0);
-  //   const [products, total] = await qb.getManyAndCount();
-  //   return {
-  //     products,
-  //     total,
-  //   };
-  // }
-
-  // async toggleFavorite(id: number, dto: UpdateProductDto) {
-  //   const find = await this.repository.findOneBy({ id });
-
-  //   if (!find) {
-  //     throw new NotFoundException('Product not found');
-  //   }
-
-  //   return this.repository.update(id, dto);
-  // }
 
   async search(dto: SearchProductDto) {
     const qb = this.repository.createQueryBuilder('products');

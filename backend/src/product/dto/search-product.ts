@@ -5,6 +5,6 @@ export class SearchProductDto {
   sizes?: string[];
   type?: string;
   limit?: number;
-  take?: number;
+  page?: number;
   views: 'DESC' | 'ASC';
 }

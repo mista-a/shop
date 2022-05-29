@@ -33,17 +33,17 @@ const Home: NextPage<HomeProps> = ({ products }) => {
     })()
   }, [userData])
 
-  const onAddToFavorite = async (productId: number) => {
-    try {
-      await Api().user.addToFavorite(productId)
-      localProducts.map((product) => {
-        if (product.id === productId) {
-          product.favorite = !product.favorite
-        }
-      })
-      setlocalProducts([...localProducts])
-    } catch {}
-  }
+  // const onAddToFavorite = async (productId: number) => {
+  //   try {
+  //     await Api().user.addToFavorite(productId)
+  //     localProducts.map((product) => {
+  //       if (product.id === productId) {
+  //         product.favorite = !product.favorite
+  //       }
+  //     })
+  //     setlocalProducts([...localProducts])
+  //   } catch {}
+  // }
 
   const carouselData = [
     {
@@ -93,7 +93,7 @@ const Home: NextPage<HomeProps> = ({ products }) => {
       <Typography className={styles.categoryName} variant='h4'>
         Most popular
       </Typography>
-      <ProductList products={localProducts} onAddToFavorite={onAddToFavorite} />
+      <ProductList products={localProducts} setProducts={setlocalProducts} />
     </>
   )
 }

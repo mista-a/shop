@@ -10,24 +10,24 @@ import { useRouter } from 'next/router'
 import { Api } from '../../API'
 
 // NextFunctionComponent
-
 const ProductPage = ({ product }) => {
   const [activeShowcaseItem, setActiveShowcaseItem] = useState(
-    product.showcase[0].miniImg
+    product.showcase[0].id,
   )
+
+  console.log()
 
   const [counter, setCounter] = useState(1)
 
   const addToCart = async () => {
-    let type = activeShowcaseItem
-    await Api().user.addToCart(product.id, counter, type)
+    await Api().user.addToCart(activeShowcaseItem, counter, product.id)
   }
 
   return (
     <div className={styles.productPage}>
       {product.showcase.map((showcaseItem) => {
         return (
-          showcaseItem.miniImg === activeShowcaseItem && (
+          showcaseItem.id === activeShowcaseItem && (
             <>
               <img
                 className={styles.mainProductImg}
@@ -64,10 +64,10 @@ const ProductPage = ({ product }) => {
             <Button
               variant='text'
               className={`showcaseItem ${
-                activeShowcaseItem === showcaseItem.miniImg &&
+                activeShowcaseItem === showcaseItem.id &&
                 styles.activeShowcaseItem
               }`}
-              onClick={() => setActiveShowcaseItem(showcaseItem.miniImg)}
+              onClick={() => setActiveShowcaseItem(showcaseItem.id)}
             >
               <img src={showcaseItem.miniImg} />
             </Button>
@@ -79,7 +79,7 @@ const ProductPage = ({ product }) => {
             Add to cart
           </TextButton>
         </Box>
-        {/* <AboutProduct></AboutProduct> */}
+        <AboutProduct></AboutProduct>
       </div>
     </div>
   )

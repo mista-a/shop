@@ -4,12 +4,12 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UserEntity } from 'src/user/entities/user.entity';
 import { UserModule } from './user/user.module';
-import { CartEntity } from 'src/user/entities/cart.entity';
 import { ProductModule } from './product/product.module';
 import { ProductEntity } from './product/entities/product.entity';
 import { AuthModule } from './auth/auth.module';
 import { CategoryEntity } from './product/entities/category.entity';
 import { SubCategoryEntity } from './product/entities/subCategory.entity';
+import { CartItemEntity } from './user/entities/cartItem.entity';
 
 @Module({
   imports: [
@@ -23,9 +23,9 @@ import { SubCategoryEntity } from './product/entities/subCategory.entity';
       entities: [
         UserEntity,
         ProductEntity,
-        CartEntity,
         CategoryEntity,
         SubCategoryEntity,
+        CartItemEntity,
       ],
       synchronize: true,
     }),

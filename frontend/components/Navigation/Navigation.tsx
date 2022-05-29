@@ -18,31 +18,30 @@ const Navigation = () => {
       <div className={styles.navigation}>
         {categories.map(({ name, id, subCategories }) => {
           return (
-            <Link
-              classLink={`${styles.link} ${styles.navigationItem}`}
-              href={name}
-              key={id}
-            >
-              <span className={styles.navigationItem}>
+            <div className={styles.category}>
+              <Link
+                classLink={`${styles.link} ${styles.navigationItem}`}
+                href={`/${textToLink(name)}`}
+                key={id}
+              >
                 {name} <ArrowIcon />
-                <div className={styles.categoryLinks}>
-                  {subCategories.map((subCategory) => {
-                    return (
-                      <Link
-                        href={`${textToLink(name)}/${textToLink(
-                          subCategory.name,
-                        )}`}
-                        key={id}
-                      >
-                        <span className={styles.categoryLinks}>
-                          {subCategory.name}
-                        </span>
-                      </Link>
-                    )
-                  })}
-                </div>
-              </span>
-            </Link>
+              </Link>
+              <div className={styles.subCategories}>
+                {subCategories.map((subCategory) => {
+                  return (
+                    <Link
+                      classLink={`${styles.link} ${styles.subCategory}`}
+                      href={`/${textToLink(name)}/${textToLink(
+                        subCategory.name,
+                      )}`}
+                      key={id}
+                    >
+                      {subCategory.name}
+                    </Link>
+                  )
+                })}
+              </div>
+            </div>
           )
         })}
       </div>

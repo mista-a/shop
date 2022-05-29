@@ -24,14 +24,14 @@ export const UserApi = (instance: AxiosInstance) => ({
     const { data } = await instance.get(`/users/cart`)
     return data
   },
-  async addToCart(productId: number, count: number, type: string) {
-    await instance.post(`/users/cart`, { productId, count, type })
+  async addToCart(typeId: number, count: number, productId: number) {
+    await instance.post(`/users/cart`, { typeId, count, productId })
   },
   async deleteFromCart(productId: number) {
     await instance.delete(`/users/cart`, { data: { productId } })
   },
   async addToFavorite(productId: number) {
-    await instance.post(`/users/favorites`, { productId })
+    await instance.post(`/users/favorites/`, { productId })
   },
   async getFavorites() {
     const { data } = await instance.get(`/users/favorites`)
@@ -39,7 +39,6 @@ export const UserApi = (instance: AxiosInstance) => ({
   },
   async getCartPrice() {
     const { data } = await instance.get(`/users/cart/price`)
-
     return data
   },
 })

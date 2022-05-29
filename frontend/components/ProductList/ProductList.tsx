@@ -5,13 +5,14 @@ import styles from './ProductList.module.sass'
 import { styled } from '@mui/material/styles'
 import { Api } from '../../API'
 import { theme } from '../../theme'
+import { Product } from '../../types/product'
 
 interface ProductListProps {
+  setProducts: (products) => void
   products: any
 }
 
-// : FC<ProductListProps>
-const ProductList = ({ products, onAddToFavorite }) => {
+const ProductList: FC<ProductListProps> = ({ setProducts, products }) => {
   const ProductListGrid: FC = styled('div')(() => ({
     display: 'grid',
     gridTemplateColumns: 'repeat(4, 1fr)',
@@ -24,23 +25,22 @@ const ProductList = ({ products, onAddToFavorite }) => {
     },
   }))
 
-  // const [products, setProducts] = useState([])
+  console.log(products)
 
-  // useEffect(() => {
-  // Api().product.getPopular
-  // },[])
-
-  // const onAddToFavorite = async (productId: number) => {
-  //   try {
-  //     Api().user.addToFavorite(productId)
-  //     products.forEach((product) => {
-  //       if (product.id === productId) {
-  //         console.log(!product.favorite)
-  //         product.favorite = !product.favorite
-  //       }
-  //     })
-  //   } catch {}
-  // }
+  const onAddToFavorite = async (productId: number) => {
+    try {
+      await Api().user.addToFavorite(productId)
+      //: Product
+      products.map((product) => {
+        if (product.id === productId) {
+          product.inFavorite = !product.inFavorite
+        }
+      })
+      setProducts([...products])
+    } catch (err) {
+      console.warn(err)
+    }
+  }
 
   return (
     <ProductListGrid>

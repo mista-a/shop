@@ -6,6 +6,8 @@ import CartList from '../../components/CartList/CartList'
 import ProductList from '../../components/ProductList/ProductList'
 
 const Cart = ({ products }) => {
+  console.log(products)
+
   // return <div></div>
   // return <ProductList products={products} />
   const [clearCart, setClearCart] = useState(false)
@@ -26,19 +28,17 @@ const Cart = ({ products }) => {
 }
 
 export const getServerSideProps = async (ctx) => {
-  try {
-    let products = await Api(ctx).user.getCart()
-    products = products.response.cart.cartItems
-    return { props: { products } }
-  } catch (err) {
-    console.log(err)
-    return {
-      props: {},
-      redirect: {
-        destination: '/',
-        permanent: false,
-      },
-    }
+  // try {
+  let products = await Api(ctx).user.getCart()
+  return { props: { products } }
+  // } catch (err) {
+  // console.log(err)
+  return {
+    props: {},
+    redirect: {
+      destination: '/',
+      permanent: false,
+    },
   }
 }
 

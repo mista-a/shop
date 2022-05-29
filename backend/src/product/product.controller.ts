@@ -34,7 +34,7 @@ export class ProductController {
   }
 
   @Get('/popular')
-  getPopularProducts(dto: UpdateProductDto) {
+  async getPopularProducts(dto: UpdateProductDto) {
     return this.productService.popular();
   }
 
@@ -59,14 +59,27 @@ export class ProductController {
     return this.productService.findByCategory(name);
   }
 
-  @Get('/category/:name/subcategories')
-  subCategories(@Param('name') name: string) {
-    return this.productService.findSubCategories(name);
-  }
+  // @Get('/category/:name/subcategories')
+  // subCategories(@Param('name') name: string) {
+  //   return this.productService.findSubCategories(name);
+  // }
 
+  @UseGuards(JwtAuthGuard)
   @Get('/subcategories/:name')
-  getBySubCategories(@Param('name') name: string) {
-    return this.productService.getBySubCategories(name);
+  getBySubCategory(
+    @User() id: number,
+    @Param('name') name: string,
+    @Query() dto: SearchProductDto,
+  ) {
+    let page = 1;
+    if (dto.page) {
+      page = +dto.page;
+    }
+    let limit = 12;
+    if (dto.limit) {
+      limit = +dto.limit;
+    }
+    return this.productService.getBySubCategory(id, name, limit, page);
   }
 
   @Get(':id')

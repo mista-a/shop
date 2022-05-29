@@ -31,7 +31,7 @@ export class ProductEntity {
   colors: string[];
 
   @Column({ default: false })
-  favorite: boolean;
+  inFavorite: boolean;
 
   @Column('json')
   showcase: any;

@@ -1,11 +1,13 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Api } from '../../API'
 import ProductList from '../../components/ProductList/ProductList'
 
 const Favorite = ({ favorites }) => {
-  console.log(favorites)
+  const [localProducts, setLocacaleProducts] = useState(favorites)
 
-  return <ProductList onAddToFavorite={() => {}} products={favorites} />
+  return (
+    <ProductList setProducts={setLocacaleProducts} products={localProducts} />
+  )
 }
 
 export const getServerSideProps = async (ctx) => {

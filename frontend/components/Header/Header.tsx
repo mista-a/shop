@@ -159,8 +159,9 @@ const Header = () => {
   useEffect(() => {
     ;(async () => {
       if (userData) {
-        const cartPrice = await Api().user.getCartPrice()
-        setCartPrice(cartPrice)
+        // const cartPrice = await Api().user.getCartPrice()
+        //igor huilo
+        setCartPrice(0)
       }
     })()
   }, [userData])

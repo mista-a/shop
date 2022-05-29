@@ -9,7 +9,7 @@ import {
   JoinColumn,
   AfterInsert,
 } from 'typeorm';
-import { CartEntity } from './cart.entity';
+import { CartItemEntity } from './cartItem.entity';
 
 @Entity('users')
 export class UserEntity {
@@ -25,16 +25,16 @@ export class UserEntity {
   @Column()
   password: string;
 
-  @OneToOne(() => CartEntity, (cart) => cart.user, {
-    eager: true,
-    cascade: true,
-  })
-  @JoinColumn({ name: 'cartId' })
-  cart: CartEntity;
+  @Column({ default: 0 })
+  cartPrice: number;
+
+  @ManyToMany(() => CartItemEntity)
+  @JoinTable()
+  cartItems: CartItemEntity[];
 
   @ManyToMany(() => ProductEntity)
   @JoinTable()
-  inFavorite: ProductEntity[];
+  favorites: ProductEntity[];
 
   // @Column('json', { default: [], unique: true })
   // cart: [{ price: number; img: string; name: string }];

@@ -18,7 +18,7 @@ const CartCard = ({ product, products }) => {
 
   useEffect(() => {
     if (counter !== product.count) {
-      Api().user.addToCart(product.item.id, counter, product.type)
+      Api().user.addToCart(product.type, counter, product.item.id)
     }
   }, [counter])
 
@@ -26,15 +26,15 @@ const CartCard = ({ product, products }) => {
     <div
       className={`${styles.cartItem} ${deleted ? styles.cartItemDeleted : ''}`}
     >
-      <img className={styles.img} src={product.type} alt={product.item.name} />
+      <img className={styles.img} src={product.type} alt={product.name} />
       {/* <ProductCard product={product.item} /> */}
       <div className={styles.about}>
         <Button onClick={deleteFromCart}>
           <ClearIcon fontSize='small' />
         </Button>
-        <span>{product.item.name}</span>
+        <span>{product.name}</span>
         <Counter counter={counter} setCounter={setCounter} />
-        <span>$ {product.item.price * counter}</span>
+        <span>$ {product.price * counter}</span>
       </div>
     </div>
   )

@@ -4,10 +4,9 @@ import React, { FC, useEffect, useState } from 'react'
 import cardImg from '../../assets/images/card-img.png'
 import styles from './Product.module.sass'
 import { ReactComponent as LikeIcon } from '../../assets/images/like-icon.svg'
-import { IProduct } from '../../types/product'
 
 interface ProductCardProps {
-  // product: IProduct
+  // product: Product
 }
 
 // : FC<ProductCardProps>
@@ -29,25 +28,27 @@ const ProductCard = ({ product, onAddToFavorite }) => {
         >
           <LikeIcon
             className={
-              product.favorite ? styles.ActiveLikeIcon : styles.likeIcon
+              product.inFavorite ? styles.ActiveLikeIcon : styles.likeIcon
             }
           />
         </button>
       </div>
-      <Typography>{product.name}</Typography>{' '}
-      <div className={styles.colors}>
-        {product.colors.map((color, index) => {
-          return (
-            <div
-              key={index}
-              className={styles.color}
-              style={{
-                backgroundColor: color,
-              }}
-            />
-          )
-        })}
-      </div>
+      <Typography>{product.name}</Typography>
+      {product.colors?.length && (
+        <div className={styles.colors}>
+          {product.colors.map((color, index) => {
+            return (
+              <div
+                key={index}
+                className={styles.color}
+                style={{
+                  backgroundColor: color,
+                }}
+              />
+            )
+          })}
+        </div>
+      )}
       <Typography>$ {product.price}</Typography>
     </div>
   )
